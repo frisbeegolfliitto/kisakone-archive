@@ -1,0 +1,70 @@
+ var lastUpdate = 1642503552;
+
+
+var liveUpdateRate;
+var liveChangeCallback;
+var liveDoneCallback;
+var liveEventId;
+var errors = 0;
+var nolive = false;
+var liveRound;
+
+function initializeLiveUpdate(updateRate, eventId, roundId, changeCallback, doneCallback) {
+	liveUpdateRate = updateRate;
+	liveChangeCallback = changeCallback;
+	liveDoneCallback = doneCallback;
+	liveEventId = eventId;
+	liveRound = roundId;
+
+	scheduleLiveUpdate();
+
+}
+
+function scheduleLiveUpdate() {
+	setTimeout(refreshLiveUpdateData, liveUpdateRate * 1000);
+}
+
+function refreshLiveUpdateData() {
+
+	jQuery.ajax({
+		cache: false,
+		data: {id: liveEventId, lastUpdate: lastUpdate, round: liveRound},
+		dataType: 'json',
+		error: liveError,
+		success: handleLiveUpdateData,
+		url: "/liveresultdata"
+
+
+	});
+
+
+	return true;
+
+}
+
+function handleLiveUpdateData(data) {
+	if (nolive) return;
+	errors = 0;
+
+	lastUpdate = data.updatedAt;
+	var count = 0;
+	for (var i in data.updates) {
+		liveChangeCallback(data.updates[i]);
+		count++;
+	}
+	//alert(count);
+	liveDoneCallback();
+
+	scheduleLiveUpdate();
+}
+
+function liveError(a, x) {
+	errors++;
+	if (errors == 1) {
+		alert("Live-tulospalvelun päivitys ei onnistu. Sivun päivitys voi auttaa ongelmaan.");
+	} else {
+		scheduleLiveUpdate();
+	}
+}
+
+

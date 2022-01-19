@@ -1,0 +1,1372 @@
+
+<!doctype html>
+<html lang="fi-FI">
+<meta charset="utf-8">
+
+<title>Leaderboard - Pekan Leipä Open - Kisakone</title>
+
+<link rel="stylesheet" href="../../../css/style.css">
+<link rel="apple-touch-icon" href="../../../images/apple-touch-icon.png">
+<script src="../../../js/jquery-1.11.2.min.js"></script>
+<script src="../../../javascript/base" defer></script>
+
+<link rel="stylesheet" href="../../../css/flag-icon/css/flag-icon.min.css">
+
+<script src="../../../js/jquery-ui-1.11.2.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/jquery-ui-lightness/jquery-ui.min.css">
+<script src="../../../js/analytics.js" defer></script>
+<script src="../../../js/addthisevent/ate.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/addthisevent/ate.css" />
+ 
+<style type="text/css">
+    .resultrow td, .resultrow th {
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        text-align: center;
+        margin: 0;
+    }
+
+    .results td, .results th {
+        background-color: #EEE;
+        text-align: center;
+        border: 2px solid white;
+    }
+
+    .round_selection_table .selected {
+        background-color: #DDD;
+    }
+
+    .results {
+        border-collapse: collapse;
+    }
+
+    .rightside {
+        text-align: right !important;
+    }
+
+    .leftside {
+        text-align: left !important;
+    }
+
+    .sdtd {
+        background-color: white !important;
+    }
+
+    .sd {
+        background-color: #EEE !important;
+        font-weight: bold;
+        min-width: 16px;
+    }
+
+</style>
+
+<meta name="x-kisakone-version" content="2019.01.01-1-g8e73acc">
+
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<body>
+
+<table id="contentcontainer" cellpadding="0" cellspacing="0">
+    <tr id="headtr">
+    <td colspan="3">
+        <header id="header">
+            <div class="loginbox" id="login_panel">
+    <a id="login_link" href="../../../login.html">Kirjaudu sisään</a> |
+    <a id="register_link" href="../../../rekisteroidy.html">Rekisteröidy</a>
+
+</div>
+<form class="loginbox hidden" action="../../../index.html" id="login_form" method="post">
+    <input type="hidden" name="comingFrom" value="/kilpailu/18/katso/leaderboard" />
+    <a id="loginform_x" href="leaderboard.html" class="dialogx" ><img src="../../../images/loginx2.png" alt="Sulje" /></a>
+    <input type="hidden" name="loginAt" value="1642503511" />
+    <input type="hidden" name="formid" value="login" />
+
+    <div>
+        <label for="loginUsernameInput">Käyttäjätunnus</label>
+        <input type="text" name="username" id="loginUsernameInput" />
+    </div>
+    <div>
+        <label for="loginPassword">Salasana</label>
+        <input type="password" id="loginPassword" name="password" />
+    </div>
+
+    <div>
+        <input id="loginRememberMe" type="checkbox" name="rememberMe" />
+        <label for="loginRememberMe">Muista salasana</label>
+        <input id="loginSubmit" type="submit" value="Kirjaudu" />
+    </div>
+    <div>
+        <a href="../../../rekisteroidy.html">Rekisteröidy</a> |
+        <a href="../../../unohtunutsalasana.html">Unohtuiko salasana?</a>
+    </div>
+</form>
+                        <img id="sitelogo" src="../../../images/sitelogo.png" alt="Kisakone" />
+
+            <h1 id="sitename">Kisakone</h1>
+            <div id="pagename">Leaderboard - Pekan Leipä Open</div>
+        </header>
+    <ul id="mainmenu">
+
+        <li  class="selected">
+        <a
+           href="../../../kilpailut.html">Kilpailut</a>
+    </li>
+        <li >
+        <a
+           href="../../../sarjat.html">Sarjat</a>
+    </li>
+        </ul>    </td>
+    </tr>
+
+    <tr id="maintr2">
+        <td id="submenucontainer">        <br />
+            <p style="margin-left: 16px; margin-bottom: 16px;"><a style="font-size: 11pt; color: #2f5ab6 !important; font-weight: bold; text-decoration: none;" href="../../../content/Resurssipankki.html">Resurssipankki</a></p>
+
+                 <ul class="submenu submenu0">
+                        <li>
+                
+                <span>Pekan Leipä Open</span>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../18.html">
+                
+                <span>Yleistiedot</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="tulokset.html">
+                
+                <span>Tulokset</span>
+                                    </a>
+                                                                             <ul class="submenu submenu2">
+                        <li>
+                                    <a href="livetulokset.html">
+                
+                <span>Live-seuranta</span>
+                                    </a>
+                                            </li>
+                        <li>
+                
+                <span>Leaderboard</span>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="kilpailijat.html">
+                
+                <span>Kilpailijat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="kiintiot.html">
+                
+                <span>Kiintiöt</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="rata.html">
+                
+                <span>Rata</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="aikataulu.html">
+                
+                <span>Aikataulu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="ilmoittautuminen.html">
+                
+                <span>Ilmoittautuminen</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailusyote/18.rss">
+                
+                <span>Tilaa RSS</span>
+                                    </a>
+                                            </li>
+                    
+                    
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/index.html">
+                
+                <span>Kilpailut</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/ajankohtaiset.html">
+                
+                <span>Ajankohtaiset</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tulevat.html">
+                
+                <span>Tulevat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/paattyneet.html">
+                
+                <span>Päättyneet</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kaikki</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailuarkisto.html">
+                
+                <span>Arkisto</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kilpailut tasoittain</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/5.html">
+                
+                <span>Erilliskilpailu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/7.html">
+                
+                <span>Pro-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/9.html">
+                
+                <span>SM</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/10.html">
+                
+                <span>Am-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/11.html">
+                
+                <span>PDGA-liiga</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/12.html">
+                
+                <span>Am2-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/16.html">
+                
+                <span>WGE</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/18.html">
+                
+                <span>Muu kiertue</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                    
+                    
+    
+</ul>&nbsp;        </td>
+        <td id="content">
+  <div id="event_content">
+    <h2>Leaderboard</h2>
+</div>
+
+
+<p class="preliminary" style="display: none">
+    Viimeisimmän kierroksen tulosten syöttö on yhä kesken ja tulokset ovat vasta alustavia. Kilpailijoiden järjestys ja sarjapisteet pyritään ennustamaan, eivätkä ole lopullisia.
+</p>
+
+<table class="results ">
+    <tr style="border: none">
+        
+        <td colspan="8" style="background-color: white" class="leftside">
+            <a name="cMA1"></a>
+            <h3>MA1</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                    
+                    <th>R3</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r121_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Markus&nbsp;Pohjolainen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>42266</td>
+                        <td></td>
+            
+                                                                            <td id="r121_">60</td>
+                                                                            <td id="r121_">51</td>
+                                                                            <td id="r121_">27</td>
+            
+            <td id="r121_tc">0</td>
+
+            <td id="r121_pm">138</td>
+            <td id="r121_t">138</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r65_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Janne&nbsp;Kupiainen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39991</td>
+                        <td></td>
+            
+                                                                            <td id="r65_">54</td>
+                                                                            <td id="r65_">63</td>
+                                                                            <td id="r65_">27</td>
+            
+            <td id="r65_tc">0</td>
+
+            <td id="r65_pm">144</td>
+            <td id="r65_t">144</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r96_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Markku&nbsp;Tohni</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8567</td>
+                        <td></td>
+            
+                                                                            <td id="r96_">63</td>
+                                                                            <td id="r96_">57</td>
+                                                                            <td id="r96_">30</td>
+            
+            <td id="r96_tc">0</td>
+
+            <td id="r96_pm">150</td>
+            <td id="r96_t">150</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r53_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ville&nbsp;Kotamaki</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8947</td>
+                        <td></td>
+            
+                                                                            <td id="r53_">59</td>
+                                                                            <td id="r53_">63</td>
+                                                                            <td id="r53_">28</td>
+            
+            <td id="r53_tc">0</td>
+
+            <td id="r53_pm">150</td>
+            <td id="r53_t">150</td>
+                                    <td id="r53_p" class="sdtd sd">SD</td>
+                    </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r26_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Thomas&nbsp;Mykkänen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40848</td>
+                        <td></td>
+            
+                                                                            <td id="r26_">65</td>
+                                                                            <td id="r26_">57</td>
+                                                                            <td id="r26_">31</td>
+            
+            <td id="r26_tc">0</td>
+
+            <td id="r26_pm">153</td>
+            <td id="r26_t">153</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r230_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ville&nbsp;Voutilainen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40856</td>
+                        <td></td>
+            
+                                                                            <td id="r230_">60</td>
+                                                                            <td id="r230_">61</td>
+                                                                            <td id="r230_">33</td>
+            
+            <td id="r230_tc">0</td>
+
+            <td id="r230_pm">154</td>
+            <td id="r230_t">154</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r396_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Juha&nbsp;Oinas</td>
+                        <td><abbr title=""></abbr></td>
+                        <td></td>
+                        <td></td>
+            
+                                                                            <td id="r396_">62</td>
+                                                                            <td id="r396_">61</td>
+                                                                            <td id="r396_">0</td>
+            
+            <td id="r396_tc">0</td>
+
+            <td id="r396_pm">123</td>
+            <td id="r396_t">123</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r119_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tuomo&nbsp;Hänninen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>43768</td>
+                        <td></td>
+            
+                                                                            <td id="r119_">64</td>
+                                                                            <td id="r119_">61</td>
+                                                                            <td id="r119_">0</td>
+            
+            <td id="r119_tc">0</td>
+
+            <td id="r119_pm">125</td>
+            <td id="r119_t">125</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r54_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tommi&nbsp;Tohni</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8771</td>
+                        <td></td>
+            
+                                                                            <td id="r54_">64</td>
+                                                                            <td id="r54_">61</td>
+                                                                            <td id="r54_">0</td>
+            
+            <td id="r54_tc">0</td>
+
+            <td id="r54_pm">125</td>
+            <td id="r54_t">125</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r345_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tommi&nbsp;Åkerfelt</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>45171</td>
+                        <td></td>
+            
+                                                                            <td id="r345_">66</td>
+                                                                            <td id="r345_">60</td>
+                                                                            <td id="r345_">0</td>
+            
+            <td id="r345_tc">0</td>
+
+            <td id="r345_pm">126</td>
+            <td id="r345_t">126</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3391_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Matti&nbsp;Havanka</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40541</td>
+                        <td></td>
+            
+                                                                            <td id="r3391_">63</td>
+                                                                            <td id="r3391_">63</td>
+                                                                            <td id="r3391_">0</td>
+            
+            <td id="r3391_tc">0</td>
+
+            <td id="r3391_pm">126</td>
+            <td id="r3391_t">126</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r190_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tuukka&nbsp;Hänninen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>41515</td>
+                        <td></td>
+            
+                                                                            <td id="r190_">63</td>
+                                                                            <td id="r190_">64</td>
+                                                                            <td id="r190_">0</td>
+            
+            <td id="r190_tc">0</td>
+
+            <td id="r190_pm">127</td>
+            <td id="r190_t">127</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r8_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Seppo&nbsp;Kuikka</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>28837</td>
+                        <td></td>
+            
+                                                                            <td id="r8_">67</td>
+                                                                            <td id="r8_">61</td>
+                                                                            <td id="r8_">0</td>
+            
+            <td id="r8_tc">0</td>
+
+            <td id="r8_pm">128</td>
+            <td id="r8_t">128</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r406_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Reima&nbsp;Innala</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>47922</td>
+                        <td></td>
+            
+                                                                            <td id="r406_">62</td>
+                                                                            <td id="r406_">66</td>
+                                                                            <td id="r406_">0</td>
+            
+            <td id="r406_tc">0</td>
+
+            <td id="r406_pm">128</td>
+            <td id="r406_t">128</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r29_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jouko&nbsp;Rosenqvist</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>26429</td>
+                        <td></td>
+            
+                                                                            <td id="r29_">63</td>
+                                                                            <td id="r29_">67</td>
+                                                                            <td id="r29_">0</td>
+            
+            <td id="r29_tc">0</td>
+
+            <td id="r29_pm">130</td>
+            <td id="r29_t">130</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r13_pos">16</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jan-Johannes&nbsp;Salmi</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>42503</td>
+                        <td></td>
+            
+                                                                            <td id="r13_">65</td>
+                                                                            <td id="r13_">67</td>
+                                                                            <td id="r13_">0</td>
+            
+            <td id="r13_tc">0</td>
+
+            <td id="r13_pm">132</td>
+            <td id="r13_t">132</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r262_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Samuli&nbsp;Suominen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40556</td>
+                        <td></td>
+            
+                                                                            <td id="r262_">64</td>
+                                                                            <td id="r262_">69</td>
+                                                                            <td id="r262_">0</td>
+            
+            <td id="r262_tc">0</td>
+
+            <td id="r262_pm">133</td>
+            <td id="r262_t">133</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r133_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Markku&nbsp;Kantola</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>48740</td>
+                        <td></td>
+            
+                                                                            <td id="r133_">68</td>
+                                                                            <td id="r133_">67</td>
+                                                                            <td id="r133_">0</td>
+            
+            <td id="r133_tc">0</td>
+
+            <td id="r133_pm">135</td>
+            <td id="r133_t">135</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r67_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Toni&nbsp;Toivonen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8775</td>
+                        <td></td>
+            
+                                                                            <td id="r67_">64</td>
+                                                                            <td id="r67_">71</td>
+                                                                            <td id="r67_">0</td>
+            
+            <td id="r67_tc">0</td>
+
+            <td id="r67_pm">135</td>
+            <td id="r67_t">135</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r202_pos">20</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Teppo&nbsp;Nieppola</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>44259</td>
+                        <td></td>
+            
+                                                                            <td id="r202_">73</td>
+                                                                            <td id="r202_">64</td>
+                                                                            <td id="r202_">0</td>
+            
+            <td id="r202_tc">0</td>
+
+            <td id="r202_pm">137</td>
+            <td id="r202_t">137</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r334_pos">20</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Aku&nbsp;Franssila</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>44708</td>
+                        <td></td>
+            
+                                                                            <td id="r334_">72</td>
+                                                                            <td id="r334_">65</td>
+                                                                            <td id="r334_">0</td>
+            
+            <td id="r334_tc">0</td>
+
+            <td id="r334_pm">137</td>
+            <td id="r334_t">137</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r47_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kiril&nbsp;Häyrinen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39174</td>
+                        <td></td>
+            
+                                                                            <td id="r47_">70</td>
+                                                                            <td id="r47_">74</td>
+                                                                            <td id="r47_">0</td>
+            
+            <td id="r47_tc">0</td>
+
+            <td id="r47_pm">144</td>
+            <td id="r47_t">144</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r30_pos">23</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Terttu&nbsp;Rosenqvist</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>26432</td>
+                        <td></td>
+            
+                                                                            <td id="r30_">67</td>
+                                                                            <td id="r30_">79</td>
+                                                                            <td id="r30_">0</td>
+            
+            <td id="r30_tc">0</td>
+
+            <td id="r30_pm">146</td>
+            <td id="r30_t">146</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r212_pos">24</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jukka&nbsp;Suvela</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40635</td>
+                        <td></td>
+            
+                                                                            <td id="r212_">64</td>
+                                                                            <td id="r212_">84</td>
+                                                                            <td id="r212_">0</td>
+            
+            <td id="r212_tc">0</td>
+
+            <td id="r212_pm">148</td>
+            <td id="r212_t">148</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r436_pos">25</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kalle&nbsp;Vertanen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td></td>
+                        <td></td>
+            
+                                                                            <td id="r436_">68</td>
+                                                                            <td id="r436_">0</td>
+                                                                            <td id="r436_">0</td>
+            
+            <td id="r436_tc">0</td>
+
+            <td id="r436_pm">68</td>
+            <td id="r436_t">68</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r139_pos">26</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Mäntysalo</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>37103</td>
+                        <td></td>
+            
+                                                                            <td id="r139_">0</td>
+                                                                            <td id="r139_">0</td>
+                                                                            <td id="r139_">0</td>
+            
+            <td id="r139_tc">0</td>
+
+            <td id="r139_pm">0</td>
+            <td id="r139_t">0</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r379_pos">26</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Janne&nbsp;Skinnarla</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>48515</td>
+                        <td></td>
+            
+                                                                            <td id="r379_">0</td>
+                                                                            <td id="r379_">0</td>
+                                                                            <td id="r379_">0</td>
+            
+            <td id="r379_tc">0</td>
+
+            <td id="r379_pm">0</td>
+            <td id="r379_t">0</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="8" style="background-color: white" class="leftside">
+            <a name="cMPO"></a>
+            <h3>MPO</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                    
+                    <th>R3</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r115_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ville&nbsp;Piippo</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>27555</td>
+                        <td></td>
+            
+                                                                            <td id="r115_">52</td>
+                                                                            <td id="r115_">57</td>
+                                                                            <td id="r115_">24</td>
+            
+            <td id="r115_tc">0</td>
+
+            <td id="r115_pm">133</td>
+            <td id="r115_t">133</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r239_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pasi&nbsp;Koivu</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>41251</td>
+                        <td></td>
+            
+                                                                            <td id="r239_">57</td>
+                                                                            <td id="r239_">53</td>
+                                                                            <td id="r239_">25</td>
+            
+            <td id="r239_tc">0</td>
+
+            <td id="r239_pm">135</td>
+            <td id="r239_t">135</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r43_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Miko&nbsp;Fyhr</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>28836</td>
+                        <td></td>
+            
+                                                                            <td id="r43_">59</td>
+                                                                            <td id="r43_">54</td>
+                                                                            <td id="r43_">22</td>
+            
+            <td id="r43_tc">0</td>
+
+            <td id="r43_pm">135</td>
+            <td id="r43_t">135</td>
+                                    <td id="r43_p" class="sdtd sd">SD</td>
+                    </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r206_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ville&nbsp;Lapinmäki</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39874</td>
+                        <td></td>
+            
+                                                                            <td id="r206_">59</td>
+                                                                            <td id="r206_">58</td>
+                                                                            <td id="r206_">25</td>
+            
+            <td id="r206_tc">0</td>
+
+            <td id="r206_pm">142</td>
+            <td id="r206_t">142</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2373_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pasi&nbsp;Putus</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>37020</td>
+                        <td></td>
+            
+                                                                            <td id="r2373_">60</td>
+                                                                            <td id="r2373_">55</td>
+                                                                            <td id="r2373_">27</td>
+            
+            <td id="r2373_tc">0</td>
+
+            <td id="r2373_pm">142</td>
+            <td id="r2373_t">142</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r175_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jere&nbsp;Pohjankoski</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39873</td>
+                        <td></td>
+            
+                                                                            <td id="r175_">58</td>
+                                                                            <td id="r175_">59</td>
+                                                                            <td id="r175_">29</td>
+            
+            <td id="r175_tc">0</td>
+
+            <td id="r175_pm">146</td>
+            <td id="r175_t">146</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r12_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jaani&nbsp;Länsiö</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>28833</td>
+                        <td></td>
+            
+                                                                            <td id="r12_">61</td>
+                                                                            <td id="r12_">56</td>
+                                                                            <td id="r12_">31</td>
+            
+            <td id="r12_tc">0</td>
+
+            <td id="r12_pm">148</td>
+            <td id="r12_t">148</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r350_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kristian&nbsp;Kosonen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>41248</td>
+                        <td></td>
+            
+                                                                            <td id="r350_">57</td>
+                                                                            <td id="r350_">60</td>
+                                                                            <td id="r350_">31</td>
+            
+            <td id="r350_tc">0</td>
+
+            <td id="r350_pm">148</td>
+            <td id="r350_t">148</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r242_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Risto&nbsp;Lehtinen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>35544</td>
+                        <td></td>
+            
+                                                                            <td id="r242_">62</td>
+                                                                            <td id="r242_">56</td>
+                                                                            <td id="r242_">0</td>
+            
+            <td id="r242_tc">0</td>
+
+            <td id="r242_pm">118</td>
+            <td id="r242_t">118</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r146_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Niko&nbsp;Mäenrinne</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40857</td>
+                        <td></td>
+            
+                                                                            <td id="r146_">59</td>
+                                                                            <td id="r146_">59</td>
+                                                                            <td id="r146_">0</td>
+            
+            <td id="r146_tc">0</td>
+
+            <td id="r146_pm">118</td>
+            <td id="r146_t">118</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r385_pos">11</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jesse&nbsp;Pohjankoski</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39715</td>
+                        <td></td>
+            
+                                                                            <td id="r385_">61</td>
+                                                                            <td id="r385_">58</td>
+                                                                            <td id="r385_">0</td>
+            
+            <td id="r385_tc">0</td>
+
+            <td id="r385_pm">119</td>
+            <td id="r385_t">119</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r35_pos">11</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jere&nbsp;Rosenqvist</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>26431</td>
+                        <td></td>
+            
+                                                                            <td id="r35_">59</td>
+                                                                            <td id="r35_">60</td>
+                                                                            <td id="r35_">0</td>
+            
+            <td id="r35_tc">0</td>
+
+            <td id="r35_pm">119</td>
+            <td id="r35_t">119</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r6_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Teemu&nbsp;Malmelin</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>39681</td>
+                        <td></td>
+            
+                                                                            <td id="r6_">64</td>
+                                                                            <td id="r6_">56</td>
+                                                                            <td id="r6_">0</td>
+            
+            <td id="r6_tc">0</td>
+
+            <td id="r6_pm">120</td>
+            <td id="r6_t">120</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r10_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jouni&nbsp;Leskinen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8790</td>
+                        <td></td>
+            
+                                                                            <td id="r10_">61</td>
+                                                                            <td id="r10_">59</td>
+                                                                            <td id="r10_">0</td>
+            
+            <td id="r10_tc">0</td>
+
+            <td id="r10_pm">120</td>
+            <td id="r10_t">120</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r376_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Myöhänen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>41250</td>
+                        <td></td>
+            
+                                                                            <td id="r376_">64</td>
+                                                                            <td id="r376_">63</td>
+                                                                            <td id="r376_">0</td>
+            
+            <td id="r376_tc">0</td>
+
+            <td id="r376_pm">127</td>
+            <td id="r376_t">127</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r419_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Lasse&nbsp;Hynninen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>40855</td>
+                        <td></td>
+            
+                                                                            <td id="r419_">62</td>
+                                                                            <td id="r419_">65</td>
+                                                                            <td id="r419_">0</td>
+            
+            <td id="r419_tc">0</td>
+
+            <td id="r419_pm">127</td>
+            <td id="r419_t">127</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r156_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jarmo&nbsp;Rantanen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>43802</td>
+                        <td></td>
+            
+                                                                            <td id="r156_">62</td>
+                                                                            <td id="r156_">66</td>
+                                                                            <td id="r156_">0</td>
+            
+            <td id="r156_tc">0</td>
+
+            <td id="r156_pm">128</td>
+            <td id="r156_t">128</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r131_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Vilppu&nbsp;Tukiainen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>44255</td>
+                        <td></td>
+            
+                                                                            <td id="r131_">64</td>
+                                                                            <td id="r131_">68</td>
+                                                                            <td id="r131_">0</td>
+            
+            <td id="r131_tc">0</td>
+
+            <td id="r131_pm">132</td>
+            <td id="r131_t">132</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r94_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tomi&nbsp;Lagerkrans</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>36469</td>
+                        <td></td>
+            
+                                                                            <td id="r94_">69</td>
+                                                                            <td id="r94_">66</td>
+                                                                            <td id="r94_">0</td>
+            
+            <td id="r94_tc">0</td>
+
+            <td id="r94_pm">135</td>
+            <td id="r94_t">135</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r151_pos">20</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tapani&nbsp;Karppinen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>44257</td>
+                        <td></td>
+            
+                                                                            <td id="r151_">68</td>
+                                                                            <td id="r151_">68</td>
+                                                                            <td id="r151_">0</td>
+            
+            <td id="r151_tc">0</td>
+
+            <td id="r151_pm">136</td>
+            <td id="r151_t">136</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r433_pos">21</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Hannukka</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>41239</td>
+                        <td></td>
+            
+                                                                            <td id="r433_">66</td>
+                                                                            <td id="r433_">72</td>
+                                                                            <td id="r433_">0</td>
+            
+            <td id="r433_tc">0</td>
+
+            <td id="r433_pm">138</td>
+            <td id="r433_t">138</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r100_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Hynönen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>26425</td>
+                        <td></td>
+            
+                                                                            <td id="r100_">999</td>
+                                                                            <td id="r100_">0</td>
+                                                                            <td id="r100_">0</td>
+            
+            <td id="r100_tc">0</td>
+
+            <td id="r100_pm">999</td>
+            <td id="r100_t">999</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r147_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Henry&nbsp;Rantanen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>43506</td>
+                        <td></td>
+            
+                                                                            <td id="r147_">999</td>
+                                                                            <td id="r147_">0</td>
+                                                                            <td id="r147_">0</td>
+            
+            <td id="r147_tc">0</td>
+
+            <td id="r147_pm">999</td>
+            <td id="r147_t">999</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r101_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Harri&nbsp;Hynönen</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>26424</td>
+                        <td></td>
+            
+                                                                            <td id="r101_">999</td>
+                                                                            <td id="r101_">0</td>
+                                                                            <td id="r101_">0</td>
+            
+            <td id="r101_tc">0</td>
+
+            <td id="r101_pm">999</td>
+            <td id="r101_t">999</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r61_pos">25</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jalle&nbsp;Stoor</td>
+                        <td><abbr title=""></abbr></td>
+                        <td>8992</td>
+                        <td></td>
+            
+                                                                            <td id="r61_">0</td>
+                                                                            <td id="r61_">0</td>
+                                                                            <td id="r61_">0</td>
+            
+            <td id="r61_tc">0</td>
+
+            <td id="r61_pm">0</td>
+            <td id="r61_t">0</td>
+                                </tr>
+    </table>
+
+
+</td>
+<td id="helpcontainer" style="display: none"></td>
+<td id="adbannercontainer">
+     <div id="adbanner">
+
+<a href="http://ldg.fi"><img src="http://ldg.fi/kuvat/LDG_logo.png"></a>
+<br/><br/>
+<a href="http://www.pekanleipa.fi"><img src="http://ldg.fi/kuvat/pekanleipa.jpg" width="300"></a>
+</div></td>
+</tr>
+</table>
+</body>
+</html>

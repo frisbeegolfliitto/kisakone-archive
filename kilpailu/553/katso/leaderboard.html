@@ -1,0 +1,941 @@
+
+<!doctype html>
+<html lang="fi-FI">
+<meta charset="utf-8">
+
+<title>Leaderboard - Peurungan Kesäliiga 10/10 - Kisakone</title>
+
+<link rel="stylesheet" href="../../../css/style.css">
+<link rel="apple-touch-icon" href="../../../images/apple-touch-icon.png">
+<script src="../../../js/jquery-1.11.2.min.js"></script>
+<script src="../../../javascript/base" defer></script>
+
+<link rel="stylesheet" href="../../../css/flag-icon/css/flag-icon.min.css">
+
+<script src="../../../js/jquery-ui-1.11.2.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/jquery-ui-lightness/jquery-ui.min.css">
+<script src="../../../js/analytics.js" defer></script>
+<script src="../../../js/addthisevent/ate.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/addthisevent/ate.css" />
+ 
+<style type="text/css">
+    .resultrow td, .resultrow th {
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        text-align: center;
+        margin: 0;
+    }
+
+    .results td, .results th {
+        background-color: #EEE;
+        text-align: center;
+        border: 2px solid white;
+    }
+
+    .round_selection_table .selected {
+        background-color: #DDD;
+    }
+
+    .results {
+        border-collapse: collapse;
+    }
+
+    .rightside {
+        text-align: right !important;
+    }
+
+    .leftside {
+        text-align: left !important;
+    }
+
+    .sdtd {
+        background-color: white !important;
+    }
+
+    .sd {
+        background-color: #EEE !important;
+        font-weight: bold;
+        min-width: 16px;
+    }
+
+</style>
+
+<meta name="x-kisakone-version" content="2019.01.01-1-g8e73acc">
+
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<body>
+
+<table id="contentcontainer" cellpadding="0" cellspacing="0">
+    <tr id="headtr">
+    <td colspan="3">
+        <header id="header">
+            <div class="loginbox" id="login_panel">
+    <a id="login_link" href="../../../login.html">Kirjaudu sisään</a> |
+    <a id="register_link" href="../../../rekisteroidy.html">Rekisteröidy</a>
+
+</div>
+<form class="loginbox hidden" action="../../../index.html" id="login_form" method="post">
+    <input type="hidden" name="comingFrom" value="/kilpailu/553/katso/leaderboard" />
+    <a id="loginform_x" href="leaderboard.html" class="dialogx" ><img src="../../../images/loginx2.png" alt="Sulje" /></a>
+    <input type="hidden" name="loginAt" value="1642503536" />
+    <input type="hidden" name="formid" value="login" />
+
+    <div>
+        <label for="loginUsernameInput">Käyttäjätunnus</label>
+        <input type="text" name="username" id="loginUsernameInput" />
+    </div>
+    <div>
+        <label for="loginPassword">Salasana</label>
+        <input type="password" id="loginPassword" name="password" />
+    </div>
+
+    <div>
+        <input id="loginRememberMe" type="checkbox" name="rememberMe" />
+        <label for="loginRememberMe">Muista salasana</label>
+        <input id="loginSubmit" type="submit" value="Kirjaudu" />
+    </div>
+    <div>
+        <a href="../../../rekisteroidy.html">Rekisteröidy</a> |
+        <a href="../../../unohtunutsalasana.html">Unohtuiko salasana?</a>
+    </div>
+</form>
+                        <img id="sitelogo" src="../../../images/sitelogo.png" alt="Kisakone" />
+
+            <h1 id="sitename">Kisakone</h1>
+            <div id="pagename">Leaderboard - Peurungan Kesäliiga 10/10</div>
+        </header>
+    <ul id="mainmenu">
+
+        <li  class="selected">
+        <a
+           href="../../../kilpailut.html">Kilpailut</a>
+    </li>
+        <li >
+        <a
+           href="../../../sarjat.html">Sarjat</a>
+    </li>
+        </ul>    </td>
+    </tr>
+
+    <tr id="maintr2">
+        <td id="submenucontainer">        <br />
+            <p style="margin-left: 16px; margin-bottom: 16px;"><a style="font-size: 11pt; color: #2f5ab6 !important; font-weight: bold; text-decoration: none;" href="../../../content/Resurssipankki.html">Resurssipankki</a></p>
+
+                 <ul class="submenu submenu0">
+                        <li>
+                
+                <span>Peurungan Kesäliiga 10/10</span>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../553.html">
+                
+                <span>Yleistiedot</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="tulokset.html">
+                
+                <span>Tulokset</span>
+                                    </a>
+                                                                             <ul class="submenu submenu2">
+                        <li>
+                                    <a href="livetulokset.html">
+                
+                <span>Live-seuranta</span>
+                                    </a>
+                                            </li>
+                        <li>
+                
+                <span>Leaderboard</span>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="kilpailijat.html">
+                
+                <span>Kilpailijat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="kiintiot.html">
+                
+                <span>Kiintiöt</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="rata.html">
+                
+                <span>Rata</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="aikataulu.html">
+                
+                <span>Aikataulu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="ilmoittautuminen.html">
+                
+                <span>Ilmoittautuminen</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailusyote/553.rss">
+                
+                <span>Tilaa RSS</span>
+                                    </a>
+                                            </li>
+                    
+                    
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/index.html">
+                
+                <span>Kilpailut</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/ajankohtaiset.html">
+                
+                <span>Ajankohtaiset</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tulevat.html">
+                
+                <span>Tulevat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/paattyneet.html">
+                
+                <span>Päättyneet</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kaikki</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailuarkisto.html">
+                
+                <span>Arkisto</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kilpailut tasoittain</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/5.html">
+                
+                <span>Erilliskilpailu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/7.html">
+                
+                <span>Pro-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/9.html">
+                
+                <span>SM</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/10.html">
+                
+                <span>Am-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/11.html">
+                
+                <span>PDGA-liiga</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/12.html">
+                
+                <span>Am2-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/16.html">
+                
+                <span>WGE</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/18.html">
+                
+                <span>Muu kiertue</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                    
+                    
+    
+</ul>&nbsp;        </td>
+        <td id="content">
+  <div id="event_content">
+    <h2>Leaderboard</h2>
+</div>
+
+<div id="pdga_link">
+    <a href="http://www.pdga.com/tour/event/28354">Kilpailun tulokset ja ratingit PDGA:n sivuilla</a>
+</div>
+
+<p class="preliminary" style="display: none">
+    Viimeisimmän kierroksen tulosten syöttö on yhä kesken ja tulokset ovat vasta alustavia. Kilpailijoiden järjestys ja sarjapisteet pyritään ennustamaan, eivätkä ole lopullisia.
+</p>
+
+<table class="results ">
+    <tr style="border: none">
+        
+        <td colspan="6" style="background-color: white" class="leftside">
+            <a name="cMA1"></a>
+            <h3>MA1</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r2754_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Samu&nbsp;Åström</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td>73743</td>
+                        <td>919</td>
+            
+                                                                            <td id="r2754_">68</td>
+            
+            <td id="r2754_tc">22</td>
+
+            <td id="r2754_pm">-1</td>
+            <td id="r2754_t">68</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3006_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Aaro&nbsp;&nbsp;Valli</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>72919</td>
+                        <td>888</td>
+            
+                                                                            <td id="r3006_">69</td>
+            
+            <td id="r3006_tc">22</td>
+
+            <td id="r3006_pm">0</td>
+            <td id="r3006_t">69</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2906_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Oskari&nbsp;Vikström</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td>74130</td>
+                        <td>899</td>
+            
+                                                                            <td id="r2906_">69</td>
+            
+            <td id="r2906_tc">22</td>
+
+            <td id="r2906_pm">0</td>
+            <td id="r2906_t">69</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r4457_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kimmo&nbsp;Vänskä</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>82501</td>
+                        <td>0</td>
+            
+                                                                            <td id="r4457_">70</td>
+            
+            <td id="r4457_tc">22</td>
+
+            <td id="r4457_pm">1</td>
+            <td id="r4457_t">70</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2825_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Matti&nbsp;Ahonen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td></td>
+                        <td>896</td>
+            
+                                                                            <td id="r2825_">73</td>
+            
+            <td id="r2825_tc">22</td>
+
+            <td id="r2825_pm">4</td>
+            <td id="r2825_t">73</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3941_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Koskinen</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td></td>
+                        <td></td>
+            
+                                                                            <td id="r3941_">73</td>
+            
+            <td id="r3941_tc">22</td>
+
+            <td id="r3941_pm">4</td>
+            <td id="r3941_t">73</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2774_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Matias&nbsp;Puikkonen</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td>73058</td>
+                        <td>893</td>
+            
+                                                                            <td id="r2774_">74</td>
+            
+            <td id="r2774_tc">22</td>
+
+            <td id="r2774_pm">5</td>
+            <td id="r2774_t">74</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3336_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Eevert&nbsp;Salminen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>76795</td>
+                        <td>887</td>
+            
+                                                                            <td id="r3336_">74</td>
+            
+            <td id="r3336_tc">22</td>
+
+            <td id="r3336_pm">5</td>
+            <td id="r3336_t">74</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2815_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pasi&nbsp;Toivola</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>73762</td>
+                        <td>859</td>
+            
+                                                                            <td id="r2815_">76</td>
+            
+            <td id="r2815_tc">22</td>
+
+            <td id="r2815_pm">7</td>
+            <td id="r2815_t">76</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3471_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Lappalainen</td>
+                        <td><abbr title="Urheiluseura Kivijärven Kivekkäät ry">KivijKi</abbr></td>
+                        <td>80419</td>
+                        <td>877</td>
+            
+                                                                            <td id="r3471_">76</td>
+            
+            <td id="r3471_tc">22</td>
+
+            <td id="r3471_pm">7</td>
+            <td id="r3471_t">76</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1966_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Antti&nbsp;Ruuska</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>71210</td>
+                        <td>879</td>
+            
+                                                                            <td id="r1966_">76</td>
+            
+            <td id="r1966_tc">22</td>
+
+            <td id="r1966_pm">7</td>
+            <td id="r1966_t">76</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3532_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jooa&nbsp;Saari</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>79887</td>
+                        <td>833</td>
+            
+                                                                            <td id="r3532_">77</td>
+            
+            <td id="r3532_tc">22</td>
+
+            <td id="r3532_pm">8</td>
+            <td id="r3532_t">77</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3842_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tuomo&nbsp;Harju</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>83154</td>
+                        <td>852</td>
+            
+                                                                            <td id="r3842_">77</td>
+            
+            <td id="r3842_tc">22</td>
+
+            <td id="r3842_pm">8</td>
+            <td id="r3842_t">77</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2547_pos">14</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Valtteri&nbsp;Korhonen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>70944</td>
+                        <td>905</td>
+            
+                                                                            <td id="r2547_">79</td>
+            
+            <td id="r2547_tc">22</td>
+
+            <td id="r2547_pm">10</td>
+            <td id="r2547_t">79</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3083_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Veli-Pekka&nbsp;Savela</td>
+                        <td><abbr title="Saarijärven Pullistus ry">SaPu</abbr></td>
+                        <td>82240</td>
+                        <td>857</td>
+            
+                                                                            <td id="r3083_">80</td>
+            
+            <td id="r3083_tc">22</td>
+
+            <td id="r3083_pm">11</td>
+            <td id="r3083_t">80</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2139_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Juuso&nbsp;Litendahl</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>64457</td>
+                        <td>857</td>
+            
+                                                                            <td id="r2139_">80</td>
+            
+            <td id="r2139_tc">22</td>
+
+            <td id="r2139_pm">11</td>
+            <td id="r2139_t">80</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r4022_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jussi&nbsp;Kovanen</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td>84534</td>
+                        <td>879</td>
+            
+                                                                            <td id="r4022_">81</td>
+            
+            <td id="r4022_tc">22</td>
+
+            <td id="r4022_pm">12</td>
+            <td id="r4022_t">81</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3545_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Matti&nbsp;Ahonen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>80276</td>
+                        <td>886</td>
+            
+                                                                            <td id="r3545_">82</td>
+            
+            <td id="r3545_tc">22</td>
+
+            <td id="r3545_pm">13</td>
+            <td id="r3545_t">82</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3938_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jukka&nbsp;Saari</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td></td>
+                        <td></td>
+            
+                                                                            <td id="r3938_">90</td>
+            
+            <td id="r3938_tc">22</td>
+
+            <td id="r3938_pm">21</td>
+            <td id="r3938_t">90</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="6" style="background-color: white" class="leftside">
+            <a name="cMPO"></a>
+            <h3>MPO</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r806_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Antti&nbsp;Riekkola</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>53385</td>
+                        <td>934</td>
+            
+                                                                            <td id="r806_">64</td>
+            
+            <td id="r806_tc">22</td>
+
+            <td id="r806_pm">-5</td>
+            <td id="r806_t">64</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1489_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jaakko&nbsp;Halttunen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>60278</td>
+                        <td>917</td>
+            
+                                                                            <td id="r1489_">69</td>
+            
+            <td id="r1489_tc">22</td>
+
+            <td id="r1489_pm">0</td>
+            <td id="r1489_t">69</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2644_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Kaakkolahti</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>71400</td>
+                        <td>867</td>
+            
+                                                                            <td id="r2644_">72</td>
+            
+            <td id="r2644_tc">22</td>
+
+            <td id="r2644_pm">3</td>
+            <td id="r2644_t">72</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2738_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Pellinen</td>
+                        <td><abbr title="Jyväskylän Liitokiekkoilijat ry">JyLi</abbr></td>
+                        <td>73147</td>
+                        <td>794</td>
+            
+                                                                            <td id="r2738_">69</td>
+            
+            <td id="r2738_tc">21</td>
+
+            <td id="r2738_pm">3</td>
+            <td id="r2738_t">69</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r513_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Simo&nbsp;Väisänen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>40559</td>
+                        <td>925</td>
+            
+                                                                            <td id="r513_">73</td>
+            
+            <td id="r513_tc">22</td>
+
+            <td id="r513_pm">4</td>
+            <td id="r513_t">73</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r724_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Timo&nbsp;Frondelius</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>49984</td>
+                        <td>907</td>
+            
+                                                                            <td id="r724_">73</td>
+            
+            <td id="r724_tc">22</td>
+
+            <td id="r724_pm">4</td>
+            <td id="r724_t">73</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3758_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jani&nbsp;Kotanen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>82076</td>
+                        <td>894</td>
+            
+                                                                            <td id="r3758_">75</td>
+            
+            <td id="r3758_tc">22</td>
+
+            <td id="r3758_pm">6</td>
+            <td id="r3758_t">75</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2656_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jussi&nbsp;Honkala</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>72163</td>
+                        <td>783</td>
+            
+                                                                            <td id="r2656_">81</td>
+            
+            <td id="r2656_tc">22</td>
+
+            <td id="r2656_pm">12</td>
+            <td id="r2656_t">81</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1592_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Kämäräinen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>64055</td>
+                        <td>849</td>
+            
+                                                                            <td id="r1592_">81</td>
+            
+            <td id="r1592_tc">22</td>
+
+            <td id="r1592_pm">12</td>
+            <td id="r1592_t">81</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1858_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pete&nbsp;Hytönen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>64475</td>
+                        <td>881</td>
+            
+                                                                            <td id="r1858_">82</td>
+            
+            <td id="r1858_tc">22</td>
+
+            <td id="r1858_pm">13</td>
+            <td id="r1858_t">82</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3530_pos">11</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tero&nbsp;Koivu</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>79880</td>
+                        <td>837</td>
+            
+                                                                            <td id="r3530_">87</td>
+            
+            <td id="r3530_tc">22</td>
+
+            <td id="r3530_pm">18</td>
+            <td id="r3530_t">87</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r719_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jani&nbsp;Senilä</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>49981</td>
+                        <td>861</td>
+            
+                                                                            <td id="r719_">88</td>
+            
+            <td id="r719_tc">22</td>
+
+            <td id="r719_pm">19</td>
+            <td id="r719_t">88</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="6" style="background-color: white" class="leftside">
+            <a name="cFA1"></a>
+            <h3>FA1</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r3582_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Paula&nbsp;Hiironen</td>
+                        <td><abbr title="Puska Puttaajat ry">PP</abbr></td>
+                        <td>80572</td>
+                        <td>630</td>
+            
+                                                                            <td id="r3582_">96</td>
+            
+            <td id="r3582_tc">22</td>
+
+            <td id="r3582_pm">27</td>
+            <td id="r3582_t">96</td>
+                                </tr>
+    </table>
+
+
+</td>
+<td id="helpcontainer" style="display: none"></td>
+</tr>
+</table>
+</body>
+</html>

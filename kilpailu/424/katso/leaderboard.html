@@ -1,0 +1,2042 @@
+
+<!doctype html>
+<html lang="fi-FI">
+<meta charset="utf-8">
+
+<title>Leaderboard - Vampula Open - Kisakone</title>
+
+<link rel="stylesheet" href="../../../css/style.css">
+<link rel="apple-touch-icon" href="../../../images/apple-touch-icon.png">
+<script src="../../../js/jquery-1.11.2.min.js"></script>
+<script src="../../../javascript/base" defer></script>
+
+<link rel="stylesheet" href="../../../css/flag-icon/css/flag-icon.min.css">
+
+<script src="../../../js/jquery-ui-1.11.2.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/jquery-ui-lightness/jquery-ui.min.css">
+<script src="../../../js/analytics.js" defer></script>
+<script src="../../../js/addthisevent/ate.min.js" defer></script>
+<link rel="stylesheet" href="../../../js/addthisevent/ate.css" />
+ 
+<style type="text/css">
+    .resultrow td, .resultrow th {
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        text-align: center;
+        margin: 0;
+    }
+
+    .results td, .results th {
+        background-color: #EEE;
+        text-align: center;
+        border: 2px solid white;
+    }
+
+    .round_selection_table .selected {
+        background-color: #DDD;
+    }
+
+    .results {
+        border-collapse: collapse;
+    }
+
+    .rightside {
+        text-align: right !important;
+    }
+
+    .leftside {
+        text-align: left !important;
+    }
+
+    .sdtd {
+        background-color: white !important;
+    }
+
+    .sd {
+        background-color: #EEE !important;
+        font-weight: bold;
+        min-width: 16px;
+    }
+
+</style>
+
+<meta name="x-kisakone-version" content="2019.01.01-1-g8e73acc">
+
+<!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<body>
+
+<table id="contentcontainer" cellpadding="0" cellspacing="0">
+    <tr id="headtr">
+    <td colspan="3">
+        <header id="header">
+            <div class="loginbox" id="login_panel">
+    <a id="login_link" href="../../../login.html">Kirjaudu sisään</a> |
+    <a id="register_link" href="../../../rekisteroidy.html">Rekisteröidy</a>
+
+</div>
+<form class="loginbox hidden" action="../../../index.html" id="login_form" method="post">
+    <input type="hidden" name="comingFrom" value="/kilpailu/424/katso/leaderboard" />
+    <a id="loginform_x" href="leaderboard.html" class="dialogx" ><img src="../../../images/loginx2.png" alt="Sulje" /></a>
+    <input type="hidden" name="loginAt" value="1642503534" />
+    <input type="hidden" name="formid" value="login" />
+
+    <div>
+        <label for="loginUsernameInput">Käyttäjätunnus</label>
+        <input type="text" name="username" id="loginUsernameInput" />
+    </div>
+    <div>
+        <label for="loginPassword">Salasana</label>
+        <input type="password" id="loginPassword" name="password" />
+    </div>
+
+    <div>
+        <input id="loginRememberMe" type="checkbox" name="rememberMe" />
+        <label for="loginRememberMe">Muista salasana</label>
+        <input id="loginSubmit" type="submit" value="Kirjaudu" />
+    </div>
+    <div>
+        <a href="../../../rekisteroidy.html">Rekisteröidy</a> |
+        <a href="../../../unohtunutsalasana.html">Unohtuiko salasana?</a>
+    </div>
+</form>
+                        <img id="sitelogo" src="../../../images/sitelogo.png" alt="Kisakone" />
+
+            <h1 id="sitename">Kisakone</h1>
+            <div id="pagename">Leaderboard - Vampula Open</div>
+        </header>
+    <ul id="mainmenu">
+
+        <li  class="selected">
+        <a
+           href="../../../kilpailut.html">Kilpailut</a>
+    </li>
+        <li >
+        <a
+           href="../../../sarjat.html">Sarjat</a>
+    </li>
+        </ul>    </td>
+    </tr>
+
+    <tr id="maintr2">
+        <td id="submenucontainer">        <br />
+            <p style="margin-left: 16px; margin-bottom: 16px;"><a style="font-size: 11pt; color: #2f5ab6 !important; font-weight: bold; text-decoration: none;" href="../../../content/Resurssipankki.html">Resurssipankki</a></p>
+
+                 <ul class="submenu submenu0">
+                        <li>
+                
+                <span>Vampula Open</span>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../424.html">
+                
+                <span>Yleistiedot</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="tulokset.html">
+                
+                <span>Tulokset</span>
+                                    </a>
+                                                                             <ul class="submenu submenu2">
+                        <li>
+                                    <a href="livetulokset.html">
+                
+                <span>Live-seuranta</span>
+                                    </a>
+                                            </li>
+                        <li>
+                
+                <span>Leaderboard</span>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="kilpailijat.html">
+                
+                <span>Kilpailijat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="kiintiot.html">
+                
+                <span>Kiintiöt</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="rata.html">
+                
+                <span>Rata</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="aikataulu.html">
+                
+                <span>Aikataulu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="ilmoittautuminen.html">
+                
+                <span>Ilmoittautuminen</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="4941.html">
+                
+                <span>Palkinnot</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailusyote/424.rss">
+                
+                <span>Tilaa RSS</span>
+                                    </a>
+                                            </li>
+                    
+                    
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/index.html">
+                
+                <span>Kilpailut</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/ajankohtaiset.html">
+                
+                <span>Ajankohtaiset</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tulevat.html">
+                
+                <span>Tulevat</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/paattyneet.html">
+                
+                <span>Päättyneet</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kaikki</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailuarkisto.html">
+                
+                <span>Arkisto</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                        <li>
+                                    <a href="../../../kilpailut/kuluvaVuosi.html">
+                
+                <span>Kilpailut tasoittain</span>
+                                    </a>
+                                                                             <ul class="submenu submenu1">
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/5.html">
+                
+                <span>Erilliskilpailu</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/7.html">
+                
+                <span>Pro-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/9.html">
+                
+                <span>SM</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/10.html">
+                
+                <span>Am-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/11.html">
+                
+                <span>PDGA-liiga</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/12.html">
+                
+                <span>Am2-tour</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/16.html">
+                
+                <span>WGE</span>
+                                    </a>
+                                            </li>
+                        <li>
+                                    <a href="../../../kilpailut/tasoittain/level/18.html">
+                
+                <span>Muu kiertue</span>
+                                    </a>
+                                            </li>
+    
+</ul>&nbsp;                                                </li>
+                    
+                    
+    
+</ul>&nbsp;        </td>
+        <td id="content">
+  <div id="event_content">
+    <h2>Leaderboard</h2>
+</div>
+
+<div id="pdga_link">
+    <a href="http://www.pdga.com/tour/event/28689">Kilpailun tulokset ja ratingit PDGA:n sivuilla</a>
+</div>
+
+<p class="preliminary" style="display: none">
+    Viimeisimmän kierroksen tulosten syöttö on yhä kesken ja tulokset ovat vasta alustavia. Kilpailijoiden järjestys ja sarjapisteet pyritään ennustamaan, eivätkä ole lopullisia.
+</p>
+
+<table class="results ">
+    <tr style="border: none">
+        
+        <td colspan="7" style="background-color: white" class="leftside">
+            <a name="cMA3"></a>
+            <h3>MA3</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r3120_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tuomas&nbsp;Ylihärsilä</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>85345</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3120_">76</td>
+                                                                            <td id="r3120_">72</td>
+            
+            <td id="r3120_tc">44</td>
+
+            <td id="r3120_pm">0</td>
+            <td id="r3120_t">148</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3066_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Heikki&nbsp;Koivisto</td>
+                        <td><abbr title="Liitokiekkoseura Mustavaris ry">Mustavaris</abbr></td>
+                        <td>82039</td>
+                        <td>881</td>
+            
+                                                                            <td id="r3066_">76</td>
+                                                                            <td id="r3066_">75</td>
+            
+            <td id="r3066_tc">44</td>
+
+            <td id="r3066_pm">3</td>
+            <td id="r3066_t">151</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2394_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Samuel&nbsp;Stenman</td>
+                        <td><abbr title="Liitokiekkoseura Mustavaris ry">Mustavaris</abbr></td>
+                        <td>74978</td>
+                        <td>873</td>
+            
+                                                                            <td id="r2394_">77</td>
+                                                                            <td id="r2394_">75</td>
+            
+            <td id="r2394_tc">44</td>
+
+            <td id="r2394_pm">4</td>
+            <td id="r2394_t">152</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r851_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Mutikainen</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>58578</td>
+                        <td>895</td>
+            
+                                                                            <td id="r851_">74</td>
+                                                                            <td id="r851_">78</td>
+            
+            <td id="r851_tc">44</td>
+
+            <td id="r851_pm">4</td>
+            <td id="r851_t">152</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1254_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jason&nbsp;Gabrielsson</td>
+                        <td><abbr title="Frisbeegolf Club Keinukallio ry">FGCK</abbr></td>
+                        <td>59236</td>
+                        <td>899</td>
+            
+                                                                            <td id="r1254_">71</td>
+                                                                            <td id="r1254_">81</td>
+            
+            <td id="r1254_tc">44</td>
+
+            <td id="r1254_pm">4</td>
+            <td id="r1254_t">152</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2766_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kalle&nbsp;Seuranen</td>
+                        <td><abbr title="Nummelan Frisbeeseura ry">NFS</abbr></td>
+                        <td>73814</td>
+                        <td>846</td>
+            
+                                                                            <td id="r2766_">80</td>
+                                                                            <td id="r2766_">74</td>
+            
+            <td id="r2766_tc">44</td>
+
+            <td id="r2766_pm">6</td>
+            <td id="r2766_t">154</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2499_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Juha-Pekka&nbsp;Aro</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>70870</td>
+                        <td>828</td>
+            
+                                                                            <td id="r2499_">77</td>
+                                                                            <td id="r2499_">77</td>
+            
+            <td id="r2499_tc">44</td>
+
+            <td id="r2499_pm">6</td>
+            <td id="r2499_t">154</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3241_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kim&nbsp;Kiminki</td>
+                        <td><abbr title="Nummelan Frisbeeseura ry">NFS</abbr></td>
+                        <td>48087</td>
+                        <td>862</td>
+            
+                                                                            <td id="r3241_">81</td>
+                                                                            <td id="r3241_">74</td>
+            
+            <td id="r3241_tc">44</td>
+
+            <td id="r3241_pm">7</td>
+            <td id="r3241_t">155</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2972_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jussi-Pekka&nbsp;Laakso</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>79707</td>
+                        <td>812</td>
+            
+                                                                            <td id="r2972_">76</td>
+                                                                            <td id="r2972_">79</td>
+            
+            <td id="r2972_tc">44</td>
+
+            <td id="r2972_pm">7</td>
+            <td id="r2972_t">155</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2509_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Nestori&nbsp;Mäkinen</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>71227</td>
+                        <td>856</td>
+            
+                                                                            <td id="r2509_">81</td>
+                                                                            <td id="r2509_">75</td>
+            
+            <td id="r2509_tc">44</td>
+
+            <td id="r2509_pm">8</td>
+            <td id="r2509_t">156</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2970_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jesse&nbsp;Sandell</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>74857</td>
+                        <td>877</td>
+            
+                                                                            <td id="r2970_">79</td>
+                                                                            <td id="r2970_">77</td>
+            
+            <td id="r2970_tc">44</td>
+
+            <td id="r2970_pm">8</td>
+            <td id="r2970_t">156</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2195_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Juho&nbsp;Seuri</td>
+                        <td><abbr title="Disc Golf Club Säkylä ry">DGCS</abbr></td>
+                        <td>80499</td>
+                        <td>0</td>
+            
+                                                                            <td id="r2195_">83</td>
+                                                                            <td id="r2195_">75</td>
+            
+            <td id="r2195_tc">44</td>
+
+            <td id="r2195_pm">10</td>
+            <td id="r2195_t">158</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r987_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Aleksi&nbsp;Mäkelä</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>52483</td>
+                        <td>888</td>
+            
+                                                                            <td id="r987_">79</td>
+                                                                            <td id="r987_">79</td>
+            
+            <td id="r987_tc">44</td>
+
+            <td id="r987_pm">10</td>
+            <td id="r987_t">158</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2326_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tapio&nbsp;Viikari</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>70867</td>
+                        <td>879</td>
+            
+                                                                            <td id="r2326_">75</td>
+                                                                            <td id="r2326_">83</td>
+            
+            <td id="r2326_tc">44</td>
+
+            <td id="r2326_pm">10</td>
+            <td id="r2326_t">158</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r919_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jaakko&nbsp;Rantala</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>59225</td>
+                        <td>864</td>
+            
+                                                                            <td id="r919_">81</td>
+                                                                            <td id="r919_">78</td>
+            
+            <td id="r919_tc">44</td>
+
+            <td id="r919_pm">11</td>
+            <td id="r919_t">159</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1005_pos">16</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Atte&nbsp;Mässeli</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>63338</td>
+                        <td>891</td>
+            
+                                                                            <td id="r1005_">80</td>
+                                                                            <td id="r1005_">80</td>
+            
+            <td id="r1005_tc">44</td>
+
+            <td id="r1005_pm">12</td>
+            <td id="r1005_t">160</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r4284_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pasi&nbsp;Ojanen</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>81296</td>
+                        <td>896</td>
+            
+                                                                            <td id="r4284_">86</td>
+                                                                            <td id="r4284_">76</td>
+            
+            <td id="r4284_tc">44</td>
+
+            <td id="r4284_pm">14</td>
+            <td id="r4284_t">162</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r4097_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Heleä</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>84828</td>
+                        <td>0</td>
+            
+                                                                            <td id="r4097_">83</td>
+                                                                            <td id="r4097_">80</td>
+            
+            <td id="r4097_tc">44</td>
+
+            <td id="r4097_pm">15</td>
+            <td id="r4097_t">163</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1755_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Veli&nbsp;Ahola</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>64471</td>
+                        <td>844</td>
+            
+                                                                            <td id="r1755_">88</td>
+                                                                            <td id="r1755_">76</td>
+            
+            <td id="r1755_tc">44</td>
+
+            <td id="r1755_pm">16</td>
+            <td id="r1755_t">164</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2273_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Tuumanen</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>75253</td>
+                        <td>870</td>
+            
+                                                                            <td id="r2273_">83</td>
+                                                                            <td id="r2273_">81</td>
+            
+            <td id="r2273_tc">44</td>
+
+            <td id="r2273_pm">16</td>
+            <td id="r2273_t">164</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3328_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jani&nbsp;Paussu</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>70939</td>
+                        <td>857</td>
+            
+                                                                            <td id="r3328_">80</td>
+                                                                            <td id="r3328_">84</td>
+            
+            <td id="r3328_tc">44</td>
+
+            <td id="r3328_pm">16</td>
+            <td id="r3328_t">164</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2682_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Vesa&nbsp;Hyytiäinen</td>
+                        <td><abbr title="Frisbeegolf Forssa ry">FBGF</abbr></td>
+                        <td>71850</td>
+                        <td>872</td>
+            
+                                                                            <td id="r2682_">78</td>
+                                                                            <td id="r2682_">86</td>
+            
+            <td id="r2682_tc">44</td>
+
+            <td id="r2682_pm">16</td>
+            <td id="r2682_t">164</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r904_pos">23</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jussi&nbsp;Vitikainen</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>53540</td>
+                        <td>879</td>
+            
+                                                                            <td id="r904_">77</td>
+                                                                            <td id="r904_">88</td>
+            
+            <td id="r904_tc">44</td>
+
+            <td id="r904_pm">17</td>
+            <td id="r904_t">165</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3807_pos">24</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Hannes&nbsp;Koivuluoma</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>82287</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3807_">81</td>
+                                                                            <td id="r3807_">88</td>
+            
+            <td id="r3807_tc">44</td>
+
+            <td id="r3807_pm">21</td>
+            <td id="r3807_t">169</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2525_pos">25</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tomi&nbsp;Vuori</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>71550</td>
+                        <td>783</td>
+            
+                                                                            <td id="r2525_">86</td>
+                                                                            <td id="r2525_">85</td>
+            
+            <td id="r2525_tc">44</td>
+
+            <td id="r2525_pm">23</td>
+            <td id="r2525_t">171</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2784_pos">25</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Petri&nbsp;Muikku</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>83966</td>
+                        <td>0</td>
+            
+                                                                            <td id="r2784_">84</td>
+                                                                            <td id="r2784_">87</td>
+            
+            <td id="r2784_tc">44</td>
+
+            <td id="r2784_pm">23</td>
+            <td id="r2784_t">171</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3817_pos">27</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Tuomaala</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>82506</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3817_">86</td>
+                                                                            <td id="r3817_">86</td>
+            
+            <td id="r3817_tc">44</td>
+
+            <td id="r3817_pm">24</td>
+            <td id="r3817_t">172</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3683_pos">28</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Lahtinen</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>81294</td>
+                        <td>794</td>
+            
+                                                                            <td id="r3683_">89</td>
+                                                                            <td id="r3683_">84</td>
+            
+            <td id="r3683_tc">44</td>
+
+            <td id="r3683_pm">25</td>
+            <td id="r3683_t">173</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r564_pos">28</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pekka&nbsp;Rautiainen</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>48910</td>
+                        <td>868</td>
+            
+                                                                            <td id="r564_">88</td>
+                                                                            <td id="r564_">85</td>
+            
+            <td id="r564_tc">44</td>
+
+            <td id="r564_pm">25</td>
+            <td id="r564_t">173</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1230_pos">28</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Kytölä</td>
+                        <td><abbr title="Liitokiekkoseura Mustavaris ry">Mustavaris</abbr></td>
+                        <td>73317</td>
+                        <td>836</td>
+            
+                                                                            <td id="r1230_">85</td>
+                                                                            <td id="r1230_">88</td>
+            
+            <td id="r1230_tc">44</td>
+
+            <td id="r1230_pm">25</td>
+            <td id="r1230_t">173</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3296_pos">31</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Salmela</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>76459</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3296_">86</td>
+                                                                            <td id="r3296_">88</td>
+            
+            <td id="r3296_tc">44</td>
+
+            <td id="r3296_pm">26</td>
+            <td id="r3296_t">174</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1731_pos">32</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Rami&nbsp;Ojanen</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>70571</td>
+                        <td>815</td>
+            
+                                                                            <td id="r1731_">90</td>
+                                                                            <td id="r1731_">87</td>
+            
+            <td id="r1731_tc">44</td>
+
+            <td id="r1731_pm">29</td>
+            <td id="r1731_t">177</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1159_pos">33</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Yli-Hongisto</td>
+                        <td><abbr title="Liitokiekkoseura Mustavaris ry">Mustavaris</abbr></td>
+                        <td>57813</td>
+                        <td>813</td>
+            
+                                                                            <td id="r1159_">85</td>
+                                                                            <td id="r1159_">98</td>
+            
+            <td id="r1159_tc">44</td>
+
+            <td id="r1159_pm">35</td>
+            <td id="r1159_t">183</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3043_pos">34</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Veli-Matti&nbsp;Tuumanen</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>77021</td>
+                        <td>764</td>
+            
+                                                                            <td id="r3043_">91</td>
+                                                                            <td id="r3043_">94</td>
+            
+            <td id="r3043_tc">44</td>
+
+            <td id="r3043_pm">37</td>
+            <td id="r3043_t">185</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3736_pos">35</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Lasse&nbsp;Jarvansalo</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>81552</td>
+                        <td>725</td>
+            
+                                                                            <td id="r3736_">91</td>
+                                                                            <td id="r3736_">95</td>
+            
+            <td id="r3736_tc">44</td>
+
+            <td id="r3736_pm">38</td>
+            <td id="r3736_t">186</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1160_pos">36</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Teemu&nbsp;Jokinen</td>
+                        <td><abbr title="Liitokiekkoseura Mustavaris ry">Mustavaris</abbr></td>
+                        <td>58191</td>
+                        <td>761</td>
+            
+                                                                            <td id="r1160_">108</td>
+                                                                            <td id="r1160_">101</td>
+            
+            <td id="r1160_tc">44</td>
+
+            <td id="r1160_pm">61</td>
+            <td id="r1160_t">209</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1196_pos">37</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jarkko&nbsp;Saastamoinen</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>58585</td>
+                        <td>881</td>
+            
+                                                                            <td id="r1196_">0</td>
+                                                                            <td id="r1196_">0</td>
+            
+            <td id="r1196_tc">0</td>
+
+            <td id="r1196_pm">DNF</td>
+            <td id="r1196_t">DNF</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="7" style="background-color: white" class="leftside">
+            <a name="cMPO"></a>
+            <h3>MPO</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r2586_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Aalto</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>71551</td>
+                        <td>928</td>
+            
+                                                                            <td id="r2586_">72</td>
+                                                                            <td id="r2586_">69</td>
+            
+            <td id="r2586_tc">44</td>
+
+            <td id="r2586_pm">-7</td>
+            <td id="r2586_t">141</td>
+                                    <td id="r2586_p" class="sdtd sd">SD</td>
+                    </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r945_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ilkka&nbsp;Niemi</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>54340</td>
+                        <td>951</td>
+            
+                                                                            <td id="r945_">72</td>
+                                                                            <td id="r945_">69</td>
+            
+            <td id="r945_tc">44</td>
+
+            <td id="r945_pm">-7</td>
+            <td id="r945_t">141</td>
+                                    <td id="r945_p" class="sdtd sd">SD</td>
+                    </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3558_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Kankare</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>80444</td>
+                        <td>912</td>
+            
+                                                                            <td id="r3558_">73</td>
+                                                                            <td id="r3558_">69</td>
+            
+            <td id="r3558_tc">44</td>
+
+            <td id="r3558_pm">-6</td>
+            <td id="r3558_t">142</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2832_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Samuli&nbsp;Ahonen</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>81374</td>
+                        <td>904</td>
+            
+                                                                            <td id="r2832_">70</td>
+                                                                            <td id="r2832_">72</td>
+            
+            <td id="r2832_tc">44</td>
+
+            <td id="r2832_pm">-6</td>
+            <td id="r2832_t">142</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2954_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jere-Pekka&nbsp;Haakana</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>81232</td>
+                        <td>949</td>
+            
+                                                                            <td id="r2954_">73</td>
+                                                                            <td id="r2954_">71</td>
+            
+            <td id="r2954_tc">44</td>
+
+            <td id="r2954_pm">-4</td>
+            <td id="r2954_t">144</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2660_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sami&nbsp;Romu</td>
+                        <td><abbr title="Frisbeegolf Forssa ry">FBGF</abbr></td>
+                        <td>70943</td>
+                        <td>936</td>
+            
+                                                                            <td id="r2660_">73</td>
+                                                                            <td id="r2660_">72</td>
+            
+            <td id="r2660_tc">44</td>
+
+            <td id="r2660_pm">-3</td>
+            <td id="r2660_t">145</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1238_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Henri&nbsp;Alen</td>
+                        <td><abbr title="Disc Golf Club Säkylä ry">DGCS</abbr></td>
+                        <td>64942</td>
+                        <td>895</td>
+            
+                                                                            <td id="r1238_">74</td>
+                                                                            <td id="r1238_">72</td>
+            
+            <td id="r1238_tc">44</td>
+
+            <td id="r1238_pm">-2</td>
+            <td id="r1238_t">146</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1189_pos">7</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Juuso&nbsp;Karhunen</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>58602</td>
+                        <td>923</td>
+            
+                                                                            <td id="r1189_">73</td>
+                                                                            <td id="r1189_">73</td>
+            
+            <td id="r1189_tc">44</td>
+
+            <td id="r1189_pm">-2</td>
+            <td id="r1189_t">146</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r450_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Lassi&nbsp;Salminen</td>
+                        <td><abbr title="Tomoottajat Disc Golf ry">TDG</abbr></td>
+                        <td>46977</td>
+                        <td>925</td>
+            
+                                                                            <td id="r450_">70</td>
+                                                                            <td id="r450_">77</td>
+            
+            <td id="r450_tc">44</td>
+
+            <td id="r450_pm">-1</td>
+            <td id="r450_t">147</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r481_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Suomijärvi</td>
+                        <td><abbr title="Tomoottajat Disc Golf ry">TDG</abbr></td>
+                        <td>64468</td>
+                        <td>942</td>
+            
+                                                                            <td id="r481_">71</td>
+                                                                            <td id="r481_">77</td>
+            
+            <td id="r481_tc">44</td>
+
+            <td id="r481_pm">0</td>
+            <td id="r481_t">148</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3814_pos">11</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Olli-Pekka&nbsp;Suurkoivu</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>82561</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3814_">73</td>
+                                                                            <td id="r3814_">76</td>
+            
+            <td id="r3814_tc">44</td>
+
+            <td id="r3814_pm">1</td>
+            <td id="r3814_t">149</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3497_pos">11</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joni&nbsp;Latokylä</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>80443</td>
+                        <td>892</td>
+            
+                                                                            <td id="r3497_">71</td>
+                                                                            <td id="r3497_">78</td>
+            
+            <td id="r3497_tc">44</td>
+
+            <td id="r3497_pm">1</td>
+            <td id="r3497_t">149</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1271_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tero&nbsp;Koivumäki</td>
+                        <td><abbr title="Tomoottajat Disc Golf ry">TDG</abbr></td>
+                        <td>64469</td>
+                        <td>910</td>
+            
+                                                                            <td id="r1271_">78</td>
+                                                                            <td id="r1271_">72</td>
+            
+            <td id="r1271_tc">44</td>
+
+            <td id="r1271_pm">2</td>
+            <td id="r1271_t">150</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r981_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jari&nbsp;Salonen</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>57281</td>
+                        <td>901</td>
+            
+                                                                            <td id="r981_">75</td>
+                                                                            <td id="r981_">75</td>
+            
+            <td id="r981_tc">44</td>
+
+            <td id="r981_pm">2</td>
+            <td id="r981_t">150</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1187_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pekka&nbsp;Korhonen</td>
+                        <td><abbr title="Siikaisten Sisu ry">SiikSi</abbr></td>
+                        <td>58596</td>
+                        <td>902</td>
+            
+                                                                            <td id="r1187_">76</td>
+                                                                            <td id="r1187_">75</td>
+            
+            <td id="r1187_tc">44</td>
+
+            <td id="r1187_pm">3</td>
+            <td id="r1187_t">151</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3119_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tuomas&nbsp;Westerling</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>81535</td>
+                        <td>906</td>
+            
+                                                                            <td id="r3119_">76</td>
+                                                                            <td id="r3119_">75</td>
+            
+            <td id="r3119_tc">44</td>
+
+            <td id="r3119_pm">3</td>
+            <td id="r3119_t">151</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1162_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Wikman</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>58576</td>
+                        <td>913</td>
+            
+                                                                            <td id="r1162_">79</td>
+                                                                            <td id="r1162_">75</td>
+            
+            <td id="r1162_tc">44</td>
+
+            <td id="r1162_pm">6</td>
+            <td id="r1162_t">154</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1657_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Teemu&nbsp;Levänaho</td>
+                        <td><abbr title="DGC Fat Disc&amp;#039;s">DGCFD</abbr></td>
+                        <td>64026</td>
+                        <td>893</td>
+            
+                                                                            <td id="r1657_">76</td>
+                                                                            <td id="r1657_">78</td>
+            
+            <td id="r1657_tc">44</td>
+
+            <td id="r1657_pm">6</td>
+            <td id="r1657_t">154</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r501_pos">19</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kalle&nbsp;Laakso</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>51589</td>
+                        <td>968</td>
+            
+                                                                            <td id="r501_">76</td>
+                                                                            <td id="r501_">79</td>
+            
+            <td id="r501_tc">44</td>
+
+            <td id="r501_pm">7</td>
+            <td id="r501_t">155</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3764_pos">20</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Lauri&nbsp;Aalto</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>82169</td>
+                        <td>900</td>
+            
+                                                                            <td id="r3764_">78</td>
+                                                                            <td id="r3764_">78</td>
+            
+            <td id="r3764_tc">44</td>
+
+            <td id="r3764_pm">8</td>
+            <td id="r3764_t">156</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2280_pos">21</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Ville&nbsp;Suomela</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>70709</td>
+                        <td>910</td>
+            
+                                                                            <td id="r2280_">77</td>
+                                                                            <td id="r2280_">80</td>
+            
+            <td id="r2280_tc">44</td>
+
+            <td id="r2280_pm">9</td>
+            <td id="r2280_t">157</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1558_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Harri&nbsp;Aaltonen</td>
+                        <td><abbr title="Woodpeckers Disc Golf">WoDG</abbr></td>
+                        <td>63301</td>
+                        <td>883</td>
+            
+                                                                            <td id="r1558_">85</td>
+                                                                            <td id="r1558_">76</td>
+            
+            <td id="r1558_tc">44</td>
+
+            <td id="r1558_pm">13</td>
+            <td id="r1558_t">161</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3631_pos">22</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Tonttila</td>
+                        <td><abbr title="DGC Fat Disc&amp;#039;s">DGCFD</abbr></td>
+                        <td>80968</td>
+                        <td>878</td>
+            
+                                                                            <td id="r3631_">81</td>
+                                                                            <td id="r3631_">80</td>
+            
+            <td id="r3631_tc">44</td>
+
+            <td id="r3631_pm">13</td>
+            <td id="r3631_t">161</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3013_pos">24</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Joonas&nbsp;Österman</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>74125</td>
+                        <td>842</td>
+            
+                                                                            <td id="r3013_">84</td>
+                                                                            <td id="r3013_">84</td>
+            
+            <td id="r3013_tc">44</td>
+
+            <td id="r3013_pm">20</td>
+            <td id="r3013_t">168</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1216_pos">25</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Eetu&nbsp;Arponen</td>
+                        <td><abbr title="Rauman Frisbee ry ">RF</abbr></td>
+                        <td>64914</td>
+                        <td>858</td>
+            
+                                                                            <td id="r1216_">85</td>
+                                                                            <td id="r1216_">84</td>
+            
+            <td id="r1216_tc">44</td>
+
+            <td id="r1216_pm">21</td>
+            <td id="r1216_t">169</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r628_pos">27</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Riku&nbsp;Anttila</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>49047</td>
+                        <td>903</td>
+            
+                                                                            <td id="r628_">78</td>
+                                                                            <td id="r628_">0</td>
+            
+            <td id="r628_tc">22</td>
+
+            <td id="r628_pm">DNF</td>
+            <td id="r628_t">DNF</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1243_pos">27</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kari&nbsp;Kuusisto</td>
+                        <td><abbr title="Frisbeegolf Club Keinukallio ry">FGCK</abbr></td>
+                        <td>58374</td>
+                        <td>884</td>
+            
+                                                                            <td id="r1243_">79</td>
+                                                                            <td id="r1243_">0</td>
+            
+            <td id="r1243_tc">22</td>
+
+            <td id="r1243_pm">DNF</td>
+            <td id="r1243_t">DNF</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="7" style="background-color: white" class="leftside">
+            <a name="cMP40"></a>
+            <h3>MP40</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r1011_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Erkka&nbsp;Leivo</td>
+                        <td><abbr title="Tomoottajat Disc Golf ry">TDG</abbr></td>
+                        <td>55187</td>
+                        <td>940</td>
+            
+                                                                            <td id="r1011_">68</td>
+                                                                            <td id="r1011_">72</td>
+            
+            <td id="r1011_tc">44</td>
+
+            <td id="r1011_pm">-8</td>
+            <td id="r1011_t">140</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1585_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Janne&nbsp;Alen</td>
+                        <td><abbr title="Disc Golf Club Säkylä ry">DGCS</abbr></td>
+                        <td>64945</td>
+                        <td>924</td>
+            
+                                                                            <td id="r1585_">71</td>
+                                                                            <td id="r1585_">70</td>
+            
+            <td id="r1585_tc">44</td>
+
+            <td id="r1585_pm">-7</td>
+            <td id="r1585_t">141</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1237_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Rauha</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>58384</td>
+                        <td>939</td>
+            
+                                                                            <td id="r1237_">69</td>
+                                                                            <td id="r1237_">74</td>
+            
+            <td id="r1237_tc">44</td>
+
+            <td id="r1237_pm">-5</td>
+            <td id="r1237_t">143</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2590_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Toni&nbsp;Tuominen</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>83545</td>
+                        <td>0</td>
+            
+                                                                            <td id="r2590_">73</td>
+                                                                            <td id="r2590_">71</td>
+            
+            <td id="r2590_tc">44</td>
+
+            <td id="r2590_pm">-4</td>
+            <td id="r2590_t">144</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r703_pos">5</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Kimmo&nbsp;Lehtonen</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>59241</td>
+                        <td>924</td>
+            
+                                                                            <td id="r703_">71</td>
+                                                                            <td id="r703_">75</td>
+            
+            <td id="r703_tc">44</td>
+
+            <td id="r703_pm">-2</td>
+            <td id="r703_t">146</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r597_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Taalikka</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>48909</td>
+                        <td>912</td>
+            
+                                                                            <td id="r597_">77</td>
+                                                                            <td id="r597_">72</td>
+            
+            <td id="r597_tc">44</td>
+
+            <td id="r597_pm">1</td>
+            <td id="r597_t">149</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r522_pos">6</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Timo&nbsp;Sillanpää</td>
+                        <td><abbr title="Frisbeegolfseura 7k ry">7k</abbr></td>
+                        <td>47518</td>
+                        <td>912</td>
+            
+                                                                            <td id="r522_">73</td>
+                                                                            <td id="r522_">76</td>
+            
+            <td id="r522_tc">44</td>
+
+            <td id="r522_pm">1</td>
+            <td id="r522_t">149</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1093_pos">8</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mikko&nbsp;Putaja</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>55284</td>
+                        <td>919</td>
+            
+                                                                            <td id="r1093_">75</td>
+                                                                            <td id="r1093_">75</td>
+            
+            <td id="r1093_tc">44</td>
+
+            <td id="r1093_pm">2</td>
+            <td id="r1093_t">150</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1204_pos">9</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Sauli&nbsp;Pesonen</td>
+                        <td><abbr title="Nokian Frisbeeseura">NoFS</abbr></td>
+                        <td>58584</td>
+                        <td>899</td>
+            
+                                                                            <td id="r1204_">77</td>
+                                                                            <td id="r1204_">78</td>
+            
+            <td id="r1204_tc">44</td>
+
+            <td id="r1204_pm">7</td>
+            <td id="r1204_t">155</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1178_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pasi&nbsp;Karjalainen</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>58589</td>
+                        <td>891</td>
+            
+                                                                            <td id="r1178_">80</td>
+                                                                            <td id="r1178_">77</td>
+            
+            <td id="r1178_tc">44</td>
+
+            <td id="r1178_pm">9</td>
+            <td id="r1178_t">157</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1167_pos">10</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Jussi&nbsp;Hämäläinen</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>58568</td>
+                        <td>882</td>
+            
+                                                                            <td id="r1167_">77</td>
+                                                                            <td id="r1167_">80</td>
+            
+            <td id="r1167_tc">44</td>
+
+            <td id="r1167_pm">9</td>
+            <td id="r1167_t">157</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r487_pos">12</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Vainio</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>48907</td>
+                        <td>886</td>
+            
+                                                                            <td id="r487_">80</td>
+                                                                            <td id="r487_">78</td>
+            
+            <td id="r487_tc">44</td>
+
+            <td id="r487_pm">10</td>
+            <td id="r487_t">158</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1233_pos">13</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Rami&nbsp;Rekonius</td>
+                        <td><abbr title="Nokian Frisbeeseura">NoFS</abbr></td>
+                        <td>58902</td>
+                        <td>895</td>
+            
+                                                                            <td id="r1233_">82</td>
+                                                                            <td id="r1233_">78</td>
+            
+            <td id="r1233_tc">44</td>
+
+            <td id="r1233_pm">12</td>
+            <td id="r1233_t">160</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r96_pos">14</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Markku&nbsp;Tohni</td>
+                        <td><abbr title="Nokian Frisbeeseura">NoFS</abbr></td>
+                        <td>8567</td>
+                        <td>882</td>
+            
+                                                                            <td id="r96_">82</td>
+                                                                            <td id="r96_">81</td>
+            
+            <td id="r96_tc">44</td>
+
+            <td id="r96_pm">15</td>
+            <td id="r96_t">163</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1208_pos">15</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Hunnakko</td>
+                        <td><abbr title="Nokian Frisbeeseura">NoFS</abbr></td>
+                        <td>58595</td>
+                        <td>861</td>
+            
+                                                                            <td id="r1208_">81</td>
+                                                                            <td id="r1208_">86</td>
+            
+            <td id="r1208_tc">44</td>
+
+            <td id="r1208_pm">19</td>
+            <td id="r1208_t">167</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1244_pos">16</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Nyström</td>
+                        <td><abbr title="Woodpeckers Disc Golf">WoDG</abbr></td>
+                        <td>58377</td>
+                        <td>816</td>
+            
+                                                                            <td id="r1244_">89</td>
+                                                                            <td id="r1244_">82</td>
+            
+            <td id="r1244_tc">44</td>
+
+            <td id="r1244_pm">23</td>
+            <td id="r1244_t">171</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3147_pos">17</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pekka&nbsp;Westerling</td>
+                        <td><abbr title="Tampereen Frisbeeseura">TFS</abbr></td>
+                        <td>81534</td>
+                        <td>792</td>
+            
+                                                                            <td id="r3147_">86</td>
+                                                                            <td id="r3147_">86</td>
+            
+            <td id="r3147_tc">44</td>
+
+            <td id="r3147_pm">24</td>
+            <td id="r3147_t">172</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3675_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Tapio&nbsp;Viljava</td>
+                        <td><abbr title="Nummelan Frisbeeseura ry">NFS</abbr></td>
+                        <td>81289</td>
+                        <td>0</td>
+            
+                                                                            <td id="r3675_">86</td>
+                                                                            <td id="r3675_">89</td>
+            
+            <td id="r3675_tc">44</td>
+
+            <td id="r3675_pm">27</td>
+            <td id="r3675_t">175</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2940_pos">18</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Mika&nbsp;Haapamäki</td>
+                        <td><abbr title="Tomoottajat Disc Golf ry">TDG</abbr></td>
+                        <td>72827</td>
+                        <td>765</td>
+            
+                                                                            <td id="r2940_">86</td>
+                                                                            <td id="r2940_">89</td>
+            
+            <td id="r2940_tc">44</td>
+
+            <td id="r2940_pm">27</td>
+            <td id="r2940_t">175</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r988_pos">20</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Pertti&nbsp;Mäkelä</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>55160</td>
+                        <td>794</td>
+            
+                                                                            <td id="r988_">90</td>
+                                                                            <td id="r988_">89</td>
+            
+            <td id="r988_tc">44</td>
+
+            <td id="r988_pm">31</td>
+            <td id="r988_t">179</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r2799_pos">21</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marko&nbsp;Arola</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>73057</td>
+                        <td>787</td>
+            
+                                                                            <td id="r2799_">93</td>
+                                                                            <td id="r2799_">88</td>
+            
+            <td id="r2799_tc">44</td>
+
+            <td id="r2799_pm">33</td>
+            <td id="r2799_t">181</td>
+                                </tr>
+        <tr style="border: none">
+        
+        <td colspan="7" style="background-color: white" class="leftside">
+            <a name="cFPO"></a>
+            <h3>FPO</h3>
+        </td>
+    </tr>
+    
+            
+
+                    <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+
+            <tr class="thr">
+                <th>Sijoitus</th>
+                <th>Nimi</th>
+                                <th>Seura</th>
+                                <th>PDGA</th>
+                                <th>Rating</th>
+                                                    
+                    <th>R1</th>
+                                    
+                    <th>R2</th>
+                                <th>Väyliä</th>
+                <th>+/-</th>
+                <th>Yhteensä</th>
+                            </tr>
+            <tr>
+                <td style="height: 8px; background-color: white;"></td>
+            </tr>
+        
+                        <tr class="resultrow">
+            <td id="r820_pos">1</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Soile&nbsp;Mutikainen</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>52886</td>
+                        <td>859</td>
+            
+                                                                            <td id="r820_">85</td>
+                                                                            <td id="r820_">82</td>
+            
+            <td id="r820_tc">44</td>
+
+            <td id="r820_pm">19</td>
+            <td id="r820_t">167</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r1679_pos">2</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Marika&nbsp;Salmi</td>
+                        <td><abbr title="Disc Golf Hyvinkää ry">DGH</abbr></td>
+                        <td>63322</td>
+                        <td>792</td>
+            
+                                                                            <td id="r1679_">92</td>
+                                                                            <td id="r1679_">92</td>
+            
+            <td id="r1679_tc">44</td>
+
+            <td id="r1679_pm">36</td>
+            <td id="r1679_t">184</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r3715_pos">3</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Minttu&nbsp;Heinola</td>
+                        <td><abbr title="Brutal Force ry">BF</abbr></td>
+                        <td>81551</td>
+                        <td>648</td>
+            
+                                                                            <td id="r3715_">105</td>
+                                                                            <td id="r3715_">101</td>
+            
+            <td id="r3715_tc">44</td>
+
+            <td id="r3715_pm">58</td>
+            <td id="r3715_t">206</td>
+                                </tr>
+            
+
+        
+                        <tr class="resultrow">
+            <td id="r4293_pos">4</td>
+            <td class="leftside"><span class="flag-icon flag-icon-fi"></span>Anni&nbsp;Mäkelä</td>
+                        <td><abbr title="Vampulan urheilijat ry">VU</abbr></td>
+                        <td>83540</td>
+                        <td>0</td>
+            
+                                                                            <td id="r4293_">117</td>
+                                                                            <td id="r4293_">118</td>
+            
+            <td id="r4293_tc">44</td>
+
+            <td id="r4293_pm">87</td>
+            <td id="r4293_t">235</td>
+                                </tr>
+    </table>
+
+
+</td>
+<td id="helpcontainer" style="display: none"></td>
+</tr>
+</table>
+</body>
+</html>

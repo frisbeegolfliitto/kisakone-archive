@@ -1,0 +1,979 @@
+
+
+// It sometimes makes things easier being able to use CSS attributes for changing
+// things depending on whether or not javascript support is enabled. At this
+// point we allow just that by including a CSS file using JS code.
+var jsOnlyCss = document.createElement("link");
+
+jsOnlyCss.setAttribute("type", "text/css");
+jsOnlyCss.setAttribute("rel", "stylesheet");
+jsOnlyCss.setAttribute("href", "/css/javascript.css");
+
+// This URL is used a the basis for internal links.
+var baseUrl = "/";
+
+
+
+document.getElementsByTagName("head")[0].appendChild(jsOnlyCss);
+
+// Global initialization
+$(document).ready(function(){
+
+    // Initializing the inline login form. Although it might seem to be out of
+    // the scope of this funtion, in reality the form is present on every page
+    // accessed until the user logs in, so place works well enough.
+
+    $("#login_link").click(function(event){
+	$("#login_form").show("fast");
+         event.preventDefault();
+	 document.getElementById('loginUsernameInput').focus();
+       });
+    $("#loginform_x").click(function(event){
+	$("#login_form").hide("fast");
+         event.preventDefault();
+       });
+
+    // Hilighting table rows on mouseover
+    $(".hilightrows tr").hover(
+      function () {
+
+        $(this).addClass('hilightedrow');
+      },
+      function () {
+        $(this).removeClass('hilightedrow');
+      }
+    );
+
+    $(".oddrows > tr:even").addClass('evenrow');
+    $(".oddrows > tr:odd").addClass('oddrow');
+
+    $(".oddrows > li:even").addClass('evenrow');
+    $(".oddrows > li:odd").addClass('oddrow');
+
+    $(".row_col_tracking td").mouseenter(row_col_enter);
+    $(".row_col_tracking td").mouseleave(row_col_leave);
+
+    $("#helplink").click(toggleHelp);
+
+    defaultHelpFile = $("#helpfile").text();
+
+    ConnectHelpLinks();
+
+    var inputs = $("#content input");
+    try {
+	for (var ind = 0; ind < inputs.length; ++ind) {
+	    var input = inputs[ind];
+	    if (input.type == "text") {
+		input.focus();
+		break;
+	    }
+	}
+    } catch(e) {
+	// could not focus, doesn't really matter
+    }
+
+});
+
+function ConnectHelpLinks() {
+
+    $(".helplink").click(ShowHelp);
+}
+
+function row_col_enter() {
+    var col = getColumnOf(this);
+    var row = getRowOf(this);
+
+    $(".row_col_tracking tr:eq(" +  row +")").addClass("doubleHilight");
+    $(".row_col_tracking tr").each(function(){
+	$(this).find("td:eq(" +  col +")").addClass("doubleHilight");
+    });
+}
+
+function row_col_leave() {
+    var col = getColumnOf(this);
+    var row = getRowOf(this);
+
+    $(".row_col_tracking tr:eq(" +  row +")").removeClass("doubleHilight");
+    $(".row_col_tracking tr").each(function(){
+	$(this).find("td:eq(" +  col +")").removeClass("doubleHilight");
+    });
+}
+
+function getColumnOf(td) {
+    var tr = td.parentNode;
+    var typeind = 0;
+    for (var ind = 0; ind < tr.childNodes.length; ++ind) {
+	if (tr.childNodes[ind].tagName && tr.childNodes[ind].tagName.match(/^td$/i)) typeind++;
+	if (tr.childNodes[ind] == td) return typeind - 1;
+    }
+    return -1;
+
+}
+
+function getRowOf(td) {
+    var tr = td.parentNode;
+    var typeind = 0;
+    var container = tr.parentNode;
+    for (var ind = 0; ind < container.childNodes.length; ++ind) {
+	if (container.childNodes[ind].tagName && container.childNodes[ind].tagName.match(/^tr$/i)) typeind++;
+	if (container.childNodes[ind] == tr) return typeind - 1;
+    }
+    return -1;
+
+}
+
+// This function is used merely for debugging. Typical usage is
+// alert(dumpObj(someObject))
+function dumpObj(obj, name, indent, depth) {
+	var MAX_DUMP_DEPTH = 10;
+  if (depth > MAX_DUMP_DEPTH) {
+         return indent + name + ": <Maximum Depth Reached>\n";
+  }
+
+  if (typeof obj == "object") {
+         var child = null;
+         var output = indent + name + "\n";
+         indent += "\t";
+
+         for (var item in obj) {
+               try {
+                      child = obj[item];
+               }
+               catch (e) {
+                      child = "<Unable to Evaluate>";
+               }
+
+               if (typeof child == "object") {
+                      output += dumpObj(child, item, indent, depth + 1);
+               }
+               else {
+                      output += indent + item + ": " + child + "\n";
+               }
+         }
+         return output;
+  }
+  else {
+         return obj;
+  }
+}
+
+
+// This function returns the table cell specified by a row object and the
+// column index.
+// @param row 	TR-object 	row from which the cell is to be retreived
+// @param colIn integer		0-based index of the column
+// @return TD-object		The function returns the matching TD object.
+function getTableCell(row, colInd) {
+    return $(row).children("td").get(colInd);
+}
+
+// This function returns the text of the selected option in a <SELECT> element.
+// @param select SELECT-object	The element to test
+// @return string		The text of the selected option
+function GetSelectText(select) {
+    var value = select.value;
+    return GetSelectOptionText(select, value);
+}
+
+// This function returns the text of the specified option in a <SELECT> element.
+// @param select SELECT-object	The element to test
+// @param string Value of the option
+// @return string		The text of the selected option
+function GetSelectOptionText(select, value) {
+    var e = $(select).find("option[value='" + value + "']");
+    return e.text();
+}
+
+
+// This function returns GET parameter by the given name.
+// @param name	Name of the parameter
+// @return value of the parameter, or an empty string if there is none
+function gup( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null ) {
+    return "";
+  }
+  else {
+    return results[1];
+  }
+}
+
+var currentHelpFile = null;
+function toggleHelp() {
+    $("#helpcontainer").toggle();
+    $("#adbannercontainer").toggle();
+
+    if (currentHelpFile) {
+	currentHelpFile = null;
+    } else {
+	ShowHelp(defaultHelpFile);
+    }
+
+    return false;
+}
+
+function ShowHelp() {
+     var c;
+
+     if (this.firstChild) c = this.firstChild;
+     else c = $("#helplink").get(0).firstChild;
+
+
+    var helpfile = c.textContent || c.innerText;
+
+
+    jQuery.get("/help/" , {showhelp: helpfile, inline: 1},
+		   DisplayHelp, 'xml'
+		   );
+
+
+    return false;
+}
+
+
+
+
+function DisplayHelp(data) {
+
+    $("#helpcontainer").empty();
+    $("#helpcontainer").get(0).appendChild(elementsFromXml(data.lastChild));
+    ConnectHelpLinks();
+}
+
+function elementsFromXml(xmlnode) {
+    if (xmlnode.nodeType == 3) {
+	return document.createTextNode(xmlnode.textContent);
+    }
+
+    var mynode = document.createElement(xmlnode.tagName);
+
+    if (xmlnode.attributes) {
+	for (var i = 0; i < xmlnode.attributes.length; ++i) {
+	    var a = xmlnode.attributes[i];
+	    if (a.name == 'style' && a.value =='display: none') {
+		mynode.style.display = 'none';
+		continue;
+	    } else if (a.name == 'class') {
+		mynode.className = a.value;
+		continue;
+	    }
+	    try {
+		mynode[a.name] = a.value;
+	    } catch (e) {
+		//alert(a.name);
+	    }
+	}
+    }
+
+    var child = xmlnode.firstChild;
+    while (child != undefined) {
+
+	var subnode = elementsFromXml(child);
+	child = child.nextSibling;
+
+	if (!subnode) continue;
+	mynode.appendChild(subnode);
+
+
+    }
+
+    return mynode;
+}
+
+
+  $(function(){
+
+    // add multiple select / deselect functionality
+    $("#selectall").click(function () {
+          $('.case').attr('checked', this.checked);
+    });
+
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $(".case").click(function(){
+
+        if($(".case").length == $(".case:checked").length) {
+            $("#selectall").attr("checked", "checked");
+        } else {
+            $("#selectall").removeAttr("checked");
+        }
+
+    });
+});
+
+
+
+// Including some other files implementing parts of the functionality
+
+
+ 
+
+
+
+// This function is called to initialize a sortable table. The table itself does
+// not need to be defined; it is the one with elements or SortHeading class.
+function SortableTable() {
+    var headings = $(".SortHeading");
+    var table = $(headings.closest("table").get(0));
+
+    headings.click(function(event){ SortTable(table, sortFields[$(this).text()]);
+		   event.preventDefault();
+		   });
+}
+
+
+
+// Index of the last sortable heading that was added. Not necessarily column
+// (when not all of them are searchable), but often the two match.
+var lastHandledHeading = -1;
+
+// List of sortable fields. The text of the heading is the key, values are objects
+// with the following fields:
+// - column:    column this is applied for
+// - by:        callback function for sorting
+var sortFields = new Array();
+
+// List of current sorting. The first item is used primarily, 2nd used as tie
+// breaker for that, 3rd for that and so on.
+// Each item is an object with the following fields:
+// - column     column this is applied for
+// - by         callback function for sorting
+// - ascending  if true, sort is ascending, otherwise descending
+var sortedBy = new Array();
+
+// Initializes a sortable column to a table
+// @param column    0-based index of the column
+// @param by        Callback function used for comparison in this column
+function SortField(column, by) {
+    var headings = $(".SortHeading");
+    var heading = headings.get(++lastHandledHeading);
+
+    var entry = new Object();
+    entry.column = column;
+    entry.by = by;
+    sortFields[$(heading).text()] = entry;
+
+}
+
+// Sorts the table immediately based primarily on provided criteria
+// @param table table being sorted
+// @param data sortField entry for the sorting
+function SortTable(table, data) {
+
+	var entry = new Object();
+	entry.column = data.column;
+	entry.by = data.by;
+
+        // Initializing? if so, only store the data and don't sort
+	if (sortedBy.length == 0) {
+		entry.ascending = true;
+		sortedBy.push(entry);
+		return;
+	}
+
+        // The order is reverse if the list is already being sorted by the same column
+	entry.ascending = sortedBy[0].by != entry.by || sortedBy[0].column != entry.column;
+
+        // Ascending, simply add the sort entry
+	if (entry.ascending) {
+            sortedBy.unshift(entry);
+            if (sortedBy.length > 4) sortedBy.pop();
+	} else {
+            // (probably) descending, alter the first entry
+            if (!sortedBy[0].ascending) entry.ascending = true;
+            sortedBy[0] = entry;
+        }
+
+        // And sort the table
+	SortNow();
+
+	SortDoneCallback();
+
+
+}
+
+function SortDoneCallback() {}
+
+// Sorts the table based on pre-entered criteria
+function SortNow() {
+	var headings = $(".SortHeading");
+	var table = headings.closest("table");
+
+        // Find all rows with no heading cells
+	var rows = table.find("tr").filter(function() { return $(this).find("th").length == 0 });
+	var parent = rows.parent();
+
+	// Remove the rwos from the table for now
+	rows.remove();
+
+        // Sort them
+	var rarray = rows.get();
+	quick_sort(rarray, SortCompare);
+
+
+        // And add them back to the table, in right order
+	for (var i = 0; i < rarray.length; ++i) {
+            table.get(0).appendChild(rarray[i]);
+	}
+
+}
+
+// This function performs comparison of two rows, based on pre-defined criteria.
+// a: first row to compare
+// b: second row to compare
+// If a should be before, negative integer is returned, in opposite case positive integer,
+// in case of tie, 0.
+function SortCompare(a, b) {
+	//for (var i in sortedBy)  {
+    for (var i = 0; i < sortedBy.length; ++i) {
+		var e = sortedBy[i];
+
+                // Get the cells for this sort criteria
+		var ca = getTableCell(a, e.column);
+		var cb = getTableCell(b, e.column);
+
+                // Get the result for this particular test
+		var r = e.by(ca, cb);
+
+                // Does it make a difference?
+		if (r != 0) {
+                    // Reverse the outcome if we're using descending sorting
+                    if (!e.ascending) r *= -1;
+                    return r;
+		}
+	}
+	return 0;
+}
+
+
+// Callback for sorting rows in an alphabetical fashion
+function alphabeticalSort(a, b) {
+    var at = $(a).text();
+    var bt = $(b).text();
+
+    if (at < bt) return -1;
+    if (at > bt) return 1;
+    return 0;
+}
+
+// Callback for sorting rows as integers
+function integerSort(a, b) {
+    var ai = parseInt($(a).text());
+    var bi = parseInt($(b).text());
+
+    ai = (isNaN(ai) ? 0 : ai);
+    bi = (isNaN(bi) ? 0 : bi);
+
+    if (ai < bi) return -1;
+    if (ai > bi) return 1;
+    return 0;
+}
+
+function checkboxcheckedSort(a, b) {
+	var cb1 = $(a).find("input[type='checkbox']").get(0);
+	var cb2 = $(b).find("input[type='checkbox']").get(0);
+
+	//alert($(a).find("input[type='checkbox']").length);
+
+	if (!cb1 && !cb2) return 0;
+	if (!cb1) return 1;
+	if (!cb2) return -1;
+
+	if (cb1.checked == cb2.checked) return 0;
+	if (cb1.checked) return -1;
+	else return 1;
+}
+
+
+function dateSort(a,b) {
+    var bi = parseInt( $(a).find("input").get(0).value);
+    var ai = parseInt($(b).find("input").get(0).value);
+
+    if (ai < bi) return -1;
+    if (ai > bi) return 1;
+    return 0;
+}
+var test = 5;
+
+function selectTextSort(a,b) {
+    var text1 = GetSelectText($(a).find("select").get(0));
+    var text2 = GetSelectText($(b).find("select").get(0));
+
+   if (text1 < text2) return -1;
+   if (text2 < text1) return 1;
+   return 0;
+}
+ 
+
+/** This function initializes the table search functionality
+ * @param searchField   The INPUT element, which is used for entering the search
+ *                      keywords.
+ * @param table         The TABLE object which is to be made
+ * @param emptyListMessage  The message that is to be shown, if there are no search results
+ */
+function TableSearch(searchField, table, emptyListMessage) {
+     // If the search has been done manually (as opposed to being dynamic), the dynamic
+     // search can not show items that have already been filtered out. In that case the
+     // dynamic search is disables.
+
+     var initialSearch = gup(searchField.name);
+     if (initialSearch != "") {
+
+        // No dynamic search; let the user know why.
+	var message = "Pikahaku ei ole käytössä.";
+	var form = $(searchField.form);
+	var statusDiv = form.find(".SearchStatus");
+	if (statusDiv.length == 0) {
+            statusDiv = form.next(".SearchStatus");
+	}
+
+	statusDiv.text(message);
+     } else {
+        // The search is to be used.
+
+        // Apply event handlers to refresh the list whenever the contents of the
+        // search field change.
+	$(searchField).keyup(function(){DoTableSearch(searchField, table, emptyListMessage)});
+	$(searchField).change(function(){DoTableSearch(searchField, table, emptyListMessage)});
+    }
+}
+
+ // If set to true, at least one row is shown, otherwise none.
+ var anyRowsShown = false;
+
+/**
+ * Performs the actual dynamic search of the table.
+ * @param field The input element used for searching
+ * @param table The table being searched
+ * @param message   Message to show if there are no search results
+ */
+ function DoTableSearch(field, table, message) {
+     // Separate all the words within the search query
+     var searchWords = field.value.split(" ");
+
+     // Assume none are shown; fix later if necessary
+     anyRowsShown = false;
+
+     $(table).find("tr").each(function(row){
+        // Ignore heading row(s)
+	 if ($(this).find("th").length != 0) return;
+
+         // Either show or hide the row depending on if it's a match or not
+	 if (searchMatch(this, searchWords))
+	 {
+	     $(this).show(); }
+	 else $(this).hide();
+	 });
+
+     // If any where shown, clear the message
+     if (anyRowsShown) {
+	 message = "";
+     }
+
+     // Show the message, if any
+     $(table).next(".SearchStatus").text(message);
+ }
+
+ // See if the given row matches the provided search query
+ // @param row   TR object of the row
+ // @param words  Array of search queries
+ function searchMatch(row, words) {
+     var text = $(row).text();
+
+
+     // Make sure all words in the search query are found
+
+     for (var ind = 0; ind < words.length; ++ind) {
+		  var word = words[ind];
+
+		  if (!text.match(new RegExp(word, "i"))) return false;
+     }
+
+     // All were found
+     anyRowsShown = true;
+     return true;
+ }
+
+
+ 
+var fieldTests = new Array();
+var fullTest = false;
+var cancellingForm = false;
+
+$("document").ready(function() {
+    $("input").focus(DelayedValidationTest);
+});
+
+var DelayedTest;
+
+function DelayedValidationTest()
+{
+    var entry = DelayedTest;
+    if (!entry)
+        return;
+
+    DelayedTest = null;
+    object = entry.delayedObject;
+    test = entry[0];
+    arguments = entry[2];
+    TestField(test, object, arguments);
+}
+
+
+function InitializeFormValidation(formName)
+{
+    if (fieldTests[formName] != null)
+        return;
+    fieldTests[formName] = new Array();
+    $("#" + formName).submit(function() {
+	   return ValidateFullForm(formName);
+    });
+}
+
+
+function CancelSubmit()
+{
+    cancellingForm = true;
+}
+
+
+function FindField(form, field)
+{
+    var element = $("#" + form + " :input[name='" + field + "']");
+    return element;
+}
+
+
+function CheckedFormField(form, field, test, arguments, options )
+{
+    InitializeFormValidation(form);
+    var fieldobject = FindField(form, field);
+    test(fieldobject, arguments, true);
+
+    var entry = new Array( test, fieldobject, arguments);
+    entry.options = options;
+    fieldTests[form][field] = entry;
+}
+
+
+function ValidateFullForm(formName)
+{
+    if (cancellingForm) {
+    	cancellingForm = false;
+    	return true;
+    }
+
+    var tests = fieldTests[formName];
+    var allOk = true;
+    fullTest = true;
+
+    for (var index in tests) {
+    	var test  = tests[index];
+
+    	if (test[1] == null)
+            continue;
+    	if (!TestField(test[0], test[1], test[2]))
+            allOk = false;
+    }
+    fullTest = false;
+
+    if (!allOk) {
+	   
+	   alert("Lomaketta ei voida lähettää sen virheellisen täytön johdosta. Virheelliset kohdat on korostettu.");
+	   
+	   return false;
+	}
+
+    return allOk;
+}
+
+
+function NonEmptyField(field, arguments, initialize)
+{
+    if (initialize) {
+	    field.blur(TestField);
+    }
+    else {
+	    if (getvalue(field) != "")
+            return true;
+
+    	
+    	return "Pakollinen kenttä";
+    	
+    }
+}
+
+
+function EmailField(field, arguments, initialize)
+{
+    if (initialize) {
+	   field.blur(TestField);
+    }
+    else {
+    	var value = getvalue(field);
+
+    	if (value.indexOf('@') != -1 && value.indexOf('.') != -1)
+            return true;
+
+    	
+    	return "Virheellinen sähköpostiosoite";
+    	
+    }
+}
+
+
+function RepeatedPasswordField(field, arguments, initialize)
+{
+    if (initialize) {
+    	field.blur(TestField);
+    }
+    else {
+    	var testField = $("#" + arguments);
+    	if (getvalue(field) == getvalue(testField))
+            return true;
+
+    	
+    	return "Salasanat eivät täsmää";
+    	
+    }
+}
+
+
+function PositiveIntegerField(field, arguments, initialize)
+{
+    if (initialize) {
+	   field.blur(TestField);
+    }
+    else {
+    	var value = getvalue(field);
+    	if (arguments == true && value == "")
+            return true;
+    	if (!isNaN(parseInt(value)))
+            return true;
+
+    	
+    	return "Oltava numero";
+    	
+    }
+}
+
+
+function OneOrMoreIntegerField(field, arguments, initialize)
+{
+    if (initialize) {
+        field.blur(TestField);
+    }
+    else {
+        var value = getvalue(field);
+        if (arguments == true && value == "")
+            return true;
+        if (!isNaN(parseInt(value)) && value >= 1)
+            return true;
+
+        
+        return "Oltava numero";
+        
+    }
+}
+
+
+function RadioFieldSet(field, arguments, initialize)
+{
+    if (!initialize) {
+    	var fields;
+    	if (field.is(":checked"))
+            return true;
+
+    	
+    	return "Pakollinen kenttä";
+    	
+    }
+}
+
+
+function AjaxField(field, arguments, initialize)
+{
+    if (initialize) {
+	   field.blur(TestField);
+    }
+    else {
+    	
+    	jQuery.get("/ajaxCheck/"  + arguments, {username: getvalue(field)},
+    		    function(data) {
+    			 if (data == "OK") {
+    			    HideError(field);
+    			 } else {
+    			    ShowError(field, data);
+    			 }
+    		},
+    		'text');
+    	return true;
+    }
+}
+
+
+function OrangeField(field, arguments, initialize)
+{
+    field.css("background-color", "orange");
+}
+
+
+function TestField(test, object, arguments)
+{
+    if (object == null) {
+	   var entry = fieldTests[this.form.id][this.name];
+	   object = $(this);
+	   test = entry[0];
+	   arguments = entry[2];
+
+    	if (entry.options) {
+    	    if (entry.options.delayed) {
+        		entry.delayedObject = $(this);
+        		DelayedTest = entry;
+        		return true;
+    	    }
+    	}
+    }
+
+    var result = test(object, arguments, false);
+    if (result == true) {
+	   HideError(object);
+    }
+    else if (result == false) {
+	   DefaultError(object);
+    }
+    else {
+	   ShowError(object, result);
+    }
+
+    return result == true;
+}
+
+
+function ShowError(context, message)
+{
+    $(context).css("background-color", "#FDD")
+    var ef = $(context).siblings(".fielderror");
+    ef.show();
+    ef.text(message);
+}
+
+
+function HideError(context)
+{
+    $(context).css("background-color", "")
+    var ef = $(context).siblings(".fielderror");
+    ef.hide();
+}
+
+
+function getvalue(field)
+{
+    return field.get()[0].value;
+}
+
+
+function DefaultError(context)
+{
+    
+        ShowError(context, "Virheellinen arvo");
+    
+}
+
+
+
+/*
+Modifications Copyright 2009-2010 Kisakone projektiryhmä
+Original copyright holders unknown
+Obtained from http://en.literateprograms.org/Quicksort_(JavaScript)
+
+Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+// Quicksort partition function. Internal to this module, understanding
+// should be trivial however if the quicksort algorithm itself is understood.
+function partition(array, begin, end, pivot, comparer)
+{
+	var piv=array[pivot];
+	array.swap(pivot, end-1);
+	var store=begin;
+	var ix;
+	for(ix=begin; ix<end-1; ++ix) {
+		if(comparer(array[ix], piv) <= 0) {
+			array.swap(store, ix);
+			++store;
+		}
+	}
+	array.swap(end-1, store);
+
+	return store;
+}
+
+// This function extends the javascript array object by including swap operation.
+// The function swaps the places of 2 items in the array.
+// Paramters:
+// a: index of one of the items to swap
+// b: index of the other item
+Array.prototype.swap=function(a, b)
+{
+	var tmp=this[a];
+	this[a]=this[b];
+	this[b]=tmp;
+}
+
+// This function implements the basic quicksort algorithm. Users will want to
+// use the quick_sort function instead, as this is internal to this module,
+function qsort(array, begin, end, comparer)
+{
+	if(end-1>begin) {
+		var pivot=begin+Math.floor(Math.random()*(end-begin));
+
+		pivot=partition(array, begin, end, pivot, comparer);
+
+		qsort(array, begin, pivot, comparer);
+		qsort(array, pivot+1, end, comparer);
+	}
+}
+
+// Sorts an array using quicksort algorithm, utilizing a callback for comparing
+// items.
+//
+// Pivot is randomized, so there is no obvious case where the function
+// performs badly.
+//
+// Prrameters:
+// array: the array to sort
+// callback: function used for comparing items. The function is provided two
+//   parameters, A and B. If A should be before B, a negative integer must be returned.
+//   If the opposite is true, a positive integer must be returned. If there is no
+//   clear order between the two, 0 must be returned.
+
+function quick_sort(array, comparer)
+{
+	qsort(array, 0, array.length, comparer);
+}
+
+
