@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<script type="758c4e33dbb9505394c584e9-text/javascript">var dataLayer = dataLayer || []</script>
+<script type="758c4e33dbb9505394c584e9-text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-N9VL74V');</script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8"><script type="758c4e33dbb9505394c584e9-text/javascript">(window.NREUM||(NREUM={})).init={ajax:{deny_list:["bam.eu01.nr-data.net"]}};(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-0ecf66eb60be7e18616",applicationID:"47454230"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1211.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta name="csrf-token" content="BwJLJC6AoXwApN0eXdqPFfEIlXXgjPKHd03yAs3u">
+<meta name="Author" content="Powergrip">
+<link rel="dns-prefetch" href="https://img.powergrip.fi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+<meta name="description" content="Powergrip on Euroopan suurin frisbeegolfvälineiden erikoisliike. Myymälämme palvelevat Oulussa, Tampereella, Turussa ja Helsingissä. Lisäksi verkkokauppamme on avoinna 24/7 osoitteessa powergrip.fi. Frisbeegolf on lähes kaikille soveltuva liikuntamuoto, jota voi harrastaa frisbeegolf-radoilla joka puolella Suomea.">
+<title>
+                Powergrip - melko hyvä frisbeegolfkauppa
+    </title>
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" href="/assets/css/site.css?id=c62eba6cf38e2d2b9042">
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#c8dc50">
+</head>
+<body itemscope itemtype="https://schema.org/SportingGoodsStore">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9VL74V" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<meta itemprop="url" content="https://powergrip.fi">
+<meta itemprop="name" content=" Powergrip">
+<meta itemprop="logo" content="https://powergrip.fi/assets/images/pg-logo-on-white.svg">
+<meta itemprop="image" content="https://powergrip.fi/assets/images/pg-store.png">
+<meta itemprop="address" content="Latokartanontie 1 90150 OULU">
+<meta itemprop="telephone" content="045-2718818">
+<meta itemprop="email" content="myynti@powergrip.fi">
+<meta itemprop="brand" content="Discmania, Discraft, Innova, Latitude 64, Gateway, Millennium, Powergrip, Westside Discs, Hero Disc, MVP Disc Sports, Prodiscus, Dynamic Discs, Legacy Discs, Hyperflite, Prodigy Disc, Hyzerbomb Discs, Kastaplast, Axiom Discs, GRIPeq, Jacquard Products, ZÜCA, Viking Discs, Streamline Discs, YUPOONG, Whale Sacs, DiscDice, Infinite Discs, EV-7 Disc Golf, Dexshell, Flying Plate Company, Alfa Discs, Løft Discs">
+<meta itemprop="priceRange" content="$">
+<div id="app">
+<div id="wrapper">
+<div id="top-bar" class="no-select">
+<div class="container">
+<div class="nav top-links align-items-center">
+<div id="language-switch" class="nav-item dropdown mr-auto">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Switch language">
+<img class="flag-lang" src="https://powergrip.fi/assets/images/flags/fi.png" alt="lang" />
+<span class="d-inline-flex">Suomi</span>
+</a>
+<ul class="dropdown-menu">
+<li class="dropdown-item">
+<a class="nav-link" tabindex="-1" href="https://powergrip.fi/?lang=en" aria-label="English">
+<img class="flag-lang" src="https://powergrip.fi/assets/images/flags/en.png" alt="English" />
+<span>English</span>
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" tabindex="-1" href="https://powergrip.fi/?lang=se" aria-label="Svenska">
+<img class="flag-lang" src="https://powergrip.fi/assets/images/flags/se.png" alt="Svenska" />
+<span>Svenska</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="nav-item mr-auto">
+<a class="nav-link" tabindex="-1" aria-label="Myymälät" href="https://powergrip.fi/myymalat">
+<i class="fa fa-map-marker"></i>
+<span class="d-none d-md-inline-block">Myymälät</span>
+</a>
+</div>
+<div id="sidebar-menu">
+<div id="sidebar-cart-wrap" class="nav-item sidebar-wrap sidebar-menu-item">
+<a href="#" data-name="sidebar-cart" class="sidebar-toggler nav-link icon_wrap with_text" aria-label="Ostoskori">
+<i class="fa fa-shopping-cart">
+<cart-count-indicator></cart-count-indicator>
+</i>
+<span class="icon_text d-md-none">
+Ostoskori
+</span>
+<span class="icon_text d-none d-lg-inline-block">
+Ostoskori
+</span>
+</a>
+</div>
+<div id="sidebar-recent-wrap" class="nav-item sidebar-wrap sidebar-menu-item">
+<a href="#" data-name="sidebar-recent" class="sidebar-toggler nav-link icon_wrap with_text" aria-label="Viimeksi katsotut">
+<i class="fa fa-history">
+<span class="amount_circle ">0</span>
+</i>
+<span class="icon_text d-md-none">
+Äskeiset
+</span>
+<span class="icon_text d-none d-lg-inline-block">
+Viimeksi katsotut
+</span>
+</a>
+</div>
+<div id="sidebar-search-wrap" class="nav-item sidebar-wrap sidebar-menu-item">
+<a href="#" data-name="sidebar-search" class="sidebar-toggler nav-link icon_wrap with_text" aria-label="Haku">
+<i class="fa fa-search"></i>
+<span class="icon_text d-md-none">
+Haku
+</span>
+<span class="icon_text d-none d-lg-inline-block">
+Haku
+</span>
+</a>
+</div>
+<nav class="st-menu" id="sidebar-recent" tabindex="-1">
+<div class="st-menu-container no-select d-flex flex-column">
+<div class="st-menu-header">
+<h5 class="st-menu-title">
+Viimeksi katsotut
+</h5>
+<button type="button" class="st-close ml-auto" aria-label="Sulje" data-name="sidebar-recent">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="d-flex flex-column flex-fill justify-content-between">
+<ul class="list-group">
+</ul>
+</div>
+</div>
+</nav>
+<nav class="st-menu" id="sidebar-search" tabindex="-1">
+<div class="st-menu-container no-select d-flex flex-column">
+<div class="st-menu-header">
+<h5 class="st-menu-title">
+Haku
+</h5>
+<button type="button" class="st-close ml-auto" aria-label="Sulje" data-name="sidebar-search">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="d-flex flex-column flex-fill justify-content-between">
+<div>
+<a class="btn btn-primary btn-sm mt-2 mb-3 ml-3" href="https://powergrip.fi/hae">
+<i class="fa fa-fw fa-sliders"></i>
+<span>Tarkennettu tuotehaku</span>
+</a>
+<instant-search index-name="pg_products"></instant-search>
+</div>
+</div>
+</div>
+</nav>
+<nav class="st-menu" id="sidebar-cart" tabindex="-1">
+<div class="st-menu-container no-select d-flex flex-column">
+<div class="st-menu-header">
+<h5 class="st-menu-title">
+Ostoskori
+</h5>
+<button type="button" class="st-close ml-auto" aria-label="Sulje" data-name="sidebar-cart">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="d-flex flex-column flex-fill justify-content-between">
+<div id="sidebar-cart-block" class="p-3">
+<quick-cart></quick-cart>
+</div>
+</div>
+</div>
+</nav>
+</div>
+<div class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/rekisteroidy" aria-label="Rekisteröidy">
+<i class="fa fa-user-plus"></i>
+<span class="d-none d-sm-inline-block">
+Rekisteröidy
+</span>
+</a>
+</div>
+<div class="nav-item">
+<b-button v-b-modal.login-modal variant="link nav-link" data-ref="login-modal" aria-label="Kirjaudu">
+<i class="fa fa-sign-in"></i>
+<span class="d-none d-sm-inline-block">
+Kirjaudu
+</span>
+</b-button>
+</div>
+</div>
+</div>
+</div>
+<header id="top-navigation" class="no-select">
+<nav id="main-navigation-area" class="container navbar navbar-expand-md navbar-light bg-pg-lime">
+<button id="sidebar-switch" type="button" class="btn" aria-label="Asiakaspalvelu">
+<i class="fa"></i>
+</button>
+<div class="navbar-brand">
+<img class="brand-logo d-flex m-auto" src="https://powergrip.fi/assets/images/pg-footer-logo-on-lime.svg" alt="Powergrip">
+</div>
+<button class="navbar-toggler navbar-toggler-sm" type="button" data-toggle="collapse" data-target="#main-navigation" aria-controls="main-navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div id="main-navigation" class="collapse navbar-collapse">
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi" title="Etusivu" aria-label="Etusivu">
+Etusivu
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/tuote/lahjakor" title="Lahjakortit" aria-label="Lahjakortit">
+Lahjakortit
+</a>
+</li>
+<li class="nav-item dropdown mega-menu">
+<a class="nav-link dropdown-toggle" role="button" href="#" id="main-nav-discs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Kiekot">
+Kiekot
+</a>
+<ul class="dropdown-menu mega-menu" aria-labelledby="main-nav-discs">
+<li class="mega-menu-container">
+<div class="row">
+<div class="col-12 col-md-3">
+<h5 class="d-none d-md-block"><span>Tuoteryhmät</span></h5>
+<ul class="list-unstyled">
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Uutuudet" title="Uutuudet" aria-label="Uutuudet">
+Uutuudet
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Draiverit" title="Draiverit" aria-label="Draiverit">
+Draiverit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/L%C3%A4hestymiskiekot" title="Lähestymiskiekot" aria-label="Lähestymiskiekot">
+Lähestymiskiekot
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Putterit" title="Putterit" aria-label="Putterit">
+Putterit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Kiekkopaketit" title="Kiekkopaketit" aria-label="Kiekkopaketit">
+Kiekkopaketit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Erikoisuudet" title="Erikoisuudet" aria-label="Erikoisuudet">
+Erikoisuudet
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/St%C3%A4mpitt%C3%B6m%C3%A4t%20kiekot" title="Stämpittömät kiekot" aria-label="Stämpittömät kiekot">
+Stämpittömät kiekot
+</a>
+</li>
+</ul>
+</div>
+<div class="d-none d-md-block col-md-9">
+<h5><span>Valmistajat</span></h5>
+<ul class="list-unstyled row">
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Discmania" title="Discmania" aria-label="Discmania">
+Discmania
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Discraft" title="Discraft" aria-label="Discraft">
+Discraft
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Innova" title="Innova" aria-label="Innova">
+Innova
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Latitude%2064" title="Latitude 64" aria-label="Latitude 64">
+Latitude 64
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Gateway" title="Gateway" aria-label="Gateway">
+Gateway
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Millennium" title="Millennium" aria-label="Millennium">
+Millennium
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Powergrip" title="Powergrip" aria-label="Powergrip">
+Powergrip
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Westside%20Discs" title="Westside Discs" aria-label="Westside Discs">
+Westside Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+ <a class="nav-link" href="https://powergrip.fi/valmistaja/Hero%20Disc" title="Hero Disc" aria-label="Hero Disc">
+Hero Disc
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/MVP%20Disc%20Sports" title="MVP Disc Sports" aria-label="MVP Disc Sports">
+MVP Disc Sports
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Prodiscus" title="Prodiscus" aria-label="Prodiscus">
+Prodiscus
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Dynamic%20Discs" title="Dynamic Discs" aria-label="Dynamic Discs">
+Dynamic Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Legacy%20Discs" title="Legacy Discs" aria-label="Legacy Discs">
+Legacy Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Hyperflite" title="Hyperflite" aria-label="Hyperflite">
+Hyperflite
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Prodigy%20Disc" title="Prodigy Disc" aria-label="Prodigy Disc">
+Prodigy Disc
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Hyzerbomb%20Discs" title="Hyzerbomb Discs" aria-label="Hyzerbomb Discs">
+Hyzerbomb Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Kastaplast" title="Kastaplast" aria-label="Kastaplast">
+Kastaplast
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Axiom%20Discs" title="Axiom Discs" aria-label="Axiom Discs">
+ Axiom Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/GRIPeq" title="GRIPeq" aria-label="GRIPeq">
+GRIPeq
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Jacquard%20Products" title="Jacquard Products" aria-label="Jacquard Products">
+Jacquard Products
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Z%C3%9CCA" title="ZÜCA" aria-label="ZÜCA">
+ZÜCA
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Viking%20Discs" title="Viking Discs" aria-label="Viking Discs">
+Viking Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Streamline%20Discs" title="Streamline Discs" aria-label="Streamline Discs">
+Streamline Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/YUPOONG" title="YUPOONG" aria-label="YUPOONG">
+YUPOONG
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Whale%20Sacs" title="Whale Sacs" aria-label="Whale Sacs">
+Whale Sacs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/DiscDice" title="DiscDice" aria-label="DiscDice">
+DiscDice
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Infinite%20Discs" title="Infinite Discs" aria-label="Infinite Discs">
+Infinite Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+ <a class="nav-link" href="https://powergrip.fi/valmistaja/EV-7%20Disc%20Golf" title="EV-7 Disc Golf" aria-label="EV-7 Disc Golf">
+EV-7 Disc Golf
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Dexshell" title="Dexshell" aria-label="Dexshell">
+Dexshell
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Flying%20Plate%20Company" title="Flying Plate Company" aria-label="Flying Plate Company">
+Flying Plate Company
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/Alfa%20Discs" title="Alfa Discs" aria-label="Alfa Discs">
+Alfa Discs
+</a>
+</li>
+<li class="dropdown-item col-4">
+<a class="nav-link" href="https://powergrip.fi/valmistaja/L%C3%B8ft%20Discs" title="Løft Discs" aria-label="Løft Discs">
+Løft Discs
+</a>
+</li>
+</ul>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/kassit" title="Kassit" aria-label="Kassit">
+Kassit
+</a>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" role="button" id="main-nav-apparel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Asusteet">
+Asusteet
+</a>
+<ul class="dropdown-menu mega-menu" aria-labelledby="main-nav-apparel">
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Lippalakit" title="Lippalakit" aria-label="Lippalakit">
+Lippalakit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Pipot" title="Pipot" aria-label="Pipot">
+Pipot
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Paidat" title="Paidat" aria-label="Paidat">
+Paidat
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Hupparit" title="Hupparit" aria-label="Hupparit">
+Hupparit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Keng%C3%A4t" title="Kengät" aria-label="Kengät">
+Kengät
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Housut" title="Housut" aria-label="Housut">
+Housut
+</a>
+</li>
+</ul>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" role="button" id="main-nav-other-products" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Muut tuotteet">
+Muut tuotteet
+</a>
+<ul class="dropdown-menu" aria-labelledby="main-nav-other-products">
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Pyyhkeet" title="Pyyhkeet" aria-label="Pyyhkeet">
+Pyyhkeet
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Sateenvarjot" title="Sateenvarjot" aria-label="Sateenvarjot">
+Sateenvarjot
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Pullot" title="Pullot" aria-label="Pullot">
+Pullot
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Tarvikkeet" title="Tarvikkeet" aria-label="Tarvikkeet">
+Tarvikkeet
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Muut%20kiekot" title="Muut kiekot" aria-label="Muut kiekot">
+Muut kiekot
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/V%C3%A4rj%C3%A4ys" title="Värjäys" aria-label="Värjäys">
+Värjäys
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Korit" title="Korit" aria-label="Korit">
+Korit
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Koirafrisbeet" title="Koirafrisbeet" aria-label="Koirafrisbeet">
+Koirafrisbeet
+</a>
+</li>
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Ultimate" title="Ultimate" aria-label="Ultimate">
+Ultimate
+ </a>
+</li>
+</ul>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" role="button" id="main-nav-events" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Tapahtumat">
+Tapahtumat
+</a>
+<ul class="dropdown-menu" aria-labelledby="main-nav-events">
+<li class="dropdown-item">
+<a class="nav-link" href="https://powergrip.fi/frisbeegolf/Kurssit" title="Kurssit" aria-label="Kurssit">
+Kurssit
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div id="main-content" class="container">
+<div id="sidebar" class="no-select">
+<div id="side-menu-container" class="side-nav">
+<form id="side-nav-search-form" class="pg-form" method="get" action="https://powergrip.fi/hae">
+<label class="sr-only" for="mns-search">Haku</label>
+<div class="form-group d-flex mt-3 mb-0 px-2">
+<input id="mns-search" type="search" class="form-control" placeholder="Tuotehaku" name="query" autosave=fi.pg.product.search results=5>
+<button type="submit" class="btn btn-sm ml-1">
+<i class="fa fa-search"></i>
+<span class="sr-only">Haku</span>
+</button>
+</div>
+</form>
+<ul class="list-group uppercase list-unstyled">
+<li class="list-group-item">
+<a class="list-item" href="https://powergrip.fi/hae">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-sliders"></i> Tarkennettu tuotehaku
+</div>
+</a>
+</li>
+<li class="dropdown-divider"></li>
+<li class="list-group-item">
+<a class="list-item" data-toggle="collapse" data-parent="#side-menu-container" href="#service-menu" aria-label="Asiakaspalvelu">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-support"></i> Asiakaspalvelu
+</div>
+<span class="ml-auto"><i class="fa fa-fw fa-chevron-down"></i></span>
+</a>
+<ul id="service-menu" class="collapse">
+<li class="nav-item">
+<a class="nav-link" href="tel:+358452718818" aria-label="Matkapuhelin">
+<i class="fa fa-fw fa-phone"></i> 045-2718818
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/cdn-cgi/l/email-protection#29445050475d406959465e4c5b4e5b4059074f40" aria-label="Sähköposti">
+<i class="fa fa-fw fa-envelope"></i> <span class="__cf_email__" data-cfemail="0d6074746379644d7d627a687f6a7f647d236b64">[email&#160;protected]</span>
+</a>
+</li>
+</ul>
+</li>
+<li class="list-group-item">
+<a class="list-item" data-toggle="collapse" data-parent="#side-menu-container" href="#stores-menu" aria-label="Myymälät">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-map-marker"></i> Myymälät
+</div>
+<span class="ml-auto"><i class="fa fa-fw fa-chevron-down"></i></span>
+</a>
+<ul id="stores-menu" class="collapse ">
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/myymalat#1002" aria-label="Oulu">
+ <i class="fa fa-fw fa-caret-right"></i> Oulu
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/myymalat#1005" aria-label="Turku">
+<i class="fa fa-fw fa-caret-right"></i> Turku
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/myymalat#1006" aria-label="Helsinki">
+<i class="fa fa-fw fa-caret-right"></i> Helsinki
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/myymalat#1008" aria-label="Tampere">
+<i class="fa fa-fw fa-caret-right"></i> Tampere
+</a>
+</li>
+</ul>
+</li>
+<li class="dropdown-divider"></li>
+<li class="list-group-item">
+<a class="list-item" data-toggle="collapse" data-parent="#side-menu-container" href="#webshop-menu" aria-label="Ohjeet &amp; Ehdot">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-shopping-cart"></i> Ohjeet &amp; Ehdot
+</div>
+<span class="ml-auto"><i class="fa fa-fw fa-chevron-down"></i></span>
+</a>
+<ul id="webshop-menu" class="collapse ">
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/tilaaminen" aria-label="Tilaaminen">
+Tilaaminen
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/asiakaspalautukset" aria-label="Asiakaspalautukset">
+Asiakaspalautukset
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/toimitukset" aria-label="Toimitukset">
+Toimitukset
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/maksutavat" aria-label="Maksutavat">
+Maksutavat
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/ehdot" aria-label="Kaupan ehdot">
+Kaupan ehdot
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://powergrip.fi/ohjeet/tietosuojaseloste" aria-label="Tietosuojaseloste">
+Tietosuojaseloste
+</a>
+</li>
+</ul>
+</li>
+<li class="dropdown-divider"></li>
+<li class="list-group-item">
+<a class="list-item" href="https://powergrip.fi/ohjeet/sopimusseurat">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-users"></i> Seuratilaukset
+</div>
+</a>
+</li>
+<li class="dropdown-divider"></li>
+<li class="list-group-item">
+<a class="list-item" href="https://powergrip.fi/apua">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-question-circle-o"></i> Apua frisbeegolfkiekon valintaan
+</div>
+</a>
+</li>
+<li class="dropdown-divider"></li>
+<li class="list-group-item">
+<a class="list-item" href="https://powergrip.fi/media">
+<div class="menu-wrapper-icon">
+<i class="fa fa-fw fa-file-image-o"></i> PG-logopankki
+</div>
+</a>
+</li>
+</ul>
+<hr>
+<div class="row no-gutters d-none d-md-block mt-2 pl-1 pr-3">
+<div class="col-12 mb-3">
+<a class="d-block" href="https://powergrip.fi/podcast" target="_blank">
+<img src="https://powergrip.fi/assets/images/banners/menu-banner_podcast.svg?1" alt="Powergrip Podcasts" style="width: 100%; height: auto;">
+<div class="d-flex flex-column align-items-start w-100 text-pg-black">
+<strong>Kausi 3</strong>
+
+</div>
+</a>
+</div>
+<div class="col-12">
+<a class="d-block" href="https://powergrip.fi/blog" target="_blank">
+<img src="https://powergrip.fi/assets/images/banners/menu-banner_blog.svg?1" alt="Powergrip Blogs" style="width: 100%; height: auto;">
+</a>
+<small>Powergrip Blog</small>
+</div>
+</div>
+</div>
+</div>
+<div id="page-content">
+<div id="page-content-area">
+<section class="featured-grid d-flex flex-column flex-md-row justify-content-md-between">
+<div id="main-page-banner-carousel" class="main-page-banner main-page-banner-lg carousel slide" data-ride="carousel" data-interval="3500">
+<ol class="carousel-indicators">
+<li data-target="#main-page-banner-carousel" data-slide-to="0" class="active"></li>
+<li data-target="#main-page-banner-carousel" data-slide-to="1"></li>
+<li data-target="#main-page-banner-carousel" data-slide-to="2"></li>
+<li data-target="#main-page-banner-carousel" data-slide-to="3"></li>
+<li data-target="#main-page-banner-carousel" data-slide-to="4"></li>
+</ol>
+<div class="carousel-inner">
+<div class="carousel-item active">
+<a id="mainPageBannerLarge-pos0" class="banner-link" href="https://powergrip.fi/tuote/easybagv2la" data-banner="246/U4leJQsloWeU2RsfascA80ZE56FSXvEC" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId': '246', 'adName':'easyGo','adPosition':'lg-0'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="img-fluid banner-image" src="https://img.powergrip.fi/banners/4CpHGeFL-easy-gooo.webp" alt="Easy-Go">
+</a>
+</div>
+<div class="carousel-item ">
+<a id="mainPageBannerLarge-pos1" class="banner-link" href="https://powergrip.fi/hae/innova%20bag" data-banner="243/SHqnG2cfJjAcLb7AqRnt2e77ecdPzwBC" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId': '243', 'adName':'innovanReput','adPosition':'lg-1'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="img-fluid banner-image" src="https://img.powergrip.fi/banners/6E3e6l9e-adventure_feature.webp" alt="innovan reput">
+<div class="banner-overlay-text banner-overlay-text__position-tr" style="background: #99CCFF; color: #000000; font-size: 1.5rem;">
+Restock!
+</div>
+</a>
+</div>
+<div class="carousel-item ">
+<a id="mainPageBannerLarge-pos2" class="banner-link" href="https://powergrip.fi/hae?query=ace&amp;refinementList%5Bplastic%5D%5B0%5D=Ace%20BaseGrip&amp;refinementList%5Bplastic%5D%5B1%5D=Ace%20DuraFlex&amp;refinementList%5Bplastic%5D%5B2%5D=Ace%20BaseGrip%20Glow&amp;refinementList%5Bplastic%5D%5B3%5D=Ace%20DuraFlex%20Glow" data-banner="173/6nZAuUlyh8Ox2Lu42VYhXDNwMZvanbvz" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId': '173', 'adName':'aceLine','adPosition':'lg-2'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="img-fluid banner-image" src="https://img.powergrip.fi/banners/5nQjhJHW-ace-line.jpg" alt="Ace Line">
+<div class="banner-overlay-text banner-overlay-text__position-bl" style="background: #FFFFFF; color: light; font-size: 1rem;">
+RESTOCKED
+</div>
+</a>
+</div>
+<div class="carousel-item ">
+<a id="mainPageBannerLarge-pos3" class="banner-link" href="https://powergrip.fi/tuote/luxbaglae4" data-banner="182/GVesY9U6I00PX0IFJTZLA6tY13ti8d7Z" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId': '182', 'adName':'luxuryE4','adPosition':'lg-3'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="img-fluid banner-image" src="https://img.powergrip.fi/banners/tdpUlW4G-luxury-e4.jpg" alt="Luxury E4">
+</a>
+</div>
+<div class="carousel-item ">
+<a id="mainPageBannerLarge-pos4" class="banner-link" href="https://kurssit.powergrip.fi/kurssit/voimaa-frisbeegolfiin-2" data-banner="219/sDjJsFraYEjnBvcgLdpZsKH7RCVNftDe" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId': '219', 'adName':'voimaaFrisbeegolfiinII','adPosition':'lg-4'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="img-fluid banner-image" src="https://img.powergrip.fi/banners/woXZAxrD-mp-vf2.jpg" alt="Voimaa frisbeegolfiin II">
+</a>
+</div>
+</div>
+<a class="carousel-control-prev" href="#main-page-banner-carousel" role="button" data-slide="prev">
+<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+<span class="sr-only">text.previous</span>
+</a>
+<a class="carousel-control-next" href="#main-page-banner-carousel" role="button" data-slide="next">
+<span class="carousel-control-next-icon" aria-hidden="true"></span>
+<span class="sr-only">text.next</span>
+</a>
+</div>
+<div id="main-page-side-carousel">
+<div class="main-page-banner main-page-banner-sm">
+<a id="mainPageBannerSmall-pos0" class="banner-link" href="https://powergrip.fi/tuote/evneenig" data-banner="135/nIZ5pgeEb3fuHLNtjDDOKNLNIdQ2teSl" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId':'135', 'adName': 'neoEnigma','adPosition':'sm-0'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="banner-image" src="https://img.powergrip.fi/banners/07_Neo_Enigma_BANNER_new.jpg" alt="Neo Enigma">
+</a>
+</div>
+<div class="main-page-banner main-page-banner-sm">
+<a id="mainPageBannerSmall-pos1" class="banner-link" href="https://powergrip.fi/hae/latitude%20bag" data-banner="213/Lovd0t7rtGMY3npLInGQIZn3xo1uNX7S" onclick="if (!window.__cfRLUnblockHandlers) return false; dataLayer.push({'event':'powergrip.BannerClick', 'bannerTracking': {'adId':'213', 'adName': 'e4','adPosition':'sm-1'}});" data-cf-modified-758c4e33dbb9505394c584e9-="">
+<img class="banner-image" src="https://img.powergrip.fi/banners/w17IwKiz-d-g-luxury-bag-e4.jpg" alt="E4">
+</a>
+</div>
+</div>
+</section>
+<hr>
+<section class="container">
+<div class="row">
+<div class="col-12 col-md-9">
+<div id="mpc_tulossa-olevat" class="main-page-product-panel">
+<h1>Tulossa olevat</h1>
+<div class="row no-gutters">
+<div class="col-6 col-md-4 col-xl-3 px-1">
+<div class="product-thumbnail card" itemscope itemtype="http://schema.org/Product">
+<div class="product-thumbnail-image">
+<a class="shop-item-image" href="https://powergrip.fi/tuote/k1sreko/kastaplast-k1-soft-reko" itemprop="url">
+<img class="img-fluid" src="https://img.powergrip.fi/products/k1sreko/thumb/k1sreko.jpeg?tAjSh8dgeG9cKZht" alt="Kastaplast K1 Soft Reko" />
+</a>
+<div class="shop-option-over">
+</div>
+<div class="shop-item-info">
+</div>
+<countdown class="counter-upcoming shop-item-counter" :until="1635876000" :show-seconds="false"></countdown>
+</div>
+<div class="card-body product-thumbnail-summary" title="Kastaplast K1 Soft Reko " v-b-tooltip.hover>
+<a href="https://powergrip.fi/tuote/k1sreko">
+<h1 itemprop="brand" class="manufacturer-name">
+Kastaplast
+</h1>
+<h1 itemprop="name" class="product-title">
+K1 Soft Reko
+<span class="product-variation">
+</span>
+</h1>
+</a>
+</div>
+<div class="shop-item-buttons">
+<div class="shop-item-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<meta itemprop="priceCurrency" content="EUR">
+<span class="price-tag" itemprop="price">16.90</span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-md-4 col-xl-3 px-1">
+<div class="product-thumbnail card" itemscope itemtype="http://schema.org/Product">
+<div class="product-thumbnail-image">
+<a class="shop-item-image" href="https://powergrip.fi/tuote/k3hreko/kastaplast-k3-hard-reko" itemprop="url">
+<img class="img-fluid" src="https://img.powergrip.fi/products/k3hreko/thumb/k3hreko.jpeg?AFYPSE1Ed9bQXcJm" alt="Kastaplast K3 Hard Reko" />
+</a>
+<div class="shop-option-over">
+</div>
+<div class="shop-item-info">
+</div>
+<countdown class="counter-upcoming shop-item-counter" :until="1636023600" :show-seconds="false"></countdown>
+</div>
+<div class="card-body product-thumbnail-summary" title="Kastaplast K3 Hard Reko " v-b-tooltip.hover>
+<a href="https://powergrip.fi/tuote/k3hreko">
+<h1 itemprop="brand" class="manufacturer-name">
+Kastaplast
+</h1>
+<h1 itemprop="name" class="product-title">
+K3 Hard Reko
+<span class="product-variation">
+</span>
+</h1>
+</a>
+</div>
+<div class="shop-item-buttons">
+<div class="shop-item-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<meta itemprop="priceCurrency" content="EUR">
+<span class="price-tag" itemprop="price">11.90</span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-md-4 col-xl-3 px-1">
+<div class="product-thumbnail card" itemscope itemtype="http://schema.org/Product">
+<div class="product-thumbnail-image">
+<a class="shop-item-image" href="https://powergrip.fi/tuote/roggracktwo/latitude-64-royal-grand-grace-kristin-tattar-signature" itemprop="url">
+<img class="img-fluid" src="https://img.powergrip.fi/products/roggracktwo/thumb/roggracktwo.jpeg?tYLT0cnI8jlPZC7e" alt="Latitude 64 Royal Grand Grace Kristin Tattar Signature" />
+</a>
+<div class="shop-option-over">
+</div>
+<div class="shop-item-info">
+</div>
+<countdown class="counter-upcoming shop-item-counter" :until="1636639200" :show-seconds="false"></countdown>
+</div>
+<div class="card-body product-thumbnail-summary" title="Latitude 64 Royal Grand Grace Kristin Tattar Signature" v-b-tooltip.hover>
+<a href="https://powergrip.fi/tuote/roggracktwo">
+<h1 itemprop="brand" class="manufacturer-name">
+Latitude 64
+</h1>
+<h1 itemprop="name" class="product-title">
+Royal Grand Grace
+<span class="product-variation">
+Kristin Tattar Signature
+</span>
+</h1>
+</a>
+</div>
+<div class="shop-item-buttons">
+<div class="shop-item-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<meta itemprop="priceCurrency" content="EUR">
+<span class="price-tag" itemprop="price">26.90</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<main-page-products />
+</div>
+<aside class="col-12 col-md-3 mt-5 mt-md-0">
+<div id="top-products-menu-container" class="side-nav">
+<div class="side-nav-head">
+<h1 class="top-products-menu-header">Suosituimmat frisbeegolftuotteet</h1>
+</div>
+<top-products-menu :top-product-filters="[{&quot;text&quot;:&quot;Top 10&quot;,&quot;0&quot;:&quot;Top-10&quot;,&quot;listValue&quot;:&quot;Top10&quot;},{&quot;text&quot;:&quot;Edellinen kuukausi&quot;,&quot;listValue&quot;:&quot;LastMonth&quot;},{&quot;text&quot;:&quot;Edellinen vuosi&quot;,&quot;listValue&quot;:&quot;LastYear&quot;},{&quot;text&quot;:&quot;Kaikkien aikojen Top 10&quot;,&quot;listValue&quot;:&quot;AllTime&quot;}]" :data-products="[{&quot;title&quot;:&quot;C-Line MD3&quot;,&quot;variation&quot;:&quot;&quot;,&quot;manufacturerName&quot;:&quot;Discmania&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/cmd3\/icon\/cmd3.jpeg?aP4By2lgxDlwrWAM&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/cmd3\/discmania-c-line-md3&quot;,&quot;alt&quot;:&quot;Discmania C-Line MD3&quot;},{&quot;title&quot;:&quot;BT Origio Burst Mini&quot;,&quot;variation&quot;:&quot;Coin&quot;,&quot;manufacturerName&quot;:&quot;Westside Discs&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/minicoinwd\/icon\/minicoinwd.jpeg?AvG2XdDuZ2hFra49&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/minicoinwd\/westside-discs-bt-origio-burst-mini-coin&quot;,&quot;alt&quot;:&quot;Westside Discs BT Origio Burst Mini Coin&quot;},{&quot;title&quot;:&quot;Active Premium Sensei&quot;,&quot;variation&quot;:&quot;Niko R\u00e4tty\u00e4 Lock Series&quot;,&quot;manufacturerName&quot;:&quot;Discmania&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/aprsensnrlo\/colors\/aprsensnrlo_AADDFF\/thumb\/aprsensnrlo_AADDFF.jpg?UCQTRILjD1SEA3SN&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/aprsensnrlo\/discmania-active-premium-sensei-niko-rattya-lock-series&quot;,&quot;alt&quot;:&quot;Discmania Active Premium Sensei Niko R\u00e4tty\u00e4 Lock Series&quot;},{&quot;title&quot;:&quot;Discover Backpack&quot;,&quot;variation&quot;:&quot;&quot;,&quot;manufacturerName&quot;:&quot;Innova&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/dibagin\/thumb\/dibagin.jpg?1540803600&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/dibagin\/innova-discover-backpack&quot;,&quot;alt&quot;:&quot;Innova Discover Backpack&quot;},{&quot;title&quot;:&quot;Opto River&quot;,&quot;variation&quot;:&quot;&quot;,&quot;manufacturerName&quot;:&quot;Latitude 64&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/oprive\/thumb\/oprive.jpg?TK957QOWb699IUJI&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/oprive\/latitude-64-opto-river&quot;,&quot;alt&quot;:&quot;Latitude 64 Opto River&quot;},{&quot;title&quot;:&quot;Star Destroyer&quot;,&quot;variation&quot;:&quot;SockiBot&quot;,&quot;manufacturerName&quot;:&quot;Innova&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/stdestrwsb\/thumb\/stdestrwsb.jpg?XXK4Gb7D8opfOgti&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/stdestrwsb\/innova-star-destroyer-sockibot&quot;,&quot;alt&quot;:&quot;Innova Star Destroyer SockiBot&quot;},{&quot;title&quot;:&quot;Backpack&quot;,&quot;variation&quot;:&quot;BP-2 V3&quot;,&quot;manufacturerName&quot;:&quot;Prodigy Disc&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/bagprbp2v3\/colors\/bagprbp2v3_prod-v3pink\/icon\/bagprbp2v3_prod-v3pink.jpg?IrZ6mQKKusffYzSx&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/bagprbp2v3\/prodigy-disc-backpack-bp-2-v3&quot;,&quot;alt&quot;:&quot;Prodigy Disc Backpack BP-2 V3&quot;},{&quot;title&quot;:&quot;Active Premium Sensei&quot;,&quot;variation&quot;:&quot;&quot;,&quot;manufacturerName&quot;:&quot;Discmania&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/aprsens\/thumb\/aprsens.jpg?WrUAx7Qev9yj5efM&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/aprsens\/discmania-active-premium-sensei&quot;,&quot;alt&quot;:&quot;Discmania Active Premium Sensei&quot;},{&quot;title&quot;:&quot;Active Premium Sensei&quot;,&quot;variation&quot;:&quot;Niko R\u00e4tty\u00e4 - Hypno Lock&quot;,&quot;manufacturerName&quot;:&quot;Discmania&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/aprsensnrhylo\/icon\/aprsensnrhylo.png?mMWZW4518qZnS1RM&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/aprsensnrhylo\/discmania-active-premium-sensei-niko-rattya-hypno-lock&quot;,&quot;alt&quot;:&quot;Discmania Active Premium Sensei Niko R\u00e4tty\u00e4 - Hypno Lock&quot;},{&quot;title&quot;:&quot;Backpack&quot;,&quot;variation&quot;:&quot;BP-4 - Ripstop&quot;,&quot;manufacturerName&quot;:&quot;Prodigy Disc&quot;,&quot;image&quot;:&quot;https:\/\/img.powergrip.fi\/products\/bagprbp4\/colors\/bagprbp4_prod-v3green\/thumb\/bagprbp4_prod-v3green.jpg?1e6znaF5WvrfPZM8&quot;,&quot;url&quot;:&quot;https:\/\/powergrip.fi\/tuote\/bagprbp4\/prodigy-disc-backpack-bp-4-ripstop&quot;,&quot;alt&quot;:&quot;Prodigy Disc Backpack BP-4 - Ripstop&quot;}]">
+</top-products-menu>
+</div>
+</aside>
+</div>
+</section>
+</div>
+<footer id="main-footer" class="container no-select">
+<div class="row d-md-none mb-4 align-items-start pb-4" style="border-bottom: #bebebe 2px solid">
+<div class="col-6 d-flex flex-column align-items-center">
+<a class="d-block" href="https://powergrip.fi/podcast" target="_blank">
+<img src="https://powergrip.fi/assets/images/banners/menu-banner_podcast.svg?1" alt="Powergrip Podcasts" style="width: 100%; height: auto;">
+<div class="d-flex flex-column align-items-start w-100 text-pg-black">
+<strong>Kausi 3</strong>
+
+</div>
+</a>
+</div>
+<div class="col-6">
+<a class="d-block" href="https://powergrip.fi/blog" target="_blank">
+<img src="https://powergrip.fi/assets/images/banners/menu-banner_blog.svg?1" alt="Powergrip Blogs" style="width: 100%; height: auto;">
+</a>
+</div>
+</div>
+<div class="row">
+<div class="col-12 col-lg-3">
+<div id="social-media-icons">
+<h5>Seuraa meitä</h5>
+<ul class="list-unstyled social-icons-list">
+<li>
+<a href="https://facebook.com/pg.powergrip" class="social-icon social-icon-border social-facebook" v-b-tooltip.hover title="Facebook @" target="_blank" rel="noreferrer" aria-label="Facebook @">
+<i class="icon-facebook"></i>
+<i class="icon-facebook"></i>
+</a>
+</li>
+<li>
+<a href="https://twitter.com/PGDiscGolf" class="social-icon social-icon-border social-twitter" v-b-tooltip.hover title="Twitter @" target="_blank" rel="noreferrer" aria-label="Twitter @">
+<i class="icon-twitter"></i>
+<i class="icon-twitter"></i>
+</a>
+</li>
+<li>
+<a href="https://instagram.com/PGDiscGolf" class="social-icon social-icon-border social-instagram" v-b-tooltip.hover title="Instagram @" target="_blank" rel="noreferrer" aria-label="Instagram @">
+<i class="icon-instagram"></i>
+<i class="icon-instagram"></i>
+</a>
+</li>
+<li>
+<a href="https://youtube.com/user/PGDiscGolf" class="social-icon social-icon-border social-youtube" v-b-tooltip.hover title="YouTube @" target="_blank" rel="noreferrer" aria-label="YouTube @">
+<i class="icon-youtube"></i>
+<i class="icon-youtube"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-12 col-lg-6 mt-2 mt-lg-0">
+<div class="d-flex justify-content-start justify-content-lg-center text-pg-light-gray">
+Powergrip on Euroopan suurin frisbeegolfkauppa.
+</div>
+</div>
+<div class="col-12 col-lg-3 mt-2 mt-lg-0 text-lg-center">
+<div class="copyright">
+<i class="fa fa-copyright"></i> 2021 Powergrip
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<b-modal id="login-modal" title="Kirjaudu" hide-footer v-cloak>
+<form id="login-form-modal" class="pg-form" method="post" action="https://powergrip.fi/kirjaudu">
+<input type="hidden" name="_token" value="BwJLJC6AoXwApN0eXdqPFfEIlXXgjPKHd03yAs3u">
+<input type="hidden" name="redirect" value="1">
+<fieldset>
+<label for="f-email">Sähköposti</label>
+<div class="pg-form">
+<input id="f-email" type="email" class="form-control" name="email" required value="" autocomplete="username">
+</div>
+<label for="f-passwd">Salasana</label>
+<div class="pg-form">
+<input id="f-passwd" class="form-control" name="password" required type="password" autocomplete="current-password">
+</div>
+<label for="f-remember" class="checkbox margin-top-20">
+<input id="f-remember" type="checkbox" name="remember">
+<i></i> Pidä minut kirjautuneena tällä laitteella
+</label>
+<div class="row mt-2">
+<div class="col-6">
+<a class="btn" href="https://powergrip.fi/password/reset">
+Unohditko salasanasi?
+</a>
+</div>
+<div class="col-6">
+<button type="submit" class="btn btn-primary">
+<i class="fa fa-check"></i> Kirjaudu
+</button>
+</div>
+</div>
+</fieldset>
+<fieldset>
+</fieldset>
+</form>
+</b-modal>
+<flash message=""></flash>
+<toastr></toastr>
+</div>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/assets/js/fi.js" type="758c4e33dbb9505394c584e9-text/javascript"></script>
+<script type="758c4e33dbb9505394c584e9-text/javascript">
+    window.Powergrip = {"csrfToken":"BwJLJC6AoXwApN0eXdqPFfEIlXXgjPKHd03yAs3u","cartId":"tryRb0B07QtDYBF9OBTiSngp5SbpyvRar12BDyQg","language_code":"fi","locales":{"fi":"Suomi","en":"English","se":"Svenska"},"image_url":"https:\/\/img.powergrip.fi","price_group":1,"storeId":null,"time":1635863071,"currency":"EUR","stores":{"1006":"Helsinki","1002":"Oulu","1008":"Tampere","1005":"Turku"},"webStoreId":1002,"customer":null};
+
+</script>
+<script src="/assets/js/manifest.js?id=89712bc6d8c588400cae" type="758c4e33dbb9505394c584e9-text/javascript"></script>
+<script src="/assets/js/vendor.js?id=71e23700c3158ffb89ce" type="758c4e33dbb9505394c584e9-text/javascript"></script>
+<script src="/assets/js/app.js?id=220085568c3415b4910f" type="758c4e33dbb9505394c584e9-text/javascript"></script>
+<script type="758c4e33dbb9505394c584e9-text/javascript">$(function () {});</script>
+<script type="758c4e33dbb9505394c584e9-text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.eu01.nr-data.net","licenseKey":"NRJS-0ecf66eb60be7e18616","applicationID":"47454230","transactionName":"MhBSZQoZVxcEAEdQVgtacVIMEVYKShBbVklLHF5VHQA=","queueTime":0,"applicationTime":44,"atts":"HldRE0IDRBk=","errorBeacon":"bam.eu01.nr-data.net","agent":""}</script><script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="758c4e33dbb9505394c584e9-|49" defer=""></script></body>
+</html>

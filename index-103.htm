@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="fi-fi" dir="ltr"
+	  class='com_content view-article itemid-101 home j31 mm-hover'>
+
+<head>
+	<base href="http://www.valdemari.fi/" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="valdemari, ravintola, restaurant,  rovaniemi, lapland, lappi, ruoka, menu, pihvit, hampurilaiset, karaoke, tanssi, tapahtumat, pitopalvelu, lapin pitopalvelu, tuula, jukka, kemijoki, ranta, terassi kesäterassi, kesäpaikka, kesapaikka, olut, juoma, tanssiravintola, wings, wingsit, laulu, ohjelmat, ravintolaohjelma, teatteri, kesäteatteri, ravintolateatteri" />
+	<meta name="rights" content="Valdemari, Lapin Pitopalvelu Oy" />
+	<meta name="description" content="Valdemari - Ounaskosken ainoa rantaterassi, Elävää musiikkia viikonloppuisin ja keskiviikkoisin, Suositut karaokeillat, Teemaillat, Buffee paikallisin maustein, Pitopalvelua juhliin kuin juhliin" />
+	<meta name="generator" content="Joomla! - Open Source Content Management" />
+	<title>Valdemari</title>
+	<link href="/templates/tp_restaurant/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+	<link href="/templates/tp_restaurant/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/system/css/system.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/tp_restaurant/css/legacy-grid.css" rel="stylesheet" type="text/css" />
+	<link href="/plugins/system/t3/base-bs3/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/tp_restaurant/css/template.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/tp_restaurant/css/megamenu.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/tp_restaurant/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="/templates/tp_restaurant/css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="/modules/mod_swiper/css/swiper.css" rel="stylesheet" type="text/css" />
+	<link href="/modules/mod_swiper/css/animate.css" rel="stylesheet" type="text/css" />
+	<script src="/media/jui/js/jquery.min.js?e181d36363851845514f2273bfd0567b" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-noconflict.js?e181d36363851845514f2273bfd0567b" type="text/javascript"></script>
+	<script src="/media/jui/js/jquery-migrate.min.js?e181d36363851845514f2273bfd0567b" type="text/javascript"></script>
+	<script src="/media/system/js/caption.js?e181d36363851845514f2273bfd0567b" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/bootstrap/js/bootstrap.js?e181d36363851845514f2273bfd0567b" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/jquery.tap.min.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/script.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/menu.js" type="text/javascript"></script>
+	<script src="/plugins/system/t3/base-bs3/js/nav-collapse.js" type="text/javascript"></script>
+	<script src="/modules/mod_swiper/js/swiper.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});
+	;(function ($, undefined) {
+			$(window).load(function(){
+				function isIE() {
+				    var myNav = navigator.userAgent.toLowerCase();
+				    return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+				};
+				var o = $("#swiper-slider_102");				
+			    if (o.length) {
+			        function getSwiperHeight(object, attr) {
+			            var val = object.attr("data-" + attr), dim;
+			            if (!val) {
+			                return undefined;
+			            }
+			            dim = val.match(/(px)|(%)|(vh)$/i);
+			            if (dim.length) {
+			                switch (dim[0]) {
+			                    case"px":
+			                        return parseFloat(val);
+			                    case"vh":
+			                        return $(window).height() * (parseFloat(val) / 100);
+			                    case"%":
+			                        return object.width() * (parseFloat(val) / 100);
+			                }
+			            } else {
+			                return undefined;
+			            }
+			        }
+
+			        function toggleSwiperInnerVideos(swiper) {
+			            var videos;
+			            $.grep(swiper.slides, function (element, index) {
+			                var $slide = $(element), video;
+			                if (index === swiper.activeIndex) {
+			                    videos = $slide.find("video");
+			                    if (videos.length) {
+			                        videos.get(0).play();
+			                    }
+			                } else {
+			                    $slide.find("video").each(function () {
+			                        this.pause();
+			                    });
+			                }
+			            });
+			        }
+
+			        function toggleSwiperCaptionAnimation(swiper) {
+			            if (isIE() && isIE() < 10) {
+			                return;
+			            }
+			            var prevSlide = $(swiper.container), nextSlide = $(swiper.slides[swiper.activeIndex]);
+			            prevSlide.find("[data-caption-animate]").each(function () {
+			                var $this = $(this);
+			                $this.removeClass("animated").removeClass($this.attr("data-caption-animate")).addClass("not-animated");
+			            });
+			            nextSlide.find("[data-caption-animate]").each(function () {
+			                var $this = $(this), delay = $this.attr("data-caption-delay");
+			                setTimeout(function () {
+			                    $this.removeClass("not-animated").addClass($this.attr("data-caption-animate")).addClass("animated");
+			                }, delay ? parseInt(delay) : 0);
+			            });
+			        }
+
+			        $(document).ready(function () {
+			            o.each(function () {
+			                var s = $(this);
+			                var pag = s.find(".swiper-pagination"), next = s.find(".swiper-button-next"), prev = s.find(".swiper-button-prev"), bar = s.find(".swiper-scrollbar"), h = getSwiperHeight(o, "height"), mh = getSwiperHeight(o, "min-height");
+			                s.find(".swiper-slide").each(function () {
+			                    var $this = $(this), url;
+			                    if (url = $this.attr("data-slide-bg")) {
+			                        $this.css({"background-image": "url(" + url + ")", "background-size": "cover"})
+			                    }
+			                }).end().find("[data-caption-animate]").addClass("not-animated").end();
+
+								var slider = new Swiper(s,{
+			                    autoplay: s.attr('data-autoplay') ? s.attr('data-autoplay') === "false" ? undefined : s.attr('data-autoplay') : 5000,
+			                    direction: s.attr('data-direction') ? s.attr('data-direction') : "horizontal",
+			                    effect: s.attr('data-slide-effect') ? s.attr('data-slide-effect') : "slide",
+			                    speed: s.attr('data-slide-speed') ? s.attr('data-slide-speed') : 600,
+			                    keyboardControl: s.attr('data-keyboard') === "true",
+			                    mousewheelControl: s.attr('data-mousewheel') === "true",
+			                    mousewheelReleaseOnEdges: s.attr('data-mousewheel-release') === "true",
+			                    nextButton: next.length ? next.get(0) : null,
+			                    prevButton: prev.length ? prev.get(0) : null,
+			                    pagination: pag.length ? pag.get(0) : null,
+			                    paginationClickable: pag.length ? pag.attr("data-clickable") !== "false" : false,
+			                    paginationBulletRender: pag.length ? pag.attr("data-index-bullet") === "true" ? function (index, className) {
+			                        return '<span class="' + className + '">' + (index + 1) + '</span>';
+			                    } : null : null,
+			                    scrollbar: bar.length ? bar.get(0) : null,
+			                    scrollbarDraggable: bar.length ? bar.attr("data-draggable") !== "false" : true,
+			                    scrollbarHide: bar.length ? bar.attr("data-draggable") === "false" : false,
+			                    loop: s.attr('data-loop') !== "false",
+			                    loopedSlides: 3,
+			                    autoplayDisableOnInteraction: false,
+			                    onTransitionStart: function (swiper) {
+			                        toggleSwiperInnerVideos(swiper);
+			                    },
+			                    onTransitionEnd: function (swiper) {
+			                        toggleSwiperCaptionAnimation(swiper);
+			                    },
+			                    onInit: function (swiper) {
+			                        toggleSwiperInnerVideos(swiper);
+			                        toggleSwiperCaptionAnimation(swiper);
+			                        var o = $(swiper.container).find('.rd-parallax');
+			                        var p = $(swiper.container).find('.slider-parallax-swiper');
+			                        if(p.length){
+			                        	RDParallax_autoinit('.slider-parallax-swiper');
+			                        }
+			                        if (o.length && window.RDParallax) {
+			                            o.RDParallax({layerDirection: ($('html').hasClass("smoothscroll") || $('html').hasClass("smoothscroll-all")) && !isIE() ? "normal" : "inverse"});
+			                        }
+			                    }
+			                });
+			                $(window).on("resize", function () {
+			                    var mh = getSwiperHeight(s, "min-height"),
+			                    	h = getSwiperHeight(s, "height");
+			                    if (h) {
+			                        s.css("height", mh ? mh > h ? mh : h : h);
+			                    }			                }).load(function () {
+			                    s.find("video").each(function () {
+			                        if (!$(this).parents(".swiper-slide-active").length) {
+			                            this.pause();		                        }
+			                    });
+			                }).trigger("resize");
+			            });
+			        });
+			    }
+			});
+	})(jQuery);
+
+	</script>
+
+	
+<!-- META FOR IOS & HANDHELD -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<style type="text/stylesheet">
+		@-webkit-viewport   { width: device-width; }
+		@-moz-viewport      { width: device-width; }
+		@-ms-viewport       { width: device-width; }
+		@-o-viewport        { width: device-width; }
+		@viewport           { width: device-width; }
+	</style>
+	<script type="text/javascript">
+		//<![CDATA[
+		if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+			var msViewportStyle = document.createElement("style");
+			msViewportStyle.appendChild(
+				document.createTextNode("@-ms-viewport{width:auto!important}")
+			);
+			document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+		}
+		//]]>
+	</script>
+<meta name="HandheldFriendly" content="true"/>
+<meta name="apple-mobile-web-app-capable" content="YES"/>
+<!-- //META FOR IOS & HANDHELD -->
+
+
+
+
+<!-- Le HTML5 shim and media query for IE8 support -->
+<!--[if lt IE 9]>
+<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript" src="/plugins/system/t3/base-bs3/js/respond.min.js"></script>
+<![endif]-->
+
+<!-- You can add Google Analytics here or use T3 Injection feature -->
+
+
+	<link href='https://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Expletus+Sans:400,400italic,500' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Yesteryear" rel="stylesheet"> 
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-2427646-51']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body>
+
+<div class="t3-wrapper"> <!-- Need this wrapper for off-canvas menu. Remove if you don't use of-canvas -->
+
+  
+<!-- HEADER -->
+<header id="t3-header" class="container t3-header">
+	<div class="row">
+
+		<!-- LOGO -->
+		<div class="col-xs-12 col-sm-8 logo">
+			<div class="logo-image">
+				<a href="/" title="Ravintola Valdemari">
+											<img class="logo-img" src="/images/valdemari_logo_300.png" alt="Ravintola Valdemari" />
+															<span>Ravintola Valdemari</span>
+				</a>
+				<small class="site-slogan">Kutsu jokirannassa soi!</small>
+			</div>
+		</div>
+		<!-- //LOGO -->
+
+					<div class="col-xs-12 col-sm-4">
+									<!-- HEAD SEARCH -->
+					<div class="head-search ">
+						
+
+<div class="custom"  >
+	<p>Ravintola Valdemari, J&auml;&auml;merentie 9, Rovaniemi</p>
+<p><strong>&nbsp;Avoinna&nbsp;</strong></p>
+<ul style="list-style-type: disc;">
+<li>la 25.9 klo 19-02 (03)</li>
+<li>muina aikoina tilauksesta</li>
+</ul></div>
+
+					</div>
+					<!-- //HEAD SEARCH -->
+				
+							</div>
+		
+	</div>
+</header>
+<!-- //HEADER -->
+
+
+  
+<!-- MAIN NAVIGATION -->
+<nav id="t3-mainnav" class="wrap navbar navbar-default t3-mainnav">
+	<div class="container">
+
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+		
+											<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".t3-navbar-collapse">
+					<i class="fa fa-bars"></i>
+				</button>
+			
+			
+		</div>
+
+					<div class="t3-navbar-collapse navbar-collapse collapse"></div>
+		
+		<div class="t3-navbar navbar-collapse collapse">
+			<div  class="t3-megamenu animate zoom"  data-duration="400" data-responsive="true">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="nav navbar-nav level0">
+<li itemprop='name' class="current active" data-id="101" data-level="1">
+<a itemprop='url' class=""  href="/index.php"   data-target="#">Valdemari </a>
+
+</li>
+<li itemprop='name' class="dropdown mega" data-id="199" data-level="1">
+<a itemprop='url' class=" dropdown-toggle"  href="/index.php/ohjelmat"   data-target="#" data-toggle="dropdown">Ohjelmat <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name'  data-id="123" data-level="2">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/ohjelmakalenteri"   data-target="#">Ohjelmakalenteri </a>
+
+</li>
+<li itemprop='name' class="dropdown-submenu mega" data-id="131" data-level="2">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/teemaillat"   data-target="#">Teemaillat </a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level2">
+<li itemprop='name'  data-id="134" data-level="3">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/teemaillat/teemakuvat"   data-target="#">Teemaillat kuvia </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name'  data-id="122" data-level="2">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/karaoke"   data-target="#">Karaoke </a>
+
+</li>
+<li itemprop='name'  data-id="360" data-level="2">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/pikkujoulut"   data-target="#">Pikkujoulut Valdemarissa </a>
+
+</li>
+<li itemprop='name'  data-id="367" data-level="2">
+<a itemprop='url' class=""  href="/index.php/ohjelmat/joulukassi"   data-target="#">Joulukassi </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name' class="dropdown mega" data-id="124" data-level="1">
+<a itemprop='url' class=" dropdown-toggle"  href="/index.php/valdema"   data-target="#" data-toggle="dropdown">Ravintola <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name'  data-id="365" data-level="2">
+<a itemprop='url' class=""  href="/index.php/valdema/pikkujoulut"   data-target="#">Pikkujoulut Valdemarissa </a>
+
+</li>
+<li itemprop='name'  data-id="366" data-level="2">
+<a itemprop='url' class=""  href="/index.php/valdema/joulukassi"   data-target="#">Joulukassi </a>
+
+</li>
+<li itemprop='name'  data-id="385" data-level="2">
+<a itemprop='url' class=""  href="/index.php/valdema/kesalista"   data-target="#">Ruokalista, kesä  </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name' class="dropdown mega" data-id="201" data-level="1">
+<a itemprop='url' class=" dropdown-toggle"  href="/index.php/juhlat"   data-target="#" data-toggle="dropdown">Juhlat ja kokoukset <em class="caret"></em></a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level1">
+<li itemprop='name' class="dropdown-submenu mega" data-id="125" data-level="2">
+<a itemprop='url' class=""  href="/index.php/juhlat/juhlatilaisuudet"   data-target="#">Hää- ja juhlatilaisuudet </a>
+
+<div class="nav-child dropdown-menu mega-dropdown-menu"  ><div class="mega-dropdown-inner">
+<div class="row">
+<div class="col-xs-12 mega-col-nav" data-width="12"><div class="mega-inner">
+<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="mega-nav level2">
+<li itemprop='name'  data-id="128" data-level="3">
+<a itemprop='url' class=""  href="/index.php/juhlat/juhlatilaisuudet/haamenut"   data-target="#">Häämenut </a>
+
+</li>
+<li itemprop='name'  data-id="129" data-level="3">
+<a itemprop='url' class=""  href="/index.php/juhlat/juhlatilaisuudet/menu2"   data-target="#">Häämenu 2 </a>
+
+</li>
+<li itemprop='name'  data-id="130" data-level="3">
+<a itemprop='url' class=""  href="/index.php/juhlat/juhlatilaisuudet/menu3"   data-target="#">Häämenu 3 </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name'  data-id="279" data-level="2">
+<a itemprop='url' class=""  href="/index.php/juhlat/kokoukset"   data-target="#">Kokoukset </a>
+
+</li>
+</ul>
+</div></div>
+</div>
+</div></div>
+</li>
+<li itemprop='name'  data-id="126" data-level="1">
+<a itemprop='url' class=""  href="/index.php/pitopalvelu"   data-target="#">Pitopalvelu </a>
+
+</li>
+<li itemprop='name'  data-id="133" data-level="1">
+<a itemprop='url' class=""  href="/index.php/yhteystiedot"   data-target="#">Yhteystiedot </a>
+
+</li>
+<li itemprop='name'  data-id="302" data-level="1">
+<a itemprop='url' class=""  href="/index.php/englis"   data-target="#"><img class="" src="/images/en.gif" alt="English" /> </a>
+
+</li>
+<li itemprop='name'  data-id="388" data-level="1">
+<a itemprop='url' class=""  href="https://www.facebook.com/valdemariofficial" target="_blank"   data-target="#"><img class="" src="/images/facebook_valdemari.png" alt="FB" /></a>
+
+</li>
+<li itemprop='name'  data-id="389" data-level="1">
+<a itemprop='url' class=""  href="https://www.instagram.com/valdemariofficial/" target="_blank"   data-target="#"><img class="" src="/images/instagram_valdemari.png" alt="IG" /></a>
+
+</li>
+</ul>
+</div>
+
+		</div>
+
+	</div>
+</nav>
+<!-- //MAIN NAVIGATION -->
+
+
+  
+<!-- Slideshow -->
+<div class="tp-slideshow ">
+	
+<div id="swiper-slider_102" class="swiper-container swiper-slider "
+	data-min-height="350px"
+	data-height="35%"
+	data-autoplay="7000"
+	data-loop="true"
+	data-slide-effect="fade"
+	
+	>
+	<div class="swiper-wrapper">
+		
+<div
+class="swiper-slide "
+data-slide-bg="/images/slider/valdemari_kutsu-jokirannassa-soi.jpg"
+        
+>
+	<div class="swiper-slide-caption"
+			data-caption-animate="fadeInUp"
+		data-caption-delay="200">
+					<div class="camera_caption ">
+
+										
+						
+						
+								<p>&nbsp;</p>
+<h1 style="text-align: center;">Kutsu jokirannassa soi</h1>		
+			<!-- Read More link -->
+			
+			</div>
+			</div>
+</div>
+
+<div
+class="swiper-slide "
+data-slide-bg="/images/slider/valdemari_kutsu-jokirannassa-soi-talvi.jpg"
+        
+>
+	<div class="swiper-slide-caption"
+			data-caption-animate="fadeInUp"
+		data-caption-delay="200">
+					<div class="camera_caption ">
+
+										
+						
+						
+								<h1 style="text-align: center;">Kutsu jokirannassa soi</h1>		
+			<!-- Read More link -->
+			
+			</div>
+			</div>
+</div>
+
+<div
+class="swiper-slide "
+data-slide-bg="/images/slider/valdemari_kutsu-jokirannassa-soi-syys-2.jpg"
+        
+>
+	<div class="swiper-slide-caption"
+			data-caption-animate="fadeInUp"
+		data-caption-delay="200">
+					<div class="camera_caption ">
+
+										
+						
+						
+								<h1 style="text-align: center;">Kutsu jokirannassa soi</h1>		
+			<!-- Read More link -->
+			
+			</div>
+			</div>
+</div>
+	</div>
+			<!-- Swiper Pagination -->
+	    <div class="swiper-pagination"
+	    data-clickable=""
+	    data-index-bullet="false"
+	    ></div>
+			    <!-- Swiper Navigation -->
+	    <div class="swiper-button-prev"></div>
+	    <div class="swiper-button-next"></div>
+	</div>
+
+</div>
+<!-- //Slideshow-->
+
+
+
+  <div class="tp-features">
+	<!-- SPOTLIGHT 1 -->
+	<div class="container t3-sl t3-sl-1">
+			<!-- SPOTLIGHT -->
+	<div class="t3-spotlight t3-spotlight-1  row">
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<div class="t3-module module " id="Mod134"><div class="module-inner"><div class="module-ct"><div class="mod-article-single mod-article-single__" id="module_134">
+	<div class="item__module" id="item_86">
+				<!-- Item Title -->
+		<h2 class="item-title">
+			Joulukassi		</h2>
+		
+		<!-- Intro Text -->
+		<div class="item_introtext">
+			<p><img src="/images/pikkujoulut/joulukassi_380.jpg" alt="joulukassi 380" /></p>		</div>	
+				</div>
+     
+  <div class="mod-newsflash-adv_custom-link">
+    <a class="btn" href="/index.php/valdema/joulukassi">Lue lisää >></a>  </div>
+  </div></div></div></div>
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<div class="t3-module module " id="Mod115"><div class="module-inner"><div class="module-ct"><div class="mod-article-single mod-article-single__" id="module_115">
+	<div class="item__module" id="item_57">
+				<!-- Item Title -->
+		<h2 class="item-title">
+			Ohjelmat		</h2>
+		
+		<!-- Intro Text -->
+		<div class="item_introtext">
+			<p><a href="/index.php/ohjelmat"><img src="/images/the_bilebandi.jpg" alt="the bilebandi" /></a></p>		</div>	
+				</div>
+     
+  <div class="mod-newsflash-adv_custom-link">
+    <a class="btn" href="/index.php/ohjelmat">Lue lisää >></a>  </div>
+  </div></div></div></div>
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								<div class="t3-module module " id="Mod116"><div class="module-inner"><div class="module-ct"><div class="mod-article-single mod-article-single__" id="module_116">
+	<div class="item__module" id="item_58">
+				<!-- Item Title -->
+		<h2 class="item-title">
+			Joulubuffet		</h2>
+		
+		<!-- Intro Text -->
+		<div class="item_introtext">
+			<p><img src="/images/pikkujoulut/joulubuffet_380.jpg" alt="joulubuffet 380" /></p>		</div>	
+				</div>
+     
+  <div class="mod-newsflash-adv_custom-link">
+    <a class="btn" href="/index.php/valdema/pikkujoulut">Lue lisää >></a>  </div>
+  </div></div></div></div>
+							</div>
+			</div>
+<!-- SPOTLIGHT -->
+	</div>
+	<!-- //SPOTLIGHT 1 -->
+</div>
+
+
+  
+
+<div id="t3-mainbody" class="container t3-mainbody">
+	<div class="row">
+
+		<!-- MAIN CONTENT -->
+		<div id="t3-content" class="t3-content col-xs-12">
+								<style>
+		.lrcounter-horizontal-vertical table {
+			background: none repeat scroll 0 0 transparent !important;
+			border: medium none !important;
+			color: #000000 !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			text-align: left !important;
+		}
+		
+		
+		.lrcounter-horizontal-vertical table tr, .lrcounter-horizontal-vertical table td {
+			background: none repeat scroll 0 0 transparent !important;
+			border: medium none !important;
+			color: #000000 !important;
+			display: inline-table;
+			margin-left: 4px !important;
+			padding: 0 2px !important;
+			text-align: left !important;
+			vertical-align: bottom !important;
+		}
+		iframe, svg {
+			max-width: none !important;
+		} 
+		</style>
+		
+<div class="item-page" itemscope itemtype="http://schema.org/Article">
+	<meta itemprop="inLanguage" content="fi-FI" />
+							
+		
+		
+	
+	
+		
+						<div itemprop="articleBody">
+		<h1>Valdemari - Jokirannassa soi</h1>
+<p>Valdemarissa on mutkaton meininki, oli kes&auml; taikka talvi. Sulan maan aikana voi pist&auml;yty&auml; j&auml;&auml;hyll&auml; vaikka vilpoisalla terassilla ja ihastella komeaa maisemaa. Ja kun keskiy&ouml;n aurinko paistelee, voi meill&auml; tunnelmoida pitk&auml;&auml;nkin ilman ett&auml; on kello kaulassa.</p>
+<p>&nbsp;Valdemarin p&ouml;ydiss&auml; ei tarvitse kuijottaa kuivin suin: suolapalaa ja palanpainiketta on tarjolla ja sitten taas jalalla koreasti jotta siltapalkit ruskaa.</p>
+<ul>
+<li>Ounaskosken ainoa rantaterassi</li>
+<li>El&auml;v&auml;&auml; musiikkia (katso ohjelmakalenteri)</li>
+<li>Suositut karaokeillat</li>
+<li>Teemaillat</li>
+<li>Buffee paikallisin maustein</li>
+<li>Pitopalvelua juhliin kuin juhliin</li>
+</ul>
+<p>&nbsp;</p> 	</div>
+
+	
+								 </div>
+
+		</div>
+		<!-- //MAIN CONTENT -->
+
+	</div>
+</div> 
+
+
+  <div class="tp-bottom">
+</div>
+
+
+  
+
+
+  
+<!-- FOOTER -->
+<footer id="t3-footer" class="wrap t3-footer">
+
+			<!-- FOOT NAVIGATION -->
+		<div class="container">
+				<!-- SPOTLIGHT -->
+	<div class="t3-spotlight t3-footnav  row">
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-6">
+								<div class="t3-module module " id="Mod105"><div class="module-inner"><div class="module-ct">
+
+<div class="custom"  >
+	<p><img src="/images/valdemari_logo.png" alt="Ravintola Valdemari Rovaniemi" width="200" height="80" /></p>
+<p><strong>Ravintola Valdemari | Lapin Pitopalvelu Oy</strong><br />J&auml;&auml;merentie 9, 96200 Rovaniemi | <span id="cloak97304"><a href="mailto:valdemari@co.inet.fi">info@valdemari.fi</a> | </span>tel. 016 - 344 181</p></div>
+</div></div></div>
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-6">
+								&nbsp;
+							</div>
+					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-12">
+								&nbsp;
+							</div>
+			</div>
+<!-- SPOTLIGHT -->
+		</div>
+		<!-- //FOOT NAVIGATION -->
+	
+	<section class="t3-copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 copyright ">
+					
+
+<div class="custom"  >
+	<p><img src="/images/LIKILIIKE_merkki_clr_background.png" alt="" width="92" height="92" />&nbsp;&nbsp;&nbsp;&nbsp; <img src="/images/SV_AA_LOGO_Lapin_Pitopalvelu_Oy_FI_399129_web.jpg" alt="SV AA LOGO Lapin Pitopalvelu Oy FI 399129 web" width="90" height="129" /> <img src="/images/oiva_hymy.png" alt="" width="130" height="92" /></p></div>
+
+                </div>
+									<div class="col-md-4 poweredby text-hide">
+						<a class="t3-logo t3-logo-color" href="http://t3-framework.org" title="Powered By T3 Framework"
+						   target="_blank" >Powered By <strong>T3 Framework</strong></a>
+					</div>
+							</div>
+		</div>
+	</section>
+
+</footer>
+<!-- //FOOTER -->
+
+
+</div>
+
+</body>
+
+</html>

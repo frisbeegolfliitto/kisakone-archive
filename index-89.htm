@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<title>Elisa Webmail :: Tervetuloa Elisa Webmail -käyttäjäksi</title>
+<meta name="Robots" content="index,nofollow" />
+<meta name="viewport" content="" id="viewport" />
+<link rel="shortcut icon" href="skins/larry/images/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="skins/larry/styles.min.css?s=1525002979" />
+<!--[if IE 9]><link rel="stylesheet" type="text/css" href="skins/larry/svggradients.min.css?s=1525002979" /><![endif]-->
+<link rel="stylesheet" type="text/css" href="plugins/jqueryui/themes/larry/jquery-ui-1.10.4.custom.css?s=1525002977">
+<script type="text/javascript" src="skins/larry/ui.min.js?s=1525002979"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="skins/elisa2/site-common-components.css?s=1620633870" />
+<link rel="stylesheet" type="text/css" href="https://static.elisa.fi/components/HCo_fonts/HCo_fonts.css" />
+<link rel="stylesheet" type="text/css" href="skins/elisa2/forms.css?s=1620633870" />
+<link rel="shortcut icon" href="skins/elisa2/images/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="skins/elisa2/elisastyles.css?s=1620633870" />
+
+<link rel="stylesheet" type="text/css" href="skins/elisa2/elisalogin.css?s=1620633870" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="skins/elisa2/lib/jquery.mockjax.js?s=1620633870"></script>
+    <script src="skins/elisa2/handlebars.js?s=1620633870"></script>
+    <script src="skins/elisa2/fixtures.js?s=1620633870"></script>
+    <script src="skins/elisa2/bulletins.js?s=1620633870"></script>
+    <script type="text/javascript">
+      Bulletins.renderListing({
+        tag: 'corporate.elisa.fi:customer,elisa.fi:customer',
+        backend: '//esco.elisa.fi',
+        singleBulletinLink: {
+          urlBase: '//corporate.elisa.fi/elisa-oyj/tiedotteet/tiedote/?',
+          titleParamName: 'otsikko'
+        },
+        maxResults: 5,
+        containerSelector: '#customer-bulletins',
+        header: {
+          link: '//corporate.elisa.fi/elisa-oyj/tiedotteet/tiedote/?tag=corporate.elisa.fi%3Acustomer,elisa.fi%3Acustomer',
+          title: 'Asiakastiedotteet'
+        },
+        feed: {
+          link: '//esco.elisa.fi/rest/esco/bulletin/rss?tags=corporate.elisa.fi:customer,elisa.fi:customer',
+          <!--icon: '//corporate.elisa.fi/img/rss.png'-->
+        }
+      })
+      Bulletins.renderListing({
+        tag: 'corporate.elisa.fi:disturbance,elisa.fi:disturbance',
+        backend: '//esco.elisa.fi',
+        singleBulletinLink: {
+          urlBase: '//corporate.elisa.fi/elisa-oyj/tiedotteet/tiedote/?',
+          titleParamName: 'otsikko'
+        },
+        maxResults: 5,
+        containerSelector: '#trouble-bulletins',
+        header: {
+          link: '//corporate.elisa.fi/elisa-oyj/tiedotteet/tiedote/?tag=corporate.elisa.fi%3Adisturbance,elisa.fi%3Adisturbance',
+          title: 'Häiriötiedotteet'
+        },
+        feed: {
+          link: '//esco.elisa.fi/rest/esco/bulletin/rss?tags=corporate.elisa.fi:disturbance,elisa.fi:disturbance',
+          <!--icon: '//corporate.elisa.fi/img/rss.png'-->
+        }
+      })
+    </script>
+    <script type="text/javascript">
+    	function delete_cookie( name, path, domain ) {
+    	    document.cookie = name + "=" +
+    	      ((path) ? ";path="+path:"")+
+    	      ((domain)?";domain="+domain:"") +
+    	      ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    	}
+    	jQuery(window).load(function () {
+    		delete_cookie("_gid", "/", ".elisa.fi");
+    		$('#elisa-msg-close').click(function() {
+    			$('#elisa-msg').toggle("blind", 500);
+    			$('#elisa-center').css({'margin-top' : '10px'});
+    			$('#elisa-right').css({'margin-top' : '10px'});
+    		});
+
+    		$('input[name="_user"]').attr('placeholder', $('label[for=rcmloginuser]' ).text());
+    		$('input[name="_pass"]').attr('placeholder', $('label[for=rcmloginpwd]' ).text());
+    		
+    		$('#rcmloginuser').css({'color' : '#000'});
+			$('#rcmloginuser').css({'border-color' : '#00baf2'});    		
+    		
+    		$('#rcmloginuser').focusin(function() {
+				$(this).css({'color' : '#000'});
+				$(this).css({'border-color' : '#00baf2'});
+    		});
+    		$('#rcmloginuser').focusin(function() {
+				$(this).css({'color' : '#000'});
+				$(this).css({'border-color' : '#00baf2'});
+    		});
+    		$('#rcmloginpwd').focusin(function() {
+				$(this).css({'color' : '#000'});
+				$(this).css({'border-color' : '#00baf2'});
+				$(this).attr('type', 'password' );
+    		});
+    		$('#rcmloginuser').focusout(function() {
+				$(this).css({'border-color' : '#d9dadb'});
+    		});
+    		$('#rcmloginpwd').focusout(function() {
+				$(this).css({'color' : '#000'});
+				$(this).css({'border-color' : '#d9dadb'});
+				$(this).attr('type', 'password' );
+    		});
+    	});
+    </script>
+	<!-- giosg tag -->
+	<script>
+	(function(w, t, f) {
+		var s='script',o='_giosg',h='https://service.giosg.com',e,n;e=t.createElement(s);e.async=1;e.src=h+'/live/';
+		w[o]=w[o]||function(){(w[o]._e=w[o]._e||[]).push(arguments)};w[o]._c=f;w[o]._h=h;n=t.getElementsByTagName(s)[0];n.parentNode.insertBefore(e,n);
+	})(window,document,819);
+	</script>
+	<!-- giosg tag -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<script src="program/js/jquery.min.js?s=1525002979" type="text/javascript"></script>
+<script src="program/js/common.min.js?s=1525002979" type="text/javascript"></script>
+<script src="program/js/app.min.js?s=1525002979" type="text/javascript"></script>
+<script src="program/js/jstz.min.js?s=1525002979" type="text/javascript"></script>
+<script type="text/javascript">
+
+/*
+        @licstart  The following is the entire license notice for the 
+        JavaScript code in this page.
+
+        Copyright (C) 2005-2014 The Roundcube Dev Team
+
+        The JavaScript code in this page is free software: you can redistribute
+        it and/or modify it under the terms of the GNU General Public License
+        as published by the Free Software Foundation, either version 3 of
+        the License, or (at your option) any later version.
+
+        The code is distributed WITHOUT ANY WARRANTY; without even the implied
+        warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU GPL for more details.
+
+        @licend  The above is the entire license notice
+        for the JavaScript code in this page.
+*/
+var rcmail = new rcube_webmail();
+rcmail.set_env({"task":"login","x_frame_options":"sameorigin","standard_windows":false,"locale":"fi_FI","cookie_domain":"","cookie_path":"\/","cookie_secure":true,"skin":"elisa2","extwin":1,"refresh_interval":60,"session_lifetime":600,"action":"get","comm_path":".\/?_task=login","compose_extwin":false,"date_format":"d.m.yy","request_token":"XI1FyqBW7pFtNLzvS06JY1zeFAo5xTgF"});
+rcmail.add_label({"loading":"Ladataan...","servererror":"Palvelinvirhe!","connerror":"Yhteysvirhe, ei yhteytt\u00e4 palvelimeen!","requesttimedout":"Pyynt\u00f6 aikakatkaistiin","refreshing":"P\u00e4ivitet\u00e4\u00e4n...","windowopenerror":"Ponnahdusikkuna estettiin!","uploadingmany":"Ladataan tiedostoja...","elisa_login.loginfailedmsgdelay":"Kirjautuminen ep\u00e4onnistui!<br\/>Voit yritt\u00e4\u00e4 uudelleen $delaytime sekunnin kuluttua","elisa_login.loginfailedmsg":"Kirjautuminen ep\u00e4onnistui!","elisa_quota.mbofmbused":"%s Mt \/ %s Mt","errortitle":"Virhe havaittu.","toggleadvancedoptions":"[toggleadvancedoptions]"});
+rcmail.display_message("Sessio ei kelpaa tai ei ole en\u00e4\u00e4 voimassa","error",-1000);
+rcmail.gui_object('loginform', 'form');
+rcmail.gui_object('message', 'message');
+</script>
+
+<script type="text/javascript" src="plugins/jqueryui/js/jquery-ui-1.10.4.custom.min.js?s=1525002977"></script>
+<script type="text/javascript" src="plugins/jqueryui/js/i18n/jquery.ui.datepicker-fi.js?s=1525002977"></script>
+</head>
+<body>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CS8BF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CS8BF');</script>
+<!-- End Google Tag Manager -->
+
+<script type="text/javascript" charset="utf-8" src="https://inpref.s3.amazonaws.com/frosmo.easy.js" async="true"></script>
+<script type="text/javascript" charset="utf-8" src="https://inpref.s3.amazonaws.com/sites/6b90eceaad4f672b7760334a74898f7e.js" async="true"></script>
+
+<div id="elisa-global-header" style="height:40px; background:#0019af;">
+    <ul>
+    	<li><a href="http://www.elisa.fi">Yksityisille</a></li>
+    	<li><a href="http://elisa.fi/yrityksille/">Yrityksille</a></li>
+    	<li><a href="http://corporate.elisa.fi/">Elisa Oyj</a></li>    	
+    </ul>
+</div>
+
+<div id="elisa-top-logo">
+	<div id="elisa-top-logo-inner">
+		<img src="skins/elisa2/images/elisa_logo.png" class="logoimg" alt="Elisa Webmail"> 
+		<div class="logotext">Elisa Sähköposti</div>
+	</div>
+</div>
+
+    <div id="elisa-welcome"><h1>Tervetuloa Elisa Sähköpostiin<br><span class="sub">Välkommen till Elisa e-post</span></h1></div>
+<div id="elisa-login">
+<div id="elisa-center">
+<h4>Ohjeet</h4>
+	<ul class="text">
+		<li style="margin-bottom: 0.4em;"><a href="https://verkkoasiointi.elisa.fi/sahkoposti">Luo uusi sähköpostiosoite</a></li>
+		<li style="margin-bottom: 0.4em;"><a href="https://elisa.fi/asiakaspalvelu/aihe/sahkoposti-kotisivut/ohje/webmail/">Apua ja ohjeita sähköpostin käyttöön</a></li>
+		<li><a href="https://elisa.fi/asiakaspalvelu/ohje/tietojenkalastelu-huijausviesteilla/">Varo huijausviestejä!</a></li>
+	</ul>
+	<h4>Anvisningar</h4>
+	<ul class="text">
+		<li style="margin-bottom: 0.4em;"><a href="https://verkkoasiointi.elisa.fi/sahkoposti">Skapa en ny e-postadress</a></li>
+		<li style="margin-bottom: 0.4em;"><a href="https://elisa.fi/asiakaspalvelu/aihe/svenska/ohje/sahkoposti-kotisivutwebmail_sv/">Anvisningar för användning av e-posten</a></li>
+		<li><a href="https://elisa.fi/asiakaspalvelu/aihe/svenska/ohje/natfiske_sv/">Se upp för eventuella bluffmeddelanden</a></li>
+	</ul>
+</div>
+<div id="elisa-right">
+
+
+
+<div id="elisa-lform-top"><div class="login_text">Kirjaudu sähköpostiin / Logga in på e-post</div></div>
+<div id="elisa-lform-bottom">
+<form name="form" method="post" action="./?_task=login">
+<input type="hidden" name="_token" value="XI1FyqBW7pFtNLzvS06JY1zeFAo5xTgF"><input type="hidden" name="_extwin" value="1">
+
+<input type="hidden" name="_task" value="login"><input type="hidden" name="_action" value="login"><input type="hidden" name="_timezone" id="rcmlogintz" value="_default_"><input type="hidden" name="_url" id="rcmloginurl" value="_task=mail&amp;_action=get&amp;_mbox=INBOX&amp;_uid=65517&amp;_part=3&amp;_mimewarning=1&amp;_embed=1&amp;_extwin=1"><table><tbody><tr><td class="title"><label for="rcmloginuser">Sähköposti / E-post</label>
+</td>
+<td class="input"><input name="_user" id="rcmloginuser" required="required" size="40" autocapitalize="off" type="text"></td>
+</tr>
+<tr><td class="title"><label for="rcmloginpwd">Salasana / Lösenord</label>
+</td>
+<td class="input"><input name="_pass" id="rcmloginpwd" required="required" size="40" autocapitalize="off" type="password"></td>
+</tr>
+</tbody>
+</table>
+<p class="formbuttons"><input type="submit" id="rcmloginsubmit" class="button mainaction" value="Kirjaudu / Logga in"></p>
+
+<div id="elisa-pwd-forge">
+Salasana unohtunut?<br><a href="https://verkkoasiointi.elisa.fi/sahkoposti">Vaihda salasana OmaElisassa</a><br><br>
+Glömt lösenordet?<br><a href="https://verkkoasiointi.elisa.fi/sahkoposti">Byt lösenordet i OmaElisa</a>
+</div>
+</div>
+	<div id="message"></div>
+	<noscript>
+		<p class="noscriptwarning">Varoitus: Tämä verkkopohjainen sähköpostipalvelu vaatii Javascriptin toimiakseen. Ota Javascript käyttöön selaimesi asetuksista.</p>
+	</noscript>
+</div>
+<div style="clear:both"></div>
+</div>
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){ 
+rcmail.init();
+var images = ["skins\/elisa2\/images\/ajaxloader.gif","skins\/elisa2\/images\/ajaxloader_dark.gif","skins\/elisa2\/images\/buttons.png","skins\/elisa2\/images\/addcontact.png","skins\/elisa2\/images\/filetypes.png","skins\/elisa2\/images\/listicons.png","skins\/elisa2\/images\/messages.png","skins\/elisa2\/images\/messages_dark.png","skins\/elisa2\/images\/quota.png","skins\/elisa2\/images\/selector.png","skins\/elisa2\/images\/splitter.png"];
+            for (var i=0; i<images.length; i++) {
+                img = new Image();
+                img.src = images[i];
+            }
+});
+</script>
+
+</body>
+</html>

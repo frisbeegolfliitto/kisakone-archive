@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+<!-- Icons -->
+<link rel="shortcut icon" href="/favicon.ico?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
+<link rel="manifest" href="/manifest.json?v=2">
+<link rel="mask-icon" href="/safari-pinned-tab.svg?v=2" color="#ff5a13">
+<meta name="apple-mobile-web-app-title" content="Forenom">
+<meta name="application-name" content="Forenom">
+<meta name="msapplication-TileColor" content="#ff5a13">
+<meta name="theme-color" content="#ffffff">
+
+<script
+	src="https://browser.sentry-cdn.com/6.9.0/bundle.min.js"
+	integrity="sha384-WO22OE751vRf/HrLRHFis3ipNR16hUk5Q0qW9ascPaSswHI9Q/0ZFMaMvJ0ZgmSI"
+	crossorigin="anonymous"
+>
+</script>
+<script
+	src="https://browser.sentry-cdn.com/6.9.0/captureconsole.min.js"
+	integrity="sha384-FJ5n80A08NroQF9DJzikUUhiCaQT2rTIYeJyHytczDDbIiejfcCzBR5lQK4AnmVt"
+	crossorigin="anonymous"
+>
+</script>
+<script>
+	if (Sentry && typeof Sentry.init === 'function') {
+		var breadcrumbIgnorePattern = /fcom\/icons|trustmary|thehotelsnetwork/i;
+
+		function isBreadcrumbIgnored(breadcrumb, hint) {
+			return (
+				['xhr', 'fetch'].indexOf(breadcrumb.category) > -1 &&
+				breadcrumb.data &&
+				breadcrumb.data.url &&
+				breadcrumb.data.url.match(breadcrumbIgnorePattern)
+			);
+		}
+
+		function getBreadCrumbGraphQLPayload(breadcrumb, hint) {
+			if (
+				breadcrumb.category === 'fetch' &&
+				hint.input &&
+				hint.input.length >= 2 &&
+				hint.input[1].body &&
+				hint.input[1].body.indexOf('operationName') > -1
+			) {
+				try {
+					return JSON.parse(hint.input[1].body);
+				} catch (error) {
+					return null;
+				}
+			}
+			return null;
+		}
+
+		Sentry.init({
+			dsn: 'https://5ae93c4053914fba8d3d3872546eb1ae@sentry.io/268202',
+			allowUrls: [
+				/http:\/\/(.*\.)?f\.test/,
+				/https:\/\/(.*\.)?forenom\.dev/,
+				/https:\/\/(.*\.)?forenom\.com/,
+				/https:\/\/(.*\.)?onfido\.com/,
+			],
+			environment: "production",
+			release: "2eebf1b97e15f1efe9aee90db58bc04cbfc2ce0c",
+			debug: false,
+			ignoreErrors: [
+				// Random plugins/extensions
+				"top.GLOBALS",
+				// Thehotelsnetwork
+				"thehotelsnetwork",
+				// Stupid marketing scripts
+				"fbq is not defined",
+				"tmary is not defined",
+				"Can't find variable: fbq",
+				"Can't find variable: tmary",
+				// General connection failures
+				"ChunkLoadError",
+				/^\[object Object\]$/,
+			],
+			integrations: [
+				new Sentry.Integrations.CaptureConsole({ levels: ['error'] }),
+			],
+			beforeBreadcrumb: function(breadcrumb, hint) {
+				// Filter out unnecessary requests
+				if (isBreadcrumbIgnored(breadcrumb, hint)) {
+					return null;
+				}
+
+				// Include GraphQL operation and variables
+				var payload = getBreadCrumbGraphQLPayload(breadcrumb, hint);
+
+				if (payload && payload.operationName) {
+					breadcrumb.data.operationName = payload.operationName;
+				}
+				if (payload && payload.variables) {
+					breadcrumb.data.variables = payload.variables;
+				}
+
+				return breadcrumb
+			}
+		})
+	}
+</script>
+<!-- Wait until all polyfill bundles are loaded before launching fcom app -->
+<script>
+	window.FCOM_LAUNCH_FLAGS = {
+		polyfills_loaded: false,
+		additional_polyfills_loaded: false,
+	}
+
+	window.FCOM_LAUNCH_IF_READY = function() {
+		if (
+			window.FCOM_LAUNCH_FLAGS.polyfills_loaded === false ||
+			window.FCOM_LAUNCH_FLAGS.additional_polyfills_loaded === false
+		) {
+			return
+		}
+
+		if (typeof window.FCOM_LAUNCH === 'function') {
+			window.FCOM_LAUNCH()
+		} else {
+			setTimeout(window.FCOM_LAUNCH_IF_READY, 10)
+		}
+	}
+
+	window.FCOM_POLYFILLS_LOADED = function() {
+		window.FCOM_LAUNCH_FLAGS.polyfills_loaded = true;
+		window.FCOM_LAUNCH_IF_READY()
+	}
+
+	window.FCOM_ADDITIONAL_POLYFILLS_LOADED = function() {
+		window.FCOM_LAUNCH_FLAGS.additional_polyfills_loaded = true
+		window.FCOM_LAUNCH_IF_READY()
+	}
+</script>
+
+<script
+	async
+	src="https://cdn.polyfill.io/v3/polyfill.min.js?features=Promise,Intl.~locale.en,Intl.~locale.fi,Intl.~locale.sv,Intl.~locale.ru,Intl.~locale.nb,Intl.~locale.da&unknown=polyfill&callback=FCOM_POLYFILLS_LOADED"
+	onerror="window.FCOM_POLYFILLS_LOADED()"
+></script>
+
+<script>
+	// Fixes randomly missing getCanonicalLocales that polyfill.io doesn't automatically polyfill based on user-agent
+	(function() {
+		if (window.Intl && typeof window.Intl.getCanonicalLocales !== 'function') {
+			var script = document.createElement('script');
+			script.src = 'https://cdn.polyfill.io/v3/polyfill.min.js?features=Intl.getCanonicalLocales|always|gated&callback=FCOM_ADDITIONAL_POLYFILLS_LOADED'
+			script.async = true
+			script.onerror = window.FCOM_ADDITIONAL_POLYFILLS_LOADED
+			document.head.appendChild(script);
+		} else {
+			window.FCOM_ADDITIONAL_POLYFILLS_LOADED()
+		}
+	})()
+</script>
+
+<!-- Google Datalayer -->
+<script>
+(function() {
+	var user = null;
+	try {
+		var data = JSON.parse(window.localStorage.getItem('forenom.com/data'));
+		user = (data && data.user) ? data.user.data : null;
+	} catch (e) {
+		console.error(e)
+	}
+
+	var type = 'home-2';
+	var skip1 = ['apartment','aparthotel','hostel'];
+	var skip2 = ['location-search','cashier'];
+	var uriCount = window.location.pathname.slice(1, -1).split("/").length;
+
+	if ((skip1.indexOf(type) !== -1 && uriCount >= 4) || skip2.indexOf(type) !== -1) {
+		window.dataLayer = [{
+			'data': 'coming'
+		}];
+	} else {
+		window.dataLayer = [{
+			'page': {
+				'details': {
+					'language': 'en',
+					'url': 'https://www.forenom.com',
+					'type': type === 'home-2' ? 'frontpage' : type,
+					'accommodationType': '',
+				}
+			},
+			'user': {
+				'details': {
+					'loggedIn': user ? user.authentication.data.loggedIn : false,
+					'userId': user ? user.details.data.account.data.id : '',
+				},
+				'browser': {
+					'responsiveVersion': window.innerWidth < 576
+				}
+			}
+		}];
+	}
+})()
+</script>
+
+<!-- Facebook Pixel -->
+<script>
+	!function (f, b, e, v, n, t, s) {
+		if (f.fbq) return;
+		n = f.fbq = function () {
+			n.callMethod ?
+				n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+		};
+		if (!f._fbq) f._fbq = n;
+		n.push = n;
+		n.loaded = !0;
+		n.version = '2.0';
+		n.queue = [];
+		t = b.createElement(e);
+		t.async = !0;
+		t.src = v;
+		s = b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t, s)
+	}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://gtm.forenom.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T55GXF');</script>
+
+<!-- Trustmary placeholder -->
+<script>
+	if (!window.tmary) {
+		window.tmary = function() {};
+	}
+</script>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<link rel="alternate" href="https://www.forenom.com/" hreflang="en" />
+<link rel="alternate" href="https://www.forenom.com/fi/" hreflang="fi" />
+<link rel="alternate" href="https://www.forenom.com/sv/" hreflang="sv" />
+<link rel="alternate" href="https://www.forenom.com/nb/" hreflang="nb" />
+<link rel="alternate" href="https://www.forenom.com/da/" hreflang="da" />
+<link rel="alternate" href="https://www.forenom.com/ru/" hreflang="ru" />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Furnished apartments, hostels and aparthotels in Scandinavia - Forenom</title>
+	<meta name="description" content="We provide accommodation from single hostel rooms and apartment hotels to entire furnished apartments. Book your stay here!" />
+	<link rel="canonical" href="https://www.forenom.com/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:locale:alternate" content="fi_FI" />
+	<meta property="og:locale:alternate" content="sv_SE" />
+	<meta property="og:locale:alternate" content="nb_NO" />
+	<meta property="og:locale:alternate" content="da_DK" />
+	<meta property="og:locale:alternate" content="ru_RU" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Furnished apartments, hostels and aparthotels in Scandinavia - Forenom" />
+	<meta property="og:description" content="We provide accommodation from single hostel rooms and apartment hotels to entire furnished apartments. Book your stay here!" />
+	<meta property="og:url" content="https://www.forenom.com/" />
+	<meta property="og:site_name" content="Forenom" />
+	<meta property="article:modified_time" content="2021-10-29T12:03:20+00:00" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:label1" content="Est. reading time" />
+	<meta name="twitter:data1" content="1 minute" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.forenom.com/#organization","name":"Forenom","url":"https://www.forenom.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://www.forenom.com/#logo","inLanguage":"en-US","url":"https://www.forenom.com/wp-content/uploads/2018/04/26113207/Forenom-FB-postaus-1200x630px4.jpg","contentUrl":"https://www.forenom.com/wp-content/uploads/2018/04/26113207/Forenom-FB-postaus-1200x630px4.jpg","width":5000,"height":2625,"caption":"Forenom"},"image":{"@id":"https://www.forenom.com/#logo"}},{"@type":"WebSite","@id":"https://www.forenom.com/#website","url":"https://www.forenom.com/","name":"Forenom","description":"Be at home with us!","publisher":{"@id":"https://www.forenom.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.forenom.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://www.forenom.com/#webpage","url":"https://www.forenom.com/","name":"Furnished apartments, hostels and aparthotels in Scandinavia - Forenom","isPartOf":{"@id":"https://www.forenom.com/#website"},"about":{"@id":"https://www.forenom.com/#organization"},"datePublished":"2016-12-13T09:18:45+00:00","dateModified":"2021-10-29T12:03:20+00:00","description":"We provide accommodation from single hostel rooms and apartment hotels to entire furnished apartments. Book your stay here!","breadcrumb":{"@id":"https://www.forenom.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.forenom.com/"]}]},{"@type":"BreadcrumbList","@id":"https://www.forenom.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.forenom.com' />
+<link rel='dns-prefetch' href='//maps.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Forenom &raquo; Feed" href="https://www.forenom.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Forenom &raquo; Comments Feed" href="https://www.forenom.com/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.forenom.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8.1"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.forenom.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8.1' type='text/css' media='all' />
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style>
+<link rel='stylesheet' id='siteorigin-panels-front-css'  href='https://www.forenom.com/wp-content/plugins/siteorigin-panels/css/front-flex.min.css?ver=2.13.2' type='text/css' media='all' />
+<link rel='stylesheet' id='fcom-style-css'  href='https://www.forenom.com/wp-content/themes/fcom/dist/fcom.593ff85c623c156fa7f7.css' type='text/css' media='all' />
+<link rel='stylesheet' id='addtoany-css'  href='https://www.forenom.com/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.15' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.forenom.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.forenom.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://www.forenom.com/wp-content/plugins/add-to-any/addtoany.min.js?ver=1.1' id='addtoany-js'></script>
+<script type='text/javascript' src='https://www.forenom.com/wp-content/themes/fcom/dist/fetch-polyfill.4849759d71537e0d7d48.min.js' id='fetch-polyfill-js'></script>
+<script type='text/javascript' src='https://www.forenom.com/wp-content/themes/fcom/dist/custom-event-polyfill.0213b6f26b9567f858df.min.js' id='custom-event-polyfill-js'></script>
+<script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?libraries=places&#038;key=AIzaSyCxp5ycz52etocF15GZjbaFhFoyMVG1lwk&#038;language=en' id='google-places-js'></script>
+<link rel="https://api.w.org/" href="https://www.forenom.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.forenom.com/wp-json/wp/v2/pages/274" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.forenom.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.forenom.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.8.1" />
+<link rel='shortlink' href='https://www.forenom.com/' />
+<link rel="alternate" type="application/json+oembed" href="https://www.forenom.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.forenom.com%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.forenom.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.forenom.com%2F&#038;format=xml" />
+
+<script data-cfasync="false">
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};
+(function(d,s,a,b){a=d.createElement(s);b=d.getElementsByTagName(s)[0];a.async=1;a.src="https://static.addtoany.com/menu/page.js";b.parentNode.insertBefore(a,b);})(document,"script");
+</script>
+                <style type="text/css" media="all"
+                       id="siteorigin-panels-layouts-head">/* Layout 274 */ #pgc-274-0-0 , #pgc-274-1-0 , #pgc-274-2-0 , #pgc-274-3-0 , #pgc-274-4-0 { width:100%;width:calc(100% - ( 0 * 30px ) ) } #pg-274-0 , #pg-274-1 , #pg-274-2 , #pg-274-3 , #pl-274 .so-panel { margin-bottom:30px } #pl-274 .so-panel:last-of-type { margin-bottom:0px } #pg-274-1> .panel-row-style { padding:0px 0px 50px 0px } #pg-274-1.panel-no-style, #pg-274-1.panel-has-style > .panel-row-style { -webkit-align-items:flex-start;align-items:flex-start } @media (max-width:780px){ #pg-274-0.panel-no-style, #pg-274-0.panel-has-style > .panel-row-style , #pg-274-1.panel-no-style, #pg-274-1.panel-has-style > .panel-row-style , #pg-274-2.panel-no-style, #pg-274-2.panel-has-style > .panel-row-style , #pg-274-3.panel-no-style, #pg-274-3.panel-has-style > .panel-row-style , #pg-274-4.panel-no-style, #pg-274-4.panel-has-style > .panel-row-style { -webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column } #pg-274-0 > .panel-grid-cell , #pg-274-0 > .panel-row-style > .panel-grid-cell , #pg-274-1 > .panel-grid-cell , #pg-274-1 > .panel-row-style > .panel-grid-cell , #pg-274-2 > .panel-grid-cell , #pg-274-2 > .panel-row-style > .panel-grid-cell , #pg-274-3 > .panel-grid-cell , #pg-274-3 > .panel-row-style > .panel-grid-cell , #pg-274-4 > .panel-grid-cell , #pg-274-4 > .panel-row-style > .panel-grid-cell { width:100%;margin-right:0 } #pg-274-0 , #pg-274-1 , #pg-274-2 , #pg-274-3 , #pg-274-4 { margin-bottom:px } #pl-274 .panel-grid-cell { padding:0 } #pl-274 .panel-grid .panel-grid-cell-empty { display:none } #pl-274 .panel-grid .panel-grid-cell-mobile-last { margin-bottom:0px }  } </style>		<style type="text/css" id="wp-custom-css">
+			.youtube-responsive-container {
+position:relative;
+padding-bottom:56.25%;
+padding-top:30px;
+height:0;
+overflow:hidden;
+}
+
+.youtube-responsive-container iframe, .youtube-responsive-container object, .youtube-responsive-container embed {
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+}
+
+.page-id-2880 #nav-main,
+.page-id-2880 #nav-secondary,
+.page-id-2903 #nav-main,
+.page-id-2903 #nav-secondary,
+.page-id-4781 #nav-main,
+.page-id-4781 #nav-secondary,
+.page-id-4785 #nav-main,
+.page-id-4785 #nav-secondary,
+.page-id-17966 #nav-main,
+.page-id-17966 #nav-secondary {
+	display:none; 
+}
+
+.page-id-2880 .contact-form-widget,
+.page-id-2903 .contact-form-widget,
+.page-id-4781 .contact-form-widget,
+.page-id-4785 .contact-form-widget,
+.page-id-20966 .contact-form-widget,
+.page-id-20959 .contact-form-widget,
+.page-id-17966 .contact-form-widget {
+  margin-top: 0;
+}		</style>
+		
+<!-- jquery.matchHeight used by FCOM widgets -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js" type="text/javascript"></script>
+</head>
+
+<body class="home page-template-default page page-id-274 siteorigin-panels siteorigin-panels-before-js siteorigin-panels-home">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+	<iframe src="https://gtm.forenom.com/ns.html?id=GTM-T55GXF" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+
+<div class="top-nav">
+	<a class="nav__logo" href="https://www.forenom.com/"></a>
+	<nav class="nav-desktop" aria-label="Main navigation for desktop page">
+				<ul class="nav-menu nav-menu--level-1">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+												<li class="nav-menu__item " data-login-widget-mount>
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'>
+				<span class='nav-menu__user-icon'><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 40 40">
+  <path d="M28.38 25.08c0-1.66-3.7-3.3-8.38-3.3s-8.38 1.64-8.38 3.3 3.7 3.3 8.38 3.3 8.38-1.65 8.38-3.3zm1.52 0c0 2.83-4.48 4.83-9.9 4.83s-9.9-2-9.9-4.83 4.47-4.83 9.9-4.83 9.9 2 9.9 4.83zM20 10.6a3.3 3.3 0 1 0-.01 6.6 3.3 3.3 0 0 0 .01-6.6zm0-1.52a4.82 4.82 0 1 1 0 9.65 4.82 4.82 0 1 1 0-9.65zM20 4a16.01 16.01 0 0 1 16 16 16.01 16.01 0 0 1-16 16A16.01 16.01 0 0 1 4 20 16.01 16.01 0 0 1 20 4zm0 1.52a14.48 14.48 0 1 0 .01 28.97A14.48 14.48 0 0 0 20 5.52z" fill="#ff5a13"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">Log in</span>
+			</span></button>					</li>
+											<li class="nav-menu__item " language-switch>
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'>
+				<span class='nav-menu__globe-icon'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.809 3.81448C11.2267 3.417 11.6281 3.25 12 3.25C12.3719 3.25 12.7733 3.417 13.191 3.81448C13.6119 4.21503 14.0194 4.82418 14.3751 5.62471C15.0268 7.09086 15.4639 9.1065 15.5323 11.375H8.46772C8.53608 9.1065 8.97323 7.09086 9.62485 5.62471C9.98065 4.82418 10.3881 4.21503 10.809 3.81448ZM7.21719 11.375C7.28572 8.96405 7.74842 6.76893 8.48259 5.11704C8.71901 4.58508 8.98791 4.09973 9.28795 3.67842C5.97256 4.7582 3.52681 7.76415 3.27198 11.375H7.21719ZM3.27198 12.625H7.21719C7.28572 15.0359 7.74842 17.2311 8.48259 18.883C8.71901 19.4149 8.98792 19.9003 9.28795 20.3216C5.97256 19.2418 3.52681 16.2358 3.27198 12.625ZM8.46772 12.625H15.5323C15.4639 14.8935 15.0268 16.9091 14.3751 18.3753C14.0194 19.1758 13.6119 19.785 13.191 20.1855C12.7733 20.583 12.3719 20.75 12 20.75C11.6281 20.75 11.2267 20.583 10.809 20.1855C10.3881 19.785 9.98065 19.1758 9.62485 18.3753C8.97323 16.9091 8.53608 14.8935 8.46772 12.625ZM16.7828 12.625C16.7143 15.0359 16.2516 17.2311 15.5174 18.883C15.281 19.4149 15.0121 19.9003 14.712 20.3216C18.0274 19.2418 20.4732 16.2358 20.728 12.625H16.7828ZM20.728 11.375C20.4732 7.76415 18.0274 4.7582 14.712 3.67842C15.0121 4.09973 15.281 4.58509 15.5174 5.11704C16.2516 6.76893 16.7143 8.96405 16.7828 11.375H20.728ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">EN</span>
+			</span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>
+				<span class='nav-menu__globe-icon'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.809 3.81448C11.2267 3.417 11.6281 3.25 12 3.25C12.3719 3.25 12.7733 3.417 13.191 3.81448C13.6119 4.21503 14.0194 4.82418 14.3751 5.62471C15.0268 7.09086 15.4639 9.1065 15.5323 11.375H8.46772C8.53608 9.1065 8.97323 7.09086 9.62485 5.62471C9.98065 4.82418 10.3881 4.21503 10.809 3.81448ZM7.21719 11.375C7.28572 8.96405 7.74842 6.76893 8.48259 5.11704C8.71901 4.58508 8.98791 4.09973 9.28795 3.67842C5.97256 4.7582 3.52681 7.76415 3.27198 11.375H7.21719ZM3.27198 12.625H7.21719C7.28572 15.0359 7.74842 17.2311 8.48259 18.883C8.71901 19.4149 8.98792 19.9003 9.28795 20.3216C5.97256 19.2418 3.52681 16.2358 3.27198 12.625ZM8.46772 12.625H15.5323C15.4639 14.8935 15.0268 16.9091 14.3751 18.3753C14.0194 19.1758 13.6119 19.785 13.191 20.1855C12.7733 20.583 12.3719 20.75 12 20.75C11.6281 20.75 11.2267 20.583 10.809 20.1855C10.3881 19.785 9.98065 19.1758 9.62485 18.3753C8.97323 16.9091 8.53608 14.8935 8.46772 12.625ZM16.7828 12.625C16.7143 15.0359 16.2516 17.2311 15.5174 18.883C15.281 19.4149 15.0121 19.9003 14.712 20.3216C18.0274 19.2418 20.4732 16.2358 20.728 12.625H16.7828ZM20.728 11.375C20.4732 7.76415 18.0274 4.7582 14.712 3.67842C15.0121 4.09973 15.281 4.58509 15.5174 5.11704C16.2516 6.76893 16.7143 8.96405 16.7828 11.375H20.728ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">EN</span>
+			</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/fi/"><span>FI</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/sv/"><span>SV</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/nb/"><span>NB</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/da/"><span>DA</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/ru/"><span>RU</span></a>					</li>
+							</ul>
+							</li>
+							</ul>
+			</nav>
+	<nav class="nav-mobile" aria-label="Main navigation for mobile page">
+				<ul class="nav-menu nav-menu--level-1">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/"><span>Home</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="/location-search"><span>Book</span></a>					</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Special offers</span><span class="nav-menu__title__highlighted-new">New</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Special offers</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/furnished-apartments-and-rooms-affordably/"><span>Stay from 488€/month</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/subscribe-to-our-newsletter/"><span>Order our newsletter</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-property-owners/"><span>Landlords</span></a>					</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Coronavirus</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Coronavirus</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/faq-corona-outbreak/"><span>FAQ</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/staysafe"><span>Stay Safe</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/our-preparations-and-services-during-the-coronavirus-outbreak/"><span>New Services</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/cleaning-and-maintenance-at-forenom-during-the-coronavirus-epidemic/"><span>Cleaning</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>For businesses</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>For businesses</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-businesses/"><span>Corporate accommodation</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/easy-corporate-housing-in-europe/"><span>Housing in Europe</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Help</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Help</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-guests/accommodation-info/"><span>FAQs</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/services/"><span>Additional Services</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/contact/"><span>Contact</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>About</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>About</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/"><span>About Forenom</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/careers/"><span>Careers</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/customer-experiences/"><span>Customers’ experiences</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/category/blog/"><span>Blog</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/category/news/"><span>News</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-guests/accommodation-info/#terms"><span>Terms and Conditions</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " data-login-widget-mount>
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'>
+				<span class='nav-menu__user-icon'><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 40 40">
+  <path d="M28.38 25.08c0-1.66-3.7-3.3-8.38-3.3s-8.38 1.64-8.38 3.3 3.7 3.3 8.38 3.3 8.38-1.65 8.38-3.3zm1.52 0c0 2.83-4.48 4.83-9.9 4.83s-9.9-2-9.9-4.83 4.47-4.83 9.9-4.83 9.9 2 9.9 4.83zM20 10.6a3.3 3.3 0 1 0-.01 6.6 3.3 3.3 0 0 0 .01-6.6zm0-1.52a4.82 4.82 0 1 1 0 9.65 4.82 4.82 0 1 1 0-9.65zM20 4a16.01 16.01 0 0 1 16 16 16.01 16.01 0 0 1-16 16A16.01 16.01 0 0 1 4 20 16.01 16.01 0 0 1 20 4zm0 1.52a14.48 14.48 0 1 0 .01 28.97A14.48 14.48 0 0 0 20 5.52z" fill="#ff5a13"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">Log in</span>
+			</span></button>					</li>
+											<li class="nav-menu__item " language-switch>
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'>
+				<span class='nav-menu__globe-icon'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.809 3.81448C11.2267 3.417 11.6281 3.25 12 3.25C12.3719 3.25 12.7733 3.417 13.191 3.81448C13.6119 4.21503 14.0194 4.82418 14.3751 5.62471C15.0268 7.09086 15.4639 9.1065 15.5323 11.375H8.46772C8.53608 9.1065 8.97323 7.09086 9.62485 5.62471C9.98065 4.82418 10.3881 4.21503 10.809 3.81448ZM7.21719 11.375C7.28572 8.96405 7.74842 6.76893 8.48259 5.11704C8.71901 4.58508 8.98791 4.09973 9.28795 3.67842C5.97256 4.7582 3.52681 7.76415 3.27198 11.375H7.21719ZM3.27198 12.625H7.21719C7.28572 15.0359 7.74842 17.2311 8.48259 18.883C8.71901 19.4149 8.98792 19.9003 9.28795 20.3216C5.97256 19.2418 3.52681 16.2358 3.27198 12.625ZM8.46772 12.625H15.5323C15.4639 14.8935 15.0268 16.9091 14.3751 18.3753C14.0194 19.1758 13.6119 19.785 13.191 20.1855C12.7733 20.583 12.3719 20.75 12 20.75C11.6281 20.75 11.2267 20.583 10.809 20.1855C10.3881 19.785 9.98065 19.1758 9.62485 18.3753C8.97323 16.9091 8.53608 14.8935 8.46772 12.625ZM16.7828 12.625C16.7143 15.0359 16.2516 17.2311 15.5174 18.883C15.281 19.4149 15.0121 19.9003 14.712 20.3216C18.0274 19.2418 20.4732 16.2358 20.728 12.625H16.7828ZM20.728 11.375C20.4732 7.76415 18.0274 4.7582 14.712 3.67842C15.0121 4.09973 15.281 4.58509 15.5174 5.11704C16.2516 6.76893 16.7143 8.96405 16.7828 11.375H20.728ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">EN</span>
+			</span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>
+				<span class='nav-menu__globe-icon'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.809 3.81448C11.2267 3.417 11.6281 3.25 12 3.25C12.3719 3.25 12.7733 3.417 13.191 3.81448C13.6119 4.21503 14.0194 4.82418 14.3751 5.62471C15.0268 7.09086 15.4639 9.1065 15.5323 11.375H8.46772C8.53608 9.1065 8.97323 7.09086 9.62485 5.62471C9.98065 4.82418 10.3881 4.21503 10.809 3.81448ZM7.21719 11.375C7.28572 8.96405 7.74842 6.76893 8.48259 5.11704C8.71901 4.58508 8.98791 4.09973 9.28795 3.67842C5.97256 4.7582 3.52681 7.76415 3.27198 11.375H7.21719ZM3.27198 12.625H7.21719C7.28572 15.0359 7.74842 17.2311 8.48259 18.883C8.71901 19.4149 8.98792 19.9003 9.28795 20.3216C5.97256 19.2418 3.52681 16.2358 3.27198 12.625ZM8.46772 12.625H15.5323C15.4639 14.8935 15.0268 16.9091 14.3751 18.3753C14.0194 19.1758 13.6119 19.785 13.191 20.1855C12.7733 20.583 12.3719 20.75 12 20.75C11.6281 20.75 11.2267 20.583 10.809 20.1855C10.3881 19.785 9.98065 19.1758 9.62485 18.3753C8.97323 16.9091 8.53608 14.8935 8.46772 12.625ZM16.7828 12.625C16.7143 15.0359 16.2516 17.2311 15.5174 18.883C15.281 19.4149 15.0121 19.9003 14.712 20.3216C18.0274 19.2418 20.4732 16.2358 20.728 12.625H16.7828ZM20.728 11.375C20.4732 7.76415 18.0274 4.7582 14.712 3.67842C15.0121 4.09973 15.281 4.58509 15.5174 5.11704C16.2516 6.76893 16.7143 8.96405 16.7828 11.375H20.728ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/>
+</svg>
+</span>
+				<span class="js-nav-username-inject">EN</span>
+			</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/fi/"><span>FI</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/sv/"><span>SV</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/nb/"><span>NB</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/da/"><span>DA</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/ru/"><span>RU</span></a>					</li>
+							</ul>
+							</li>
+							</ul>
+			</nav>
+	<button
+		class="nav__toggle nav__button"
+		type="button"
+		aria-label="Toggle navigation"
+	>
+	</button>
+</div>
+
+<div class="bottom-nav">
+	<nav class="nav-desktop">
+				<ul class="nav-menu nav-menu--level-1">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/"><span>Home</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="/location-search"><span>Book</span></a>					</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Special offers</span><span class="nav-menu__title__highlighted-new">New</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Special offers</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/furnished-apartments-and-rooms-affordably/"><span>Stay from 488€/month</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/subscribe-to-our-newsletter/"><span>Order our newsletter</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-property-owners/"><span>Landlords</span></a>					</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Coronavirus</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Coronavirus</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/faq-corona-outbreak/"><span>FAQ</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/staysafe"><span>Stay Safe</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/our-preparations-and-services-during-the-coronavirus-outbreak/"><span>New Services</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/news/cleaning-and-maintenance-at-forenom-during-the-coronavirus-epidemic/"><span>Cleaning</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>For businesses</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>For businesses</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-businesses/"><span>Corporate accommodation</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/easy-corporate-housing-in-europe/"><span>Housing in Europe</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>Help</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>Help</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-guests/accommodation-info/"><span>FAQs</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/services/"><span>Additional Services</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/contact/"><span>Contact</span></a>					</li>
+							</ul>
+							</li>
+											<li class="nav-menu__item " >
+			<button type="button" class='nav__button nav-menu__title'><span class='nav-menu__title__text'><span>About</span></span><span class='nav-menu__icon'><svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M2.17 2.92L6 6.73l3.83-3.81L11 4.08l-5 5-5-5 1.18-1.16z"/></svg>
+</span></button>									<ul class="nav-menu nav-menu--level-2">
+			<li>
+				<button type="button" class="nav__button nav-menu__close"></button>
+			</li>
+							<li>
+					<button type="button" class="nav__button nav-menu__back">
+						<span>About</span>
+					</button>
+				</li>
+												<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/"><span>About Forenom</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/careers/"><span>Careers</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/about/customer-experiences/"><span>Customers’ experiences</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/category/blog/"><span>Blog</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/category/news/"><span>News</span></a>					</li>
+											<li class="nav-menu__item " >
+			<a class='nav-menu__title' href="https://www.forenom.com/for-guests/accommodation-info/#terms"><span>Terms and Conditions</span></a>					</li>
+							</ul>
+							</li>
+							</ul>
+				<script>
+			(function(){
+				function getIn(obj, path) {
+					return path.reduce(function(memo, currentPath) {
+						if (memo && memo.hasOwnProperty(currentPath)) {
+							return memo[currentPath];
+						}
+						return null;
+					}, obj);
+				}
+
+				var localData;
+				try {
+					localData = JSON.parse(localStorage.getItem('forenom.com/data'));
+				} catch (e) {
+					return;
+				}
+
+				var isLoggedIn = getIn(
+					localData,
+					['user', 'data', 'authentication', 'data', 'loggedIn']
+				);
+				var accountDetails = getIn(
+					localData,
+					['user', 'data', 'details', 'data', 'account', 'data']
+				);
+				var userLink = document.querySelector('.js-nav-username-inject');
+
+				if (userLink && isLoggedIn && accountDetails) {
+					userLink.innerText = accountDetails.firstName || 'Logged in';
+				}
+			})()
+		</script>
+			</nav>
+</div>
+
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+<article id="post-274" class="post-274 page type-page status-publish hentry">
+	<div class="entry-content">
+		<div id="pl-274"  class="panel-layout" ><div id="pg-274-0"  class="panel-grid panel-no-style" ><div id="pgc-274-0-0"  class="panel-grid-cell" >			<div id="bgfcom-landing-jumbotron-23" class="landing-jumbotron-widget homepage dynamic-title">
+				<div class="jumbotron-background-image">
+					<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?auto=compress&ixlib=php-3.3.0&s=6dea3aba9dbf9969d39c74376803eea4" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=140&s=5574a234dcc7cc95f08ac6cfc984daf9 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=182&s=6eb061b8c4be6223bf7a5fbfe5a90e7a 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=237&s=478105a7ebfef1caabeb17111c6a1636 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=308&s=ff7fed857015c167758827ec301d58c9 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=400&s=750fe314a9e7379ed2ebf4150eef68d1 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=520&s=c4f03fb197f7ad37dc5b4b55e3ea39ce 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=676&s=8d8c9b0cd70128f054d005f310b16e31 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=878&s=ca56ca33620f1ed6ba600b6377cf070d 878w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=1142&s=960b20b01d46fb701e24b6115d80aac1 1142w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=1485&s=34014ef8fc16a5d0b85d07bc58a27f4c 1485w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=1930&s=8a4fc0d0b91dc2dcd384d823bde3f392 1930w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=2509&s=b9148bac513f5b08a9a834688f7b9724 2509w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-header.png?ixlib=php-3.3.0&w=2880&s=fe196f7a70411880e31358103de62294 2880w"  alt="" />				</div>
+
+							<div class="landing-jumbotron-widget__content">
+							<div class="landing-jumbotron-widget__texts">
+				<h1>
+					Wherever			<div class="dynamic_words">
+								<span class="dynamic_word active">work</span>
+										<span class="dynamic_word ">life</span>
+										<span class="dynamic_word ">the job</span>
+										<span class="dynamic_word ">curiosity</span>
+										<span class="dynamic_word ">the hobby</span>
+										<span class="dynamic_word ">the project</span>
+										<span class="dynamic_word ">the company</span>
+								</div>
+			takes you.			<script>
+				(function() {
+					var i, wordIndex = 0;
+					var words = document.getElementsByClassName('dynamic_word');
+
+					setInterval(function() {
+						for (i = 0; i < words.length; i++) {
+							words[i].className = words[i].className.replace('active', '');
+						}
+						wordIndex = wordIndex === (words.length - 1) ? 0 : wordIndex + 1;
+						words[wordIndex].classList.add('active');
+					}, 3000);
+				}())
+			</script>
+							</h1>
+							</div>
+						<div
+				id="fcom-landing-jumbotron-23"
+				data-search-widget="{&quot;url&quot;:&quot;\/location-search&quot;,&quot;language&quot;:&quot;en&quot;,&quot;placeholder&quot;:&quot;&quot;}"
+				class="landing-jumbotron-widget__search">
+			</div>
+						</div>
+						</div>
+			</div></div><div id="pg-274-1"  class="panel-grid panel-has-style" ><div class="panel-row-style panel-row-style-for-274-1" ><div id="pgc-274-1-0"  class="panel-grid-cell" >				<div class="slideshow-widget">
+									<h2 class="container slideshow-widget__header">Get inspired by the possibilities of the new age of working!</h2>
+									<div class="swiper slideshow-widget__wrapper">
+						<div class="swiper-wrapper">
+									<div class="swiper-slide">
+				<div class="swiper-slide__background">
+					<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?auto=compress&ixlib=php-3.3.0&s=3f20aaf3c86de2cb47a22986e5b28f4d" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=140&s=8e4ae754a7e785747fce17a8f82428b0 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=182&s=d08b5d0de82dd878d6ddcb1b5247666b 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=237&s=1bed45660ae3b6513ab454e581aa8f20 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=308&s=8f0d5827290da37470bafa4031c90b57 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=400&s=53b87e4a9eb30f0aba43abf609363230 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=520&s=608e062932838bfd3263bb62323dff67 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=676&s=fa06c2b124dd90864f0a7c393558be39 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=878&s=bf01b37c2005e9624b8d04b51dfeda29 878w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=1142&s=73476add1104bf5d31fcfc158199ef40 1142w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=1485&s=3219112dedf311f1f1ef36ad33f80815 1485w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-1.jpg?ixlib=php-3.3.0&w=1920&s=1fc02051f2f652c54cd30e66814fe115 1920w"  alt="" />				</div>
+				<div class="container">
+					<div class="swiper-slide__content">
+											<h3>Wherever work takes you</h3>
+																<h4>Welcome to new normal.</h4>
+																<p>Working life is changing faster than ever. What was once a workplace is now a coffeehouse by the sea or an apartment in your favourite city. What was once a foreign land is now a potential work site full of opportunities. Today you can take your work wherever you want to go or take on new work wherever you are.</p>
+																<a class="button Button--solid" href="https://www.forenom.com/accommodation/">Check out our easy accommodations</a>
+										</div>
+				</div>
+			</div>
+						<div class="swiper-slide">
+				<div class="swiper-slide__background">
+					<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?auto=compress&ixlib=php-3.3.0&s=cfadd6139ec52a305ae7296a130f8f40" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=140&s=afd7d7f9410768e92b6820a149b4a76c 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=182&s=6938da4946179fe75cb9aada7210e8fb 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=237&s=fbe64b1f0c3c4046dec825eebb2f83f0 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=308&s=05b9a5813619600b611de4b802c1a819 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=400&s=e0132177246b7a3654aee2e613f672b6 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=520&s=de0294a6146dd6a7aaca4071c30b0217 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=676&s=fb5c574bd832c0768858de7f702eb1e5 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=878&s=c3bbf704ad026808cdb5fe2d866acd26 878w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=1142&s=cd3899f6616581b6f0aeff71d6b4d1ec 1142w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=1485&s=3d025de11c3afdad10846efdedb7dd0f 1485w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-2.jpg?ixlib=php-3.3.0&w=1920&s=738dfeb3ebb25ce708e8a529757a2943 1920w"  alt="" />				</div>
+				<div class="container">
+					<div class="swiper-slide__content">
+											<h3>Wherever the Project Takes You</h3>
+																<h4>Stay affordably</h4>
+																<p>When a project takes the team far from home, accommodation becomes an important factor in terms of physical and psychic well-being as well as coping at work. Forenom arranges comfortable, affordable and homely accommodation close to the construction site, where your employees can recover from the working day and rest properly before the next one.</p>
+																<a class="button Button--solid" href="https://www.forenom.com/easy-corporate-housing-in-europe/">Check out our packages</a>
+										</div>
+				</div>
+			</div>
+						<div class="swiper-slide">
+				<div class="swiper-slide__background">
+					<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?auto=compress&ixlib=php-3.3.0&s=94a4e905ca4ba30f73078e1fe8d39ff7" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=140&s=3cc94305c51203ebf8aa4e39b2780318 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=182&s=fb935ff85ffbaf770dbc1a52f3f9ab72 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=237&s=22a0974b79f2bed9a587b647559900bd 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=308&s=82d4f119bfbe931c8110604668b7a40d 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=400&s=63249b694b95fc3d07266c0ad9fe6279 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=520&s=22133d02ff647d76814ef0f8fae50af6 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=676&s=9af9942dce657d49286c88eeed01c562 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=878&s=ff89114f817bccb78f171abcfb590903 878w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=1142&s=0f3644a5755e120056285bcf5b8d45ae 1142w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=1485&s=1d028b27a5ee5d8698ed20f6b595f747 1485w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-3.jpg?ixlib=php-3.3.0&w=1920&s=bb48b76ea2d75139ee0e7fd2a70201bf 1920w"  alt="" />				</div>
+				<div class="container">
+					<div class="swiper-slide__content">
+											<h3>Wherever inspiration takes You</h3>
+																<h4>Try a new city</h4>
+																<p>Do you feel like a little change of scenery? Or do you dream about a whole new life in a different city? Now it’s easier than ever to try it. Pack your laptop and follow your inspiration to wherever it takes you. Tip your toes in new life, marvel and get inspired, find your place in the world. Forenom’s home-like apartments, aparthotels and rooms let you experience your new surroundings from the local’s point of view.</p>
+																<a class="button Button--solid" href="https://www.forenom.com/furnished-apartments-and-rooms-affordably/">Check out some of our cool locations</a>
+										</div>
+				</div>
+			</div>
+						<div class="swiper-slide">
+				<div class="swiper-slide__background">
+					<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?auto=compress&ixlib=php-3.3.0&s=3386ca0112fb21b4692acf14861e6cbd" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=140&s=d0926f9f989c74eea3c5731d0c4d4faa 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=182&s=63fa89247fdebef9b9af5e001a8d87b9 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=237&s=d8ffe338933ff178aa35f09ea9e09462 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=308&s=caf9525218167c45f0d3d6cd747acda8 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=400&s=c0bff306e5c84544103f172e621f5220 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=520&s=6548d35217c2d4823d9e324c1a439c7b 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=676&s=4bded13bfe2f8fed7ec0da42d9972522 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=878&s=e10611f157a4e79eebe1d9b81855750b 878w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=1142&s=337417d54dbc87a8462ee772a6e411b4 1142w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=1485&s=24c72411026cea4531326e24bd241920 1485w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/forenom-slideshow-4.jpg?ixlib=php-3.3.0&w=1920&s=8b9bb363fbd2c40c32a104d7e469ee1a 1920w"  alt="" />				</div>
+				<div class="container">
+					<div class="swiper-slide__content">
+											<h3>Wherever Life Takes You</h3>
+																<h4>Stay comfortable and safe</h4>
+																<p>At Forenom we have done everything to make sure you can hit the road with peace of mind. In addition to our normal additional services, such as breakfast, cleaning and parking, we have developed new services for the post-corona situation and to facilitate teleworking. For example, you can order a desk and an office chair in your apartment. Wireless internet is often included in the price.</p>
+																<a class="button Button--solid" href="https://www.forenom.com/location-search">The longer you stay, the less you pay</a>
+										</div>
+				</div>
+			</div>
+									</div>
+						<div class="swiper-button-prev"></div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-pagination"></div>
+					</div>
+				</div>
+			</div></div></div><div id="pg-274-2"  class="panel-grid panel-no-style" ><div id="pgc-274-2-0"  class="panel-grid-cell" >			<div class="as-widget has-style-frontpage">
+				<div class="container">
+										<div class="row">
+						<div class="as-widget__section-title col-xs-12">
+							<h2 class="section-title">We solve your accommodation needs</h2>
+															<p class="section-desc">At Forenom, you can find temporary rental apartments and accommodation for all needs quickly and easily.</p>
+																				</div>
+					</div>
+										<div class="row">
+								<div class="as-widget__block col-md-4">
+				<div class="as-widget__block__wrapper">
+					<div class="as-widget__block__image">
+						<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?auto=compress&ixlib=php-3.3.0&s=1d83aaaa9f94390e356e5bf02f6dc8de" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=140&s=5a4e547e1f8b49e606956f62a82eebfd 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=182&s=16bd2533f7992de2a048166f14894908 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=237&s=0d51bc14a7957f2a2780bdc7c6ec4a37 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=308&s=6073834002258f4cb364402299299b08 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=400&s=a8db556b7a5b823ef84e1b28dbd338d0 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084743/Apartment1_1052x701.optimized-1.jpg?ixlib=php-3.3.0&w=500&s=845f6679cd60215cf924e95ca744b813 500w" sizes="(min-width: 768px) 370px, 500px" alt="" />					</div>
+					<div class="as-widget__block__info-wrapper">
+																					<a href="https://www.forenom.com/furnished-apartments/">
+														<h3 class="as-widget__block__title">Serviced Apartments </h3>
+															</a>
+																			<p class="as-widget__block__description">
+							The most homelike stay, enjoyable night and day						</p>
+						<div class="as-widget__block__buttons">
+															<a href="https://www.forenom.com/furnished-apartments/" class="Button--outlined">
+									View listings								</a>
+													</div>
+					</div>
+				</div>
+			</div>
+						<div class="as-widget__block col-md-4">
+				<div class="as-widget__block__wrapper">
+					<div class="as-widget__block__image">
+						<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?auto=compress&ixlib=php-3.3.0&s=36b92733c95f1227f879639840df8c6e" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=140&s=56ccc6370fd64ba75422deaf8b80d132 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=182&s=105e37cab1fbca0180b28bb2f57858f8 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=237&s=71ea8431426dd136efe22a915d39ea7c 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=308&s=3943eaecbd6d3a9cba8e1b82ea439c07 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=400&s=b8d2d25a99bb6e5f198ed641afb2485c 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084739/Aparthotels_forenomcom_1052x701.optimized.jpg?ixlib=php-3.3.0&w=500&s=cd189ab9ea460903bf2a21e72cff4924 500w" sizes="(min-width: 768px) 370px, 500px" alt="" />					</div>
+					<div class="as-widget__block__info-wrapper">
+																					<a href="https://www.forenom.com/aparthotels/">
+														<h3 class="as-widget__block__title">Aparthotels</h3>
+															</a>
+																			<p class="as-widget__block__description">
+							A comfortable and convenient location, for work or vacation 						</p>
+						<div class="as-widget__block__buttons">
+															<a href="https://www.forenom.com/aparthotels/" class="Button--outlined">
+									View listings								</a>
+													</div>
+					</div>
+				</div>
+			</div>
+						<div class="as-widget__block col-md-4">
+				<div class="as-widget__block__wrapper">
+					<div class="as-widget__block__image">
+						<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?auto=compress&ixlib=php-3.3.0&s=54df64ec1a2e79f2c69705d84ce8168b" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=140&s=5cabf012982dc9993de796cd01178968 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=182&s=463f1dd05f0db3b11254cf2ff20754fd 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=237&s=d6796e674eaa36801117db252fb9bb3a 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=308&s=2c5896aeef2617f61131edaaa667ac85 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=400&s=6dca044aa9ccd9c4475aabfd80e68dc4 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/06/18084753/Hostel2_forenomcom.1052x701.optimized.jpg?ixlib=php-3.3.0&w=500&s=77fc3a12090afe82fcc7a47cb81eb4b8 500w" sizes="(min-width: 768px) 370px, 500px" alt="" />					</div>
+					<div class="as-widget__block__info-wrapper">
+																					<a href="https://www.forenom.com/hostels/">
+														<h3 class="as-widget__block__title">Hostels</h3>
+															</a>
+																			<p class="as-widget__block__description">
+							Affordable place, with private rooms and community space						</p>
+						<div class="as-widget__block__buttons">
+															<a href="https://www.forenom.com/hostels/" class="Button--outlined">
+									View listings								</a>
+													</div>
+					</div>
+				</div>
+			</div>
+								</div>
+				</div>
+			</div>
+			</div></div><div id="pg-274-3"  class="panel-grid panel-no-style" ><div id="pgc-274-3-0"  class="panel-grid-cell" >			<div class="news-widget ">
+				<div class="container">
+					<div class="row">
+						<div class="news-widget__section-title col">
+							<h2>News</h2>
+													</div>
+					</div>
+					<div class="row">
+												<div class="news-widget__block col-lg-4">
+							<div class="news-widget__block__content">
+								<div class="news-widget__block__image">
+									<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?auto=compress&ixlib=php-3.3.0&s=186d0065172eec846ee177f848e1fb14" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=140&s=cf4e0d44937d9b320e1054b7cfa31ac4 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=182&s=139629be5354c142b4bca60b676a2e0f 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=237&s=8af6432533f8aa64a7d30fac2a14834d 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=308&s=2aa2926c92f11f7dfa4644b663383009 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=400&s=34eb51dd6770485ce5b49678c1746030 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=520&s=327067d029609ac8ac7bb87707fb6a0e 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=676&s=c4c2775f05864cfc9341aa2861f9b192 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/10/Forenom_2021_web__HJM_3986-scaled.jpg?ixlib=php-3.3.0&w=716&s=edf045d35fe07df7d0b51af1b5474d4d 716w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />								</div>
+								<div class="news-widget__block__texts">
+									<p class="intro-8df8ffe4-c598-4dae-af3b-c1b868295312">Forenom&#039;s new Country Director for Finland is eMBA and BBA Kimmo Holopainen.</p>
+									<a href="https://www.forenom.com/news/finlands-leading-business-travel-company-strengthens-its-management/">
+										<h3 class="heading-8df8ffe4-c598-4dae-af3b-c1b868295312">Finland&#039;s leading business travel company strengthens its management</h3>
+									</a>
+								</div>
+								<div class="news-widget__block__buttons">
+									<a class="Button--outlined-white" href="https://www.forenom.com/news/finlands-leading-business-travel-company-strengthens-its-management/">
+										Read more									</a>
+								</div>
+							</div>
+						</div>
+												<div class="news-widget__block col-lg-4">
+							<div class="news-widget__block__content">
+								<div class="news-widget__block__image">
+									<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?auto=compress&ixlib=php-3.3.0&s=4ca330dd0357c404a0c1b67ad36f94ac" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=140&s=62540983f43efc3dad20cadc9c553a5b 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=182&s=6ff8f00b191223b25c81ef5f2f846093 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=237&s=37266fe951088a09d1afa5c199864460 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=308&s=6178bdf9b3583c57146e961f60378b09 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=400&s=af6a14e2c37fc26a146596c854350311 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=520&s=107775f4cc6a147c32c4eb04500ae2ef 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=676&s=bad3163df609e0e2b55edc2de7e4d60c 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2021/03/Accommodation-types.png?ixlib=php-3.3.0&w=716&s=997a6565865af34b96b52608fe209807 716w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />								</div>
+								<div class="news-widget__block__texts">
+									<p class="intro-8df8ffe4-c598-4dae-af3b-c1b868295312">From 10th of May, we will start to return cleanings during accommodation back to normal frequency.</p>
+									<a href="https://www.forenom.com/news/cleanings-during-stay-will-start-again/">
+										<h3 class="heading-8df8ffe4-c598-4dae-af3b-c1b868295312">Cleanings during stay will start again</h3>
+									</a>
+								</div>
+								<div class="news-widget__block__buttons">
+									<a class="Button--outlined-white" href="https://www.forenom.com/news/cleanings-during-stay-will-start-again/">
+										Read more									</a>
+								</div>
+							</div>
+						</div>
+												<div class="news-widget__block col-lg-4">
+							<div class="news-widget__block__content">
+								<div class="news-widget__block__image">
+									<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?auto=compress&ixlib=php-3.3.0&s=9db252cbabb552194a105e6e808b4bbb" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=140&s=eb4bb86fc9abe28ec6aeab493f9aa704 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=182&s=2964174b4d0f435f3b20685b755f667b 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=237&s=02727087c1788c8ba735996257aadb07 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=308&s=1f3f132f9a2f2f55ee10dc0165cb60e5 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=400&s=3446e72542dcb9e03d148521f8f4bb8d 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=520&s=24a6723805098fed4f1a41a329626fcc 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=676&s=4240010832f9b5e101aa2904ab5c21d1 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2020/07/clean.png?ixlib=php-3.3.0&w=716&s=40bd5bed2673731a8c0fec8bf66d2e44 716w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />								</div>
+								<div class="news-widget__block__texts">
+									<p class="intro-8df8ffe4-c598-4dae-af3b-c1b868295312">Weekly cleanings paused in Helsinki region starting from 8 March 2021.</p>
+									<a href="https://www.forenom.com/news/changes-to-the-cleaning-and-maintenance-starting-from-8-march-2021/">
+										<h3 class="heading-8df8ffe4-c598-4dae-af3b-c1b868295312">Changes to the cleaning and maintenance</h3>
+									</a>
+								</div>
+								<div class="news-widget__block__buttons">
+									<a class="Button--outlined-white" href="https://www.forenom.com/news/changes-to-the-cleaning-and-maintenance-starting-from-8-march-2021/">
+										Read more									</a>
+								</div>
+							</div>
+						</div>
+											</div>
+				</div>
+			</div>
+			<script>
+				jQuery(function() {
+					if(jQuery().matchHeight) {
+						jQuery('.intro-8df8ffe4-c598-4dae-af3b-c1b868295312').matchHeight();
+						jQuery('.heading-8df8ffe4-c598-4dae-af3b-c1b868295312').matchHeight();
+					}
+				});
+			</script>
+			</div></div><div id="pg-274-4"  class="panel-grid panel-no-style" ><div id="pgc-274-4-0"  class="panel-grid-cell" >			<div class="references-widget">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<div class="references-widget__section-title">
+								<h2>Customer references</h2>
+															</div>
+						</div>
+					</div>
+				</div>
+				<div class="references-widget__section_cards">
+					<div class="container">
+						<div class="row">
+															<div class="references-widget__block col-lg-4">
+									<div class="references-widget__block__image">
+										<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?auto=compress&ixlib=php-3.3.0&s=e9fe57651df1fd2f066e546ea187ed5c" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=140&s=9f4b660a6ce6953ae646f06129d553ad 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=182&s=d180ff7a9ec76c5658a04bd948f14148 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=237&s=2f0644c0c9cfc52a994ee0f712763572 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=308&s=6eae253e2a4490a4600172e2db2c1ce9 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=400&s=9cfe91716d4608ad97f85e5b1edc3322 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=520&s=3f2baf0aaddd88fdd2e0b4dfca24e00b 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=676&s=460007bef5ab7200c21f358ae001b00d 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/01/08113133/Solar-Films-Hanna3.jpg?ixlib=php-3.3.0&w=716&s=518e587b9e0526420efaa883bf746484 716w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />									</div>
+									<div class="references-widget__block__texts">
+										<h3 class="intro-7eaba49a-9896-42d3-b9db-3e7076ba76e7">Forenom experiences: Solar Films</h3>
+										<a href="https://www.forenom.com/reference/forenom-experiences-solar-films/">
+											<p class="references-widget__block__quote heading-7eaba49a-9896-42d3-b9db-3e7076ba76e7">
+												The crew of the movie Fingerpori stayed in Forenom&#039;s Serviced Apartments 											</p>
+										</a>
+									</div>
+									<div class="references-widget__block__buttons">
+										<a class="Button--outlined-white" href="https://www.forenom.com/reference/forenom-experiences-solar-films/">Read more</a>
+									</div>
+								</div>
+															<div class="references-widget__block col-lg-4">
+									<div class="references-widget__block__image">
+										<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?auto=compress&ixlib=php-3.3.0&s=9c8e7d2b3a93c6bc911aa68899c6fd28" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=140&s=8673e6f14eb41d204a741490d39e6e6f 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=182&s=fecb2e390754ec2389b8f511151d67a5 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=237&s=796fc709a9d9420c2a63167dac421d7b 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=308&s=6a3c2c644927abd1ca2650959320c233 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=400&s=64908fd41efb6420e156f1d510ed0a4f 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=520&s=a776d6e62398b2610e1a5edb76d9135b 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=676&s=26bc789e0ec55272d1b52551250bcf8a 676w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/07/05150800/Purkupiha-thumbnail.jpg?ixlib=php-3.3.0&w=716&s=610fc1f0e96e455b7c16f9fda9945f61 716w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />									</div>
+									<div class="references-widget__block__texts">
+										<h3 class="intro-7eaba49a-9896-42d3-b9db-3e7076ba76e7">Forenom experiences: Purkupiha Oy</h3>
+										<a href="https://www.forenom.com/reference/forenom-experiences-purkupiha-oy/">
+											<p class="references-widget__block__quote heading-7eaba49a-9896-42d3-b9db-3e7076ba76e7">
+												Affordable, near-site accommodation for workers 											</p>
+										</a>
+									</div>
+									<div class="references-widget__block__buttons">
+										<a class="Button--outlined-white" href="https://www.forenom.com/reference/forenom-experiences-purkupiha-oy/">Read more</a>
+									</div>
+								</div>
+															<div class="references-widget__block col-lg-4">
+									<div class="references-widget__block__image">
+										<img src="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?auto=compress&ixlib=php-3.3.0&s=fd1c0fd4ee1106b06cb190a3b37b4390" srcset="https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=140&s=a59998880ba21a525d865b14c19cf368 140w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=182&s=94be9f5254fc025887d412b3b436fe30 182w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=237&s=2eb2c16a7cfb98033b3b92f41ffdcfb2 237w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=308&s=d3c51e3e58c22de68e9976e33d75b40a 308w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=400&s=46dec04f6e23a1f51bbca2fc0f07b40c 400w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=520&s=9b6999b3475d8eaaba8a4d42849dac08 520w,
+https://prod-wordpress-forenom.imgix.net/wp-content/uploads/2019/02/Seagulls-3-600x399.jpg?ixlib=php-3.3.0&w=600&s=8453d9025a92cd3f3a9c6c30d8349cfd 600w" sizes="(min-width: 991px) 370px, (min-width: 767px) 716px, 500px" alt="" />									</div>
+									<div class="references-widget__block__texts">
+										<h3 class="intro-7eaba49a-9896-42d3-b9db-3e7076ba76e7">Forenom experiences: Helsinki Seagulls</h3>
+										<a href="https://www.forenom.com/reference/forenom-experiences-helsinki-seagulls/">
+											<p class="references-widget__block__quote heading-7eaba49a-9896-42d3-b9db-3e7076ba76e7">
+												Basketball team lives in Forenom&#039;s apartments during league season											</p>
+										</a>
+									</div>
+									<div class="references-widget__block__buttons">
+										<a class="Button--outlined-white" href="https://www.forenom.com/reference/forenom-experiences-helsinki-seagulls/">Read more</a>
+									</div>
+								</div>
+													</div>
+					</div>
+				</div>
+			</div>
+			<script>
+				jQuery(function() {
+					if(jQuery().matchHeight) {
+						jQuery('.intro-7eaba49a-9896-42d3-b9db-3e7076ba76e7').matchHeight();
+						jQuery('.heading-7eaba49a-9896-42d3-b9db-3e7076ba76e7').matchHeight();
+					}
+				});
+			</script>
+			</div></div></div>	</div><!-- .entry-content -->
+</article><!-- #post-## -->
+
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<footer class="footer" role="contentinfo">
+	<div class="container">
+
+		<div class="footer__row">
+						<div class="footer__col contact-item-widget">
+				<h2>Finland</h4>
+
+				<div class="contact-item-widget__section-title">
+					24h Customer service				</div>
+				<a class="contact-item-widget__phone" href="tel:+358 20 198 3420">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+358 20 198 3420				</a>
+				<br>
+														<a class="contact-item-widget__whatsapp" target="__blank" href="https://wa.me/358201983420">
+						<svg viewBox="0 0 419 421" xmlns="http://www.w3.org/2000/svg"><g id="WhatsApp-Logo" serif:id="WhatsApp Logo"><path d="M305.389,252.212c-5.211,-2.608 -30.831,-15.213 -35.608,-16.954c-4.776,-1.739 -8.25,-2.607 -11.724,2.608c-3.474,5.216 -13.461,16.955 -16.501,20.433c-3.039,3.477 -6.079,3.914 -11.29,1.304c-5.211,-2.608 -22.002,-8.11 -41.906,-25.865c-15.491,-13.818 -25.95,-30.882 -28.989,-36.099c-3.04,-5.217 -0.325,-8.037 2.284,-10.635c2.345,-2.335 5.212,-6.087 7.817,-9.13c2.606,-3.042 3.474,-5.217 5.211,-8.693c1.737,-3.479 0.869,-6.521 -0.435,-9.129c-1.302,-2.608 -11.724,-28.259 -16.066,-38.694c-4.23,-10.16 -8.526,-8.784 -11.725,-8.945c-3.036,-0.151 -6.514,-0.183 -9.987,-0.183c-3.474,0 -9.12,1.304 -13.897,6.52c-4.776,5.217 -18.238,17.825 -18.238,43.473c0,25.651 18.672,50.429 21.278,53.907c2.606,3.479 36.745,56.113 89.021,78.685c12.432,5.37 22.139,8.576 29.707,10.977c12.483,3.967 23.843,3.407 32.822,2.065c10.012,-1.495 30.831,-12.605 35.174,-24.777c4.342,-12.175 4.342,-22.608 3.039,-24.781c-1.302,-2.174 -4.776,-3.478 -9.987,-6.087m-95.082,129.825l-0.07,0c-31.105,-0.012 -61.613,-8.369 -88.227,-24.162l-6.33,-3.757l-65.606,17.21l17.511,-63.966l-4.121,-6.559c-17.352,-27.598 -26.517,-59.496 -26.503,-92.25c0.038,-95.573 77.8,-173.329 173.415,-173.329c46.3,0.016 89.822,18.07 122.551,50.836c32.727,32.764 50.74,76.316 50.722,122.633c-0.039,95.581 -77.8,173.344 -173.342,173.344m147.528,-320.874c-39.375,-39.421 -91.739,-61.14 -147.53,-61.163c-114.953,0 -208.511,93.552 -208.557,208.54c-0.015,36.758 9.588,72.635 27.839,104.264l-29.587,108.071l110.558,-29.001c30.462,16.615 64.759,25.373 99.664,25.384l0.086,0c114.941,0 208.507,-93.561 208.554,-208.551c0.021,-55.726 -21.652,-108.124 -61.027,-147.544" fill="currentColor"/></g></svg>
+						WhatsApp
+					</a>
+					<br>
+								<a class="contact-item-widget__opening" href="mailto:info@forenom.fi">
+					info@forenom.fi				</a>
+
+				<br><br>
+
+				<div class="contact-item-widget__section-title">
+					Corporate Sales				</div>
+				<a class="contact-item-widget__phone" href="tel:+358 20 198 3420">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+358 20 198 3420				</a>
+				<div class="contact-item-widget__opening">
+					Mon - Fri:&nbsp;08:00&nbsp;-&nbsp;18:00				</div>
+				<div class="contact-item-widget__opening">
+					Sat:&nbsp;Closed				</div>
+				<div class="contact-item-widget__opening">
+					Sun:&nbsp;Closed				</div>
+				<a class="contact-item-widget__opening" href="mailto:sales@forenom.com">
+					sales@forenom.com				</a>
+							</div>
+						<div class="footer__col contact-item-widget">
+				<h2>Sweden</h4>
+
+				<div class="contact-item-widget__section-title">
+					24h Customer service				</div>
+				<a class="contact-item-widget__phone" href="tel:+46 8 120 74 300">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+46 8 120 74 300				</a>
+				<br>
+														<a class="contact-item-widget__whatsapp" target="__blank" href="https://wa.me/46812074300">
+						<svg viewBox="0 0 419 421" xmlns="http://www.w3.org/2000/svg"><g id="WhatsApp-Logo" serif:id="WhatsApp Logo"><path d="M305.389,252.212c-5.211,-2.608 -30.831,-15.213 -35.608,-16.954c-4.776,-1.739 -8.25,-2.607 -11.724,2.608c-3.474,5.216 -13.461,16.955 -16.501,20.433c-3.039,3.477 -6.079,3.914 -11.29,1.304c-5.211,-2.608 -22.002,-8.11 -41.906,-25.865c-15.491,-13.818 -25.95,-30.882 -28.989,-36.099c-3.04,-5.217 -0.325,-8.037 2.284,-10.635c2.345,-2.335 5.212,-6.087 7.817,-9.13c2.606,-3.042 3.474,-5.217 5.211,-8.693c1.737,-3.479 0.869,-6.521 -0.435,-9.129c-1.302,-2.608 -11.724,-28.259 -16.066,-38.694c-4.23,-10.16 -8.526,-8.784 -11.725,-8.945c-3.036,-0.151 -6.514,-0.183 -9.987,-0.183c-3.474,0 -9.12,1.304 -13.897,6.52c-4.776,5.217 -18.238,17.825 -18.238,43.473c0,25.651 18.672,50.429 21.278,53.907c2.606,3.479 36.745,56.113 89.021,78.685c12.432,5.37 22.139,8.576 29.707,10.977c12.483,3.967 23.843,3.407 32.822,2.065c10.012,-1.495 30.831,-12.605 35.174,-24.777c4.342,-12.175 4.342,-22.608 3.039,-24.781c-1.302,-2.174 -4.776,-3.478 -9.987,-6.087m-95.082,129.825l-0.07,0c-31.105,-0.012 -61.613,-8.369 -88.227,-24.162l-6.33,-3.757l-65.606,17.21l17.511,-63.966l-4.121,-6.559c-17.352,-27.598 -26.517,-59.496 -26.503,-92.25c0.038,-95.573 77.8,-173.329 173.415,-173.329c46.3,0.016 89.822,18.07 122.551,50.836c32.727,32.764 50.74,76.316 50.722,122.633c-0.039,95.581 -77.8,173.344 -173.342,173.344m147.528,-320.874c-39.375,-39.421 -91.739,-61.14 -147.53,-61.163c-114.953,0 -208.511,93.552 -208.557,208.54c-0.015,36.758 9.588,72.635 27.839,104.264l-29.587,108.071l110.558,-29.001c30.462,16.615 64.759,25.373 99.664,25.384l0.086,0c114.941,0 208.507,-93.561 208.554,-208.551c0.021,-55.726 -21.652,-108.124 -61.027,-147.544" fill="currentColor"/></g></svg>
+						WhatsApp
+					</a>
+					<br>
+								<a class="contact-item-widget__opening" href="mailto:info@forenom.se">
+					info@forenom.se				</a>
+
+				<br><br>
+
+				<div class="contact-item-widget__section-title">
+					Corporate Sales				</div>
+				<a class="contact-item-widget__phone" href="tel:+46 8 120 74 300">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+46 8 120 74 300				</a>
+				<div class="contact-item-widget__opening">
+					Mon - Fri:&nbsp;08:00&nbsp;-&nbsp;17:00				</div>
+				<div class="contact-item-widget__opening">
+					Sat:&nbsp;Closed				</div>
+				<div class="contact-item-widget__opening">
+					Sun:&nbsp;Closed				</div>
+				<a class="contact-item-widget__opening" href="mailto:sales@forenom.se">
+					sales@forenom.se				</a>
+							</div>
+						<div class="footer__col contact-item-widget">
+				<h2>Norway</h4>
+
+				<div class="contact-item-widget__section-title">
+					24h Customer service				</div>
+				<a class="contact-item-widget__phone" href="tel: +47 22 51 02 50">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					 +47 22 51 02 50				</a>
+				<br>
+														<a class="contact-item-widget__whatsapp" target="__blank" href="https://wa.me/4722510250">
+						<svg viewBox="0 0 419 421" xmlns="http://www.w3.org/2000/svg"><g id="WhatsApp-Logo" serif:id="WhatsApp Logo"><path d="M305.389,252.212c-5.211,-2.608 -30.831,-15.213 -35.608,-16.954c-4.776,-1.739 -8.25,-2.607 -11.724,2.608c-3.474,5.216 -13.461,16.955 -16.501,20.433c-3.039,3.477 -6.079,3.914 -11.29,1.304c-5.211,-2.608 -22.002,-8.11 -41.906,-25.865c-15.491,-13.818 -25.95,-30.882 -28.989,-36.099c-3.04,-5.217 -0.325,-8.037 2.284,-10.635c2.345,-2.335 5.212,-6.087 7.817,-9.13c2.606,-3.042 3.474,-5.217 5.211,-8.693c1.737,-3.479 0.869,-6.521 -0.435,-9.129c-1.302,-2.608 -11.724,-28.259 -16.066,-38.694c-4.23,-10.16 -8.526,-8.784 -11.725,-8.945c-3.036,-0.151 -6.514,-0.183 -9.987,-0.183c-3.474,0 -9.12,1.304 -13.897,6.52c-4.776,5.217 -18.238,17.825 -18.238,43.473c0,25.651 18.672,50.429 21.278,53.907c2.606,3.479 36.745,56.113 89.021,78.685c12.432,5.37 22.139,8.576 29.707,10.977c12.483,3.967 23.843,3.407 32.822,2.065c10.012,-1.495 30.831,-12.605 35.174,-24.777c4.342,-12.175 4.342,-22.608 3.039,-24.781c-1.302,-2.174 -4.776,-3.478 -9.987,-6.087m-95.082,129.825l-0.07,0c-31.105,-0.012 -61.613,-8.369 -88.227,-24.162l-6.33,-3.757l-65.606,17.21l17.511,-63.966l-4.121,-6.559c-17.352,-27.598 -26.517,-59.496 -26.503,-92.25c0.038,-95.573 77.8,-173.329 173.415,-173.329c46.3,0.016 89.822,18.07 122.551,50.836c32.727,32.764 50.74,76.316 50.722,122.633c-0.039,95.581 -77.8,173.344 -173.342,173.344m147.528,-320.874c-39.375,-39.421 -91.739,-61.14 -147.53,-61.163c-114.953,0 -208.511,93.552 -208.557,208.54c-0.015,36.758 9.588,72.635 27.839,104.264l-29.587,108.071l110.558,-29.001c30.462,16.615 64.759,25.373 99.664,25.384l0.086,0c114.941,0 208.507,-93.561 208.554,-208.551c0.021,-55.726 -21.652,-108.124 -61.027,-147.544" fill="currentColor"/></g></svg>
+						WhatsApp
+					</a>
+					<br>
+								<a class="contact-item-widget__opening" href="mailto:info@forenom.no">
+					info@forenom.no				</a>
+
+				<br><br>
+
+				<div class="contact-item-widget__section-title">
+					Corporate Sales				</div>
+				<a class="contact-item-widget__phone" href="tel: +47 22 51 02 50">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					 +47 22 51 02 50				</a>
+				<div class="contact-item-widget__opening">
+					Mon - Fri:&nbsp;8:00 – 16:00				</div>
+				<div class="contact-item-widget__opening">
+					Sat:&nbsp;Closed				</div>
+				<div class="contact-item-widget__opening">
+					Sun:&nbsp;Closed				</div>
+				<a class="contact-item-widget__opening" href="mailto:sales@forenom.no">
+					sales@forenom.no				</a>
+							</div>
+						<div class="footer__col contact-item-widget">
+				<h2>Denmark</h4>
+
+				<div class="contact-item-widget__section-title">
+					24h Customer service				</div>
+				<a class="contact-item-widget__phone" href="tel:+45 78 79 53 00">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+45 78 79 53 00				</a>
+				<br>
+														<a class="contact-item-widget__whatsapp" target="__blank" href="https://wa.me/4578795300">
+						<svg viewBox="0 0 419 421" xmlns="http://www.w3.org/2000/svg"><g id="WhatsApp-Logo" serif:id="WhatsApp Logo"><path d="M305.389,252.212c-5.211,-2.608 -30.831,-15.213 -35.608,-16.954c-4.776,-1.739 -8.25,-2.607 -11.724,2.608c-3.474,5.216 -13.461,16.955 -16.501,20.433c-3.039,3.477 -6.079,3.914 -11.29,1.304c-5.211,-2.608 -22.002,-8.11 -41.906,-25.865c-15.491,-13.818 -25.95,-30.882 -28.989,-36.099c-3.04,-5.217 -0.325,-8.037 2.284,-10.635c2.345,-2.335 5.212,-6.087 7.817,-9.13c2.606,-3.042 3.474,-5.217 5.211,-8.693c1.737,-3.479 0.869,-6.521 -0.435,-9.129c-1.302,-2.608 -11.724,-28.259 -16.066,-38.694c-4.23,-10.16 -8.526,-8.784 -11.725,-8.945c-3.036,-0.151 -6.514,-0.183 -9.987,-0.183c-3.474,0 -9.12,1.304 -13.897,6.52c-4.776,5.217 -18.238,17.825 -18.238,43.473c0,25.651 18.672,50.429 21.278,53.907c2.606,3.479 36.745,56.113 89.021,78.685c12.432,5.37 22.139,8.576 29.707,10.977c12.483,3.967 23.843,3.407 32.822,2.065c10.012,-1.495 30.831,-12.605 35.174,-24.777c4.342,-12.175 4.342,-22.608 3.039,-24.781c-1.302,-2.174 -4.776,-3.478 -9.987,-6.087m-95.082,129.825l-0.07,0c-31.105,-0.012 -61.613,-8.369 -88.227,-24.162l-6.33,-3.757l-65.606,17.21l17.511,-63.966l-4.121,-6.559c-17.352,-27.598 -26.517,-59.496 -26.503,-92.25c0.038,-95.573 77.8,-173.329 173.415,-173.329c46.3,0.016 89.822,18.07 122.551,50.836c32.727,32.764 50.74,76.316 50.722,122.633c-0.039,95.581 -77.8,173.344 -173.342,173.344m147.528,-320.874c-39.375,-39.421 -91.739,-61.14 -147.53,-61.163c-114.953,0 -208.511,93.552 -208.557,208.54c-0.015,36.758 9.588,72.635 27.839,104.264l-29.587,108.071l110.558,-29.001c30.462,16.615 64.759,25.373 99.664,25.384l0.086,0c114.941,0 208.507,-93.561 208.554,-208.551c0.021,-55.726 -21.652,-108.124 -61.027,-147.544" fill="currentColor"/></g></svg>
+						WhatsApp
+					</a>
+					<br>
+								<a class="contact-item-widget__opening" href="mailto:info@forenom.dk">
+					info@forenom.dk				</a>
+
+				<br><br>
+
+				<div class="contact-item-widget__section-title">
+					Corporate Sales				</div>
+				<a class="contact-item-widget__phone" href="tel:+45 78 79 53 00">
+					<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.23 15.26l-2.54-.29a1.99 1.99 0 00-1.64.57l-1.84 1.84a15.045 15.045 0 01-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 00-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z" fill="currentcolor"/></svg>
+					+45 78 79 53 00				</a>
+				<div class="contact-item-widget__opening">
+					Mon - Fri:&nbsp;8:30 – 15:30				</div>
+				<div class="contact-item-widget__opening">
+					Sat:&nbsp;Closed				</div>
+				<div class="contact-item-widget__opening">
+					Sun:&nbsp;Closed				</div>
+				<a class="contact-item-widget__opening" href="mailto:sales@forenom.dk">
+					sales@forenom.dk				</a>
+							</div>
+					</div>
+
+		<div class="footer__row">
+
+			<div class="footer__col">
+				<h2>Language</h4>
+				<div class="footer-lang">
+					<button type="button" class="footer-lang__toggle">
+						<span class='footer-lang__globe-icon'><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.809 3.81448C11.2267 3.417 11.6281 3.25 12 3.25C12.3719 3.25 12.7733 3.417 13.191 3.81448C13.6119 4.21503 14.0194 4.82418 14.3751 5.62471C15.0268 7.09086 15.4639 9.1065 15.5323 11.375H8.46772C8.53608 9.1065 8.97323 7.09086 9.62485 5.62471C9.98065 4.82418 10.3881 4.21503 10.809 3.81448ZM7.21719 11.375C7.28572 8.96405 7.74842 6.76893 8.48259 5.11704C8.71901 4.58508 8.98791 4.09973 9.28795 3.67842C5.97256 4.7582 3.52681 7.76415 3.27198 11.375H7.21719ZM3.27198 12.625H7.21719C7.28572 15.0359 7.74842 17.2311 8.48259 18.883C8.71901 19.4149 8.98792 19.9003 9.28795 20.3216C5.97256 19.2418 3.52681 16.2358 3.27198 12.625ZM8.46772 12.625H15.5323C15.4639 14.8935 15.0268 16.9091 14.3751 18.3753C14.0194 19.1758 13.6119 19.785 13.191 20.1855C12.7733 20.583 12.3719 20.75 12 20.75C11.6281 20.75 11.2267 20.583 10.809 20.1855C10.3881 19.785 9.98065 19.1758 9.62485 18.3753C8.97323 16.9091 8.53608 14.8935 8.46772 12.625ZM16.7828 12.625C16.7143 15.0359 16.2516 17.2311 15.5174 18.883C15.281 19.4149 15.0121 19.9003 14.712 20.3216C18.0274 19.2418 20.4732 16.2358 20.728 12.625H16.7828ZM20.728 11.375C20.4732 7.76415 18.0274 4.7582 14.712 3.67842C15.0121 4.09973 15.281 4.58509 15.5174 5.11704C16.2516 6.76893 16.7143 8.96405 16.7828 11.375H20.728ZM22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"/>
+</svg>
+</span>
+						EN						<svg class='footer-lang__arrow-icon' viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/></svg>
+					</button>
+					<ul class="footer-lang__menu">
+													<li >
+								<a href="https://www.forenom.com/fi/">FI</a>
+							</li>
+													<li >
+								<a href="https://www.forenom.com/sv/">SV</a>
+							</li>
+													<li >
+								<a href="https://www.forenom.com/nb/">NB</a>
+							</li>
+													<li >
+								<a href="https://www.forenom.com/da/">DA</a>
+							</li>
+													<li >
+								<a href="https://www.forenom.com/ru/">RU</a>
+							</li>
+											</ul>
+				</div>
+				<script>
+					// Functionality for opening the lang menu and closing it when clicking outside it
+					(function() {
+						var containerClass = 'footer-lang';
+						var openClass = 'footer-lang--open';
+						var buttonClass = 'footer-lang__toggle';
+						var menuClass = 'footer-lang__menu';
+						var container = document.querySelector('.' + containerClass);
+
+						var onBodyClick = function(event) {
+							var node = event.target;
+							while (node && node.classList) {
+								// Bail out if clicked inside the lang menu
+								if (node.classList.contains(menuClass)) {
+									return;
+								}
+								node = node.parentNode;
+							}
+							container.classList.remove(openClass);
+							window.removeEventListener('click', onBodyClick);
+						};
+
+						document
+							.querySelector('.' + buttonClass)
+							.addEventListener('click', function(event) {
+								if (!container.classList.contains(openClass)) {
+									container.classList.add(openClass);
+									window.addEventListener('click', onBodyClick);
+									event.stopPropagation();
+								}
+							});
+					}());
+				</script>
+			</div>
+
+							<div class="footer__col">
+					<h2>Help</h2>
+					<ul>
+											<li>
+							<a href="https://www.forenom.com/for-guests/accommodation-info/">FAQs</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/contact/">Contact</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/for-property-owners/">For property owners</a>
+						</li>
+										</ul>
+				</div>
+							<div class="footer__col">
+					<h2>About</h2>
+					<ul>
+											<li>
+							<a href="https://www.forenom.com/about/">About</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/about/services/">Additional Services</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/about/careers/">Careers</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/about/customer-experiences/">Customers’ experiences</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/category/blog/">Blog</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/category/news/">News</a>
+						</li>
+											<li>
+							<a href="https://www.forenom.com/for-guests/accommodation-info/#terms">Terms and Conditions</a>
+						</li>
+										</ul>
+				</div>
+			
+			<div class="footer__col">
+				<section id="nav_menu-2" class="widget widget_nav_menu"><h2 class="widgettitle">Accommodation types</h2>
+<div class="menu-footer-accommodation-types-en-container"><ul id="menu-footer-accommodation-types-en" class="menu"><li id="menu-item-9183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9183"><a href="https://www.forenom.com/furnished-apartments/">Serviced Apartments</a></li>
+<li id="menu-item-9181" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9181"><a href="https://www.forenom.com/aparthotels/">Aparthotels</a></li>
+<li id="menu-item-9182" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9182"><a href="https://www.forenom.com/hostels/">Hostels</a></li>
+<li id="menu-item-27992" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-27992"><a href="https://www.forenom.com/accommodation/">All accommodation</a></li>
+</ul></div></section><section id="nav_menu-4" class="widget widget_nav_menu"><h2 class="widgettitle">For businesses</h2>
+<div class="menu-footer-for-businesses-en-container"><ul id="menu-footer-for-businesses-en" class="menu"><li id="menu-item-215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-215"><a href="https://www.forenom.com/for-businesses/">For businesses</a></li>
+<li id="menu-item-15994" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15994"><a href="https://www.forenom.com/about/customer-experiences/">Customers&#8217; experiences</a></li>
+</ul></div></section>			</div>
+
+		</div>
+	</div>
+
+	<div class="footer__some">
+		<div class="container">
+			<div class="footer__some-title">Follow us on social media</div>
+			<div class="footer__some-icons">
+				<a target="_blank" href="https://www.facebook.com/Forenom" rel="noopener noreferrer">
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+				</a>
+				<a target="_blank" href="https://twitter.com/forenom" rel="noopener noreferrer">
+					<i class="fa fa-twitter" aria-hidden="true"></i>
+				</a>
+				<a target="_blank" href="https://www.linkedin.com/company/forenom" rel="noopener noreferrer">
+					<i class="fa fa-linkedin" aria-hidden="true"></i>
+				</a>
+				<a target="_blank" href="https://www.youtube.com/user/Forenom" rel="noopener noreferrer">
+					<i class="fa fa-youtube" aria-hidden="true"></i>
+				</a>
+				<a target="_blank" href="https://www.instagram.com/forenom/" rel="noopener noreferrer">
+					<i class="fa fa-instagram" aria-hidden="true"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer__legal container">
+		<div>&copy; Forenom Oy 2021</div>
+					<div>
+				<a href="https://www.forenom.com/privacy/">Privacy</a>
+			</div>
+			</div>
+</footer>
+<div data-contact-widget-mount></div>
+<div class="chat-widget-launchers">
+	<div data-whatsapp-widget-mount></div>
+</div>
+<link rel='stylesheet' id='font-awesome-css'  href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=5.8.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.forenom.com/wp-content/themes/fcom/dist/navigation.772307f06c5469d5add3.min.js' id='navigation-script-js'></script>
+<script type='text/javascript' id='fcom-script-js-extra'>
+/* <![CDATA[ */
+var FCOM_OPTIONS = {"language":"en","locationUrls":{"apartment":"\/furnished-apartments","apartmentGroup":"\/apartments","hostel":"\/hostels","aparthotel":"\/aparthotels","cashier":"\/cashier","receipt":"\/receipt","reservationExtension":"\/extend-reservation","search":"\/location-search","login":"\/login","passwordReset":"\/password-change","identityVerification":"\/identity-verification","cleaningFeedback":"\/cleaning-feedback"},"reservationApiUrl":"https:\/\/api.forenom.com\/rest\/v1","shopUrl":"","translations":{"(incl. {amount} deposit)":"(incl. {amount} deposit)","{amount} as deposit":"{amount} as deposit","\/privacy\/":"\/privacy\/","A copy of your request has also been sent to the email address you provided.":"A copy of your request has also been sent to the email address you provided.","accommodation":"Accommodation","add-rooms":"Add Rooms","amenities":"Amenities","amenity__armchair":"Armchair","amenity__balcony":"Balcony","amenity__balcony_chairs":"Balcony chair","amenity__balcony_table":"Balcony table","amenity__bathroom":"Bathroom","amenity__bathroom_shared":"Shared bathroom","amenity__bathtub":"Bathtub","amenity__blackout_curtain":"Blackout curtain","amenity__bookshelf":"Bookshelf","amenity__breakfast":"Breakfast (extra fee)","amenity__cabinet":"Wardrobe","amenity__carpet":"Carpet","amenity__chairs":"Chairs","amenity__cleaning_detergent":"Cleaning detergent (starter kit)","amenity__cleaning_supplies":"Cleaning supplies","amenity__code_lock":"Code lock","amenity__coffee_filter":"Coffee filter","amenity__coffeemaker":"Coffeemaker","amenity__cooking_supplies":"Cooking supplies","amenity__countertop_ceramic":"Countertop (ceramic)","amenity__countertop_wood":"Countertop (wood)","amenity__cutlery":"Cutlery","amenity__digibox":"Digibox","amenity__dishwasher":"Dishwasher","amenity__dishwashing_detergent":"Dishwashing detergent (starter kit)","amenity__drying_cabinet":"Drying cabinet","amenity__electric_kettle":"Electric kettle","amenity__electricity":"Electricity","amenity__elevator":"Elevator","amenity__freezer":"Freezer","amenity__french_balcony":"French balcony","amenity__french_press":"French press","amenity__fridge":"Fridge","amenity__glazed_balcony":"Glazed balcony","amenity__greaseproof_paper":"Greaseproof paper (starter kit)","amenity__hair_dryer":"Hair dryer","amenity__hand_soap":"Hand soap (starter kit)","amenity__heating":"Heating","amenity__high_chair":"Bar stool","amenity__hot_plate":"Hot plate","amenity__indoor_parking_hall":"Indoor parking","amenity__inner_ward_window":"Inner ward window","amenity__internet":"Internet","amenity__ironing_board":"Ironing board","amenity__kitchen":"Kitchen","amenity__kitchen_shared":"Shared kitchen","amenity__kitchenette":"Kitchenette","amenity__laminate_floor":"Laminate floor","amenity__lamp":"Lamps","amenity__laundry_detergent":"Laundry detergent (starter kit)","amenity__laundry_facilities":"Laundry facilities","amenity__laundry_rack":"Laundry rack","amenity__microwave_oven":"Microwave oven","amenity__non_smoking_building":"Non-smoking building","amenity__oven":"Oven","amenity__paper_towels":"Paper towels (starter kit)","amenity__parking_available":"Parking available","amenity__parking_heated":"Parking with outlet","amenity__parking_not_heated":"Parking without outlet","amenity__parking_orderable":"Parking (orderable)","amenity__parquet_floor":"Parquet floor","amenity__pet_friendly":"Pet-friendly","amenity__pets":"Pets allowed","amenity__pets_allowed":"Pets allowed (extra fee)","amenity__plastic_carpet":"Plastic carpet","amenity__sauna":"Sauna","amenity__sauna_seat_cover":"Sauna seat covers (starter kit)","amenity__sauna_shared":"Shared sauna","amenity__shared_laundry_room":"Shared laundry room","amenity__shared_lounge":"Shared lounge","amenity__shower":"Shower","amenity__shower_gel":"Shower gel","amenity__shower_shared":"Shared shower","amenity__sofa":"Sofa","amenity__stove":"Stove","amenity__stove_ceramic":"Ceramic stove","amenity__stove_gas":"Gas stove","amenity__stove_induction":"Induction stove","amenity__street_parking":"Public parking nearby","amenity__table":"Table","amenity__terrace":"Terrace","amenity__tiled_bathroom":"Tiled bathroom","amenity__toaster":"Toaster","amenity__toilet_paper":"Toilet paper (starter kit)","amenity__tumble_dryer":"Tumble dryer","amenity__tv":"TV","amenity__tv_stand":"TV stand","amenity__vacuum_cleaner":"Vacuum cleaner","amenity__wardrobe":"Wardrobe","amenity__washing_machine":"Washing machine","amenity__water":"Water","amenity__wc":"WC","amenity__wheelchair_accessible":"Wheelchair accessible","amenity__wifi":"WiFi","amenity__wood_floor":"Wood floor","amenity__work_chair":"Work chair","amenity__work_table":"Work table","amenity-category__bathroom":"Bathroom","amenity-category__convenience":"Convenience","amenity-category__housekeeping":"Housekeeping","amenity-category__kitchen":"Kitchen","amenity-category__other":"Other","amount-per-month":"month","amount-per-night":"night","amount-per-guest":"guest","aparthotel":"Aparthotel","aparthotels":"Aparthotels","apartment-classification":"apartment-classification","apartment-groups":"apartment groups","apartment-unavailable":"The apartment isn't available during the selected dates.","apartment-unavailable-contact-us":"Did you not find what you were looking for? Give us a call at +358 20 198 3420 and we'll find you a place to stay!","apartment-units":"Apartment units","apartment":"Apartment","apartments":"apartments","apply":"Apply","as-card__description":"Book a stay with us using our booking search!","as-card__title":"Check our available accommodations!","as-card__accommodation-description":"","as-card__accommodation-title":"Check our available accommodations!","as-card__accommodation-button":"Accommodation","as-card__aparthotels-description":"A comfortable and convenient location, for work for vacation.","as-card__aparthotels-title":"Aparthotels","as-card__apartments-description":"The most homelike stay, enjoyable night and day","as-card__apartments-title":"Serviced apartments","as-card__hostels-description":"Affordable place, with private rooms and community space.","as-card__hostels-title":"Hostels","as-card__start-searching":"Start searching","as-card__view-listing":"View listing","back":"Back","bed-type__n-baby":"{n, plural, one {# baby bed} other {# baby beds}}","bed-type__n-bunk":"{n, plural, one {# bunk bed} other {# bunk beds}}","bed-type__n-chair":"{n, plural, one {# sofa bed for one} other {# sofa beds for one}}","bed-type__n-cot":"{n, plural, one {# baby bed} other {# baby beds}}","bed-type__n-cot_extra":"{n, plural, one {# extra baby bed} other {# extra baby beds}}","bed-type__n-double":"{n, plural, one {# double bed} other {# double beds}}","bed-type__n-double_extra":"{n, plural, one {# extra double bed} other {# extra double beds}}","bed-type__n-loft":"{n, plural, one {# loft bed} other {# loft beds}}","bed-type__n-queen":"{n, plural, one {# queen bed} other {# queen beds}}","bed-type__n-single":"{n, plural, one {# single bed} other {# single beds}}","bed-type__n-single_extra":"{n, plural, one {# extra bed} other {# extra beds}}","bed-type__n-sofa":"{n, plural, one {# sofa bed for two} other {# sofa beds for two}}","bed-type__n-wall":"{n, plural, one {# wallbed} other {# wallbeds}}","Billing":"Billing","Book":"Book","book":"Book","book-now":"Book now!","booking-location-info-header":"Description","booking-maintenance__body":"Unfortunately the site is currently down for a bit of maintenance so booking is disabled. We hope to be up and running again soon. Sorry for the inconvenience.","booking-maintenance__signature":"Forenom Team","booking-maintenance__title":"Hi there!","booking-n-nights-for-n-rooms":"{nights, plural, one {# night} other {# nights}} for {rooms, plural, one {# room} other {# rooms}}","booking-reviews":"Reviews","booking-room-options":"Room options","booking-room-price-summary-title":"{rooms} {rooms, plural, one {room} other {rooms}}, {nights} {nights, plural, one {night} other {nights}}","booking-room-selector-title":"Number of rooms","booking-selected-room-details":"Selected room details","booking-summary-amount-of-nights":"{duration} {duration, plural, one {night} other {nights}}","booking-summary-book-now":"Book now","booking-summary-header-selected-rooms":"Selected rooms","booking-summary-total-price-sum":"Total","booking-summary-pay":"Pay","booking-summary-view-order":"View order details","booking-summary-accommodation":"Accommodation","booking-summary-charges":"Charges","booking-summary-total-deposit":"Total deposit","booking-summary-services":"Services","booking-summary-info-pay-only-deposit":"You are only being charged for the deposit now. The remaining costs of your stay will be billed later.","breakfast":"breakfast","button-continue-with-previous-reservation":"Continue with the previous reservation","button-start-a-new-reservation":"Start new reservation","buyers-guide-lead-form-header":"Read the Buyer's guide!","cannot-make-reservation-to-selected-dates":"Cannot make reservation to selected dates!","change-password-invalid":"The link you used has likely expired. If you would still like to reset your password please try again.","change-password-label":"New password","change-password-please-login":"Please login.","change-password-success":"Password changed successfully.","change-password-title":"Choose a new password","chat-on-whatsapp":"Chat on WhatsApp","check-in":"Check-in","check-out":"Check-out","choose-file":"choose-file","city-listing-header-accommodation":"Forenom accommodation","city-listing-header-apartment":"Serviced apartments","city-listing-header-aparthotel":"Aparthotels","city-listing-header-hostel":"Hostels","cleaning-feedback-contact-me":"I wish to be contacted regarding this feedback.","cleaning-feedback-error":"Unfortunately something went wrong and we didn't receive your feedback. If the problem persist please contact Forenom customer service. We apologize for the inconvenience.","cleaning-feedback-invalid":"The link has likely expired.","cleaning-feedback-lead":"In order to improve our service continuously, feedback from our customers is invaluable and important to us!","cleaning-feedback-submit":"Send feedback","cleaning-feedback-success":"Thank you! We have received your feedback.","cleaning-feedback-textarea":"Please tell us what went well and where we can improve.","cleaning-feedback-title":"Cleaning feedback","Close":"Close","Closed":"Closed","comforts":"Comforts","config__booking-maintenance":"0","config__contact-widget-disabled":"1","config__popup-body":"<p>If you are unable to connect to Customer Service outside business hours, please call the Finnish Customer Service number: +358 20 198 3420<\/p><p>Supports  p-tags<\/p>","config__popup-enabled":"0","config__popup-title":"Dear customer","Contact us":"Contact us","contact-email__by-language":"sales@forenom.com","contact-phone__by-language":"+358 20 198 3420","contact-phone__dk":"+45 78 79 53 00","contact-phone__fi":"+358 20 198 3420","contact-phone__no":"+47 22 51 02 50","contact-phone__se":"+46 8 120 74 300","contact-us":"Contact us!","contact-us-we-ll-find-something-for-you":"You can also call at {phone} or send us an email to {email} and within 48 hours you'll have a place to stay. We have more accommodation options available offline and we're always happy and ready to find a suitable place for you!","continue":"continue","continue-to-checkout":"Continue to check-out","corporate-sales":"Corporate Sales","country-code-at":"Austria","country-code-be":"Belgium","country-code-bg":"Bulgaria","country-code-ch":"Switzerland","country-code-cy":"Cyprus","country-code-cz":"Czechia","country-code-de":"Germany","country-code-dk":"Denmark","country-code-ee":"Estonia","country-code-en":"England","country-code-es":"Spain","country-code-fi":"Finland","country-code-fr":"France","country-code-gr":"Greece","country-code-hr":"Croatia","country-code-hu":"Hungary","country-code-is":"Iceland","country-code-it":"Italy","country-code-li":"Liechtenstein","country-code-lt":"Lithuania","country-code-lu":"Luxembourg","country-code-lv":"Latvia","country-code-mc":"Monaco","country-code-me":"Montenegro","country-code-mt":"Malta","country-code-nl":"Netherlands","country-code-no":"Norway","country-code-pl":"Poland","country-code-pt":"Portugal","country-code-ro":"Romania","country-code-ru":"Russia","country-code-se":"Sweden","country-code-si":"Slovenia","country-code-sk":"Slovakia","country-code-ua":"Ukraine","country-listing-header-accommodation":"List of Forenom accommodation","country-listing-header-aparthotel":"List of Forenom Aparthotels","country-listing-header-apartment":"List of Forenom Serviced Apartments","country-listing-header-hostel":"List of Forenom Hostels","Customer service":"Customer service","denmark":"Denmark","description":"Description","details":"Details","didnt-find-what-looking-for":"Did you not find what you were looking for?","distance":"Distance","Done":"Done","edit-dates":"Edit dates","equipment":"Equipment","error-campaign-code-rejected":"Invalid code. Please check that you have entered the code correctly and whether the code applies for this location or room type.","error-confirm-failed":"Payment confirmation failed. Please click the button below to retry.","error-create-reservation":"Sorry, we are temporarily unable to process the reservation. Please refresh the page to try again. If this continues, please give us a call at {phone} or emailing {email}. We apologize for the inconvenience.","error-dialog-help":"Need help? Please give us a call at +358 20 198 3420","error-dialog-ok":"OK","error-dialog-retry":"Retry","error-dialog-title":"Something went wrong","error-location-not-found":"Location not found","error-page-not-found-description":"The page you were looking for could not be found.","error-page-not-found-title":"Oops!","error-payment-cancelled":"Payment was rejected. You have not been charged. Please try again or use another payment method.","error-payment-rejected":"Payment could not be verified. Please contact our customer support for additional details.","error-unknown-error":"An unknown error occurred.","Feel free to get in touch, whether you need accommodation or support":"Feel free to get in touch, whether you need accommodation or support","filter-amenities-title":"Amenities","filter-category-title":"Category","filter-distance-title":"Distance","filter-only-discounted":"Show only discounted locations","filter-only-discounted-title":"Discounted locations","filter-price-title":"Price\/night","filters":"Filters","filter":"Filter","finland":"Finland","follow-us-on-social-media":"Follow us on social media","forenom-apartments":"Forenom","form-contact-us-button-open":"Contact us!","form-contact-us-button-submit":"Contact me","form-contact-us-header":"Contact us","form-contact-us-intro-paragraph":"Did you not find what you were looking for? Not to worry! Please, leave your contact information so we can get back to you with a similar solution for your stay!","form-contact-us-label-accomodation-details":"Details:","form-contact-us-label-additional-Details":"Other details","form-contact-us-label-duration":"Duration:","form-contact-us-label-email":"E-mail","form-contact-us-label-guests":"Guests:","form-contact-us-label-name":"Name","form-contact-us-label-phone":"Telephone number","form-contact-us-placeholder-additional-details":"Additional details (preferred area, required utilities, price range for example).","form-contact-us-placeholder-email":"user.name@company.com","form-contact-us-placeholder-name":"Your Full Name","form-contact-us-placeholder-phone":"+041 234 5678","from-center-of":"from center of","furnished-apartments":"furnished apartments","furnishings":"furnishings","give-us-a-call":"Give us a call at {phone} and we'll find you a place to stay!","guest-reviews-invalid":"The link has likely expired.","guest-reviews-amount-of-hidden-reviews":"There {n, plural, one {is also # review without open feedback. It impacts} other { are also # reviews without open feedback. These impact}} the overall review score.","guest-reviews-amount-of-reviews":"{n, plural, one {# review} other {# reviews}}","guest-reviews-anonymous-guest":"Guest","guest-reviews-cleanliness-score":"Cleanliness","guest-reviews-customer-service-score":"Customer service","guest-reviews-internet-score":"Internet","guest-reviews-location-score":"Location","guest-reviews-not-enough-ratings":"This location hasn't received enough ratings or reviews to display.","guest-reviews-overall-score":"Overall score","guest-reviews-price-to-value-score":"Price to value","guests":"Guests","header-continue-the-reservation":"Continue the previous reservation?","hide-details":"Hide details","hide-map":"Hide map","Home":"Home","hostel":"Hostel","hostels":"Hostels","How can we help?":"How can we help?","id-verification-complete":"Verification complete!","id-verification-complete-subtitle":"We have received proof of your identity","id-verification-failed":"Verification failed. Please try again or try another verification method.","id-verification-in-progress":"Verification in progress. Please wait.","id-verification-method-document":"Passport, driving licence or national ID card","id-verification-method-bank_denmark":"Danish NemID","id-verification-method-bank_finland":"Finnish bank & mobile authentication","id-verification-method-bank_norway":"Norwegian BankID","id-verification-method-bank_norway_mobile":"Norwegian Mobile BankID","id-verification-method-bank_sweden":"Swedish BankID","id-verification-not-required":"Verification not required","id-verification-select":"Verification method","id-verification-subtitle":"Please choose one of the verification methods below.","id-verification-title":"Identity verification","id-verification-initialization-error":"Oops, sorry! An error occurred on our end and our customer identity verification system failed to load. Please contact Forenom\u2019s customer service by email or by phone if you are arriving today.","id-verification-max-attempts-reached":"You have reached the maximum number of attempts at verification using this method. Please try another verification method or contact Forenom\u2019s customer service for help in verifying your identity.","id-verification-invalid":"The link you used has likely expired.","images":"Images","infobox-price-from":"from","Inquiries and reservations":"Inquiries and reservations","invalid-email":"Please check you have entered a valid email address","invalid-number":"invalid-number","invalid-phone":"Please check you have entered a valid phone no.","invoicing-delivery-address":"Address","invoicing-delivery-method":"Delivery method","invoicing-delivery-method-email":"Email","invoicing-delivery-method-evoice":"E-invoice","invoicing-delivery-method-post":"Post","invoicing-name":"Name","invoicing-subtitle":"If you need to change your invoice details, please contact our customer service.","invoicing-title":"Invoice details","items":"items","just-a-moment":"Just a moment","Keys pickup":"Keys pickup","klarna-promotion-text":"Klarna","km":"km","language":"Language","language-code-da":"language-code-da","language-code-en":"language-code-en","language-code-fi":"language-code-fi","language-code-nb":"language-code-nb","language-code-ru":"language-code-ru","language-code-sv":"language-code-sv","listing-city-looking-title":"Looking for a solution?","listing-city-looking-description":"Book a stay with us using our booking search! If you can\u2019t find a place that works for you from our webshop, then we will find you a place to stay within 24 hours.","listing-city-search-button":"Start searching","listing-city-contact-button":"Contact us","loader-confirm-payment-subtitle":"Please wait a moment","loader-confirm-payment-title":"Confirming payment","loader-reservation-subtitle":"Please wait a moment","loader-reservation-title":"Loading reservation","loading-data":"Loading data...","loading-spinner-title":"Loading...","location":"Location","location-image-alt-aparthotel":"{title}","location-image-alt-apartment":"{title}","location-image-alt-hostel":"{title}","location-list-title-city-aparthotel":"Aparthotels - {city}","location-list-title-city-apartment":"Furnished apartments - {city}","location-list-title-city-hostel":"Hostels - {city}","location-number":"Location No.","locations":"Locations","login":"Log in","login-already-registered":"Already registered?","login-back-to-login-end":"login","login-back-to-login-start":"Back to","login-button":"Log in","login-button-signup-facebook":"Sign up with Facebook","login-button-signup-google":"Sign up with Google","login-email-address":"E-mail","login-error-with-reset-bad-request":"Password reset failed","login-error-with-signin-bad-request":"There was an error signing in. Please, write your email and password and verify they are correctly typed.","login-error-with-signup-bad-request":"There was an error signing up. The email address might already be in use.","login-firstname":"First name","login-forgot-your-password":"Forgot your password?","login-lastname":"Lastname","login-log-in":"Log in","login-log-in-to-continue":"Log in to continue","login-log-in-with-facebook":"Log in with Facebook","login-log-in-with-google":"Log in with Google","login-logged-in":"Logged in","login-logging-in":"Logging in...","login-marketing-consent":"Yes, I want access to Forenom's member-only offers and curated accommodation insights.","login-name-error":"Name must not contain digits or special characters","login-not-registed-yet":"Not registered yet?","login-password":"Password","login-password-error":"Password must be at least {minlength} characters long","login-password-repeat":"Repeat password","login-password-repeat-error":"Passwords don't match","login-password-reseted":"Your password has been reset. Please check your email.","login-register-here":"Register here","login-register-to-continue":"Register to continue","login-reset-password":"Reset password","login-reset-password-instructions":"Enter the email address associated with your account.","login-resetting-password":"Resetting password...","login-sign-up-button":"Sign up","login-signing-up":"Signing up...","login-widget-login":"Log in","login-widget-logout":"Log out","map":"Map","max":"Max.","meta-desc-location-list-city-accommodation":"meta-desc-location-list-city-accommodation","meta-desc-location-list-city-aparthotel":"Forenom has {location-count} aparthotels in {city}. Our hotels offer great quality for the price. We have removed the elements that you don't value and we've focused on the elements that you do when staying at the hotel. Browse {location-count} apartment hotels in {city} and book online!","meta-desc-location-list-city-apartment":"Forenom has {location-count} furnished apartments for rent in {city}. Whether you're looking for a studio or larger apartment, we've got you covered. Book now!","meta-desc-location-list-city-hostel":"Looking for a hostel? Forenom has {location-count} hostels in {city}. Forenom's hostels offer you accommodation with privacy and comfort at an affordable price. Book your Hostel room today!","meta-desc-location-list-country-accommodation":"Forenom offer affordable accommodation in great locations whether you are traveling for business or leisure. Book accommodations now!","meta-desc-location-list-country-aparthotel":"Forenom apartment hotels offer affordable accommodation in great locations whether you are traveling for business or leisure. Book your hotel now!","meta-desc-location-list-country-apartment":"We offer fully furnished apartments for rent across the Nordics whether you are interested in long or short term stay. Book now!","meta-desc-location-list-country-hostel":"Looking for a hostel? Forenom's hostels offer you accommodation with privacy and comfort at an affordable price. Book your Hostel room today!","meta-title-aparthotel":"{title} | Forenom","meta-title-apartment":"{title} | Forenom","meta-title-apartment-group":"meta-title-apartment-group","meta-title-hostel":"{title} | Forenom","meta-title-listing-city":"{category} - {city} | Forenom","meta-title-listing-city-accommodation":"Accomodation in {city}: Book online - Forenom","meta-title-listing-city-aparthotels":"meta-title-listing-city-aparthotels","meta-title-listing-city-apartments":"meta-title-listing-city-apartments","meta-title-listing-city-hostels":"meta-title-listing-city-hostels","meta-title-listing-country":"{category} | Forenom","meta-title-listing-country-accommodation":"Accomodation in the Nordics: Book online - Forenom","meta-title-listing-country-aparthotels":"meta-title-listing-country-aparthotels","meta-title-listing-country-apartments":"meta-title-listing-country-apartments","meta-title-listing-country-hostels":"meta-title-listing-country-hostels","min":"Min.","my-reservations":"My Reservations","n-amenities":"{n, plural, one {# amenity} other {# amenities}}","n-guests-plural":"{n, plural, one {# guest} other {# guests}}","n-locations-found":"{n, plural, one {# location found} other {# locations found}}","n-locations":"{n, plural, one {# location} other {# locations}}","n-more":"{n} more","n-more-nights":"{n, plural, one {# more night} other {# more nights}}","n-rooms":"{n, plural, one {# room} other {# rooms}}","new":"New","night":"night","nights":"nights","nights-plural":"{nights, plural, one {# night} other {# nights}}","norway":"Norway","of":"of","Office":"Office","only-rooms-remaining":"Only {rooms, plural, one {one room} other {# rooms}} remaining!","Opening hours":"Opening hours","optional":"optional","or":"Or","or-call":"Call","Other matters":"Other matters","page":"page","payment-details-accept-terms-of-use":"I confirm that I am over 18 years of age and that I have read and accepted contract terms","payment-details-campain-code-activate-button":"Activate","payment-details-campaign-code-applied":"Discount code applied","payment-details-header-payment":"Payment","payment-details-header-payment-method":"Payment method","payment-details-header-terms-of-use":"Terms of use","payment-details-label-campain-code":"Discount code","payment-details-link-terms-of-contract":"Terms of contract","payment-details-link-terms-of-payment":"Terms of payment","payment-details-method-button-continue":"Continue to pay","payment-details-method-selection-credit-card":"Pay by card","payment-details-method-selection-invoice":"Invoice","payment-details-method-selection-klarna":"Other payment methods","payment-details-method-selection-other":"Other payment methods","payment-details-method-selection-periodic-invoice":"Invoice payments in approximately {days} day intervals","payment-details-terms-must-accept":"Contract terms must be accepted before you can continue.","payment-received-button-confirm-guest-info":"Confirm guest info","payment-redirecting":"Redirecting to payment","photos":"Photos","previous-incomplete-reservation-found":"You have a previous incomplete reservation.","previous-incomplete-reservation-found-description":"The reservation has not been paid. The customer details, payment options and services for the stay may be changed.","previous-incomplete-reservation-found-description-2":"You may start a new reservation. Previous unpaid reservations will be cancelled.","previous-upcoming-reservation-found":"You have an upcoming reservation.","previous-upcoming-reservation-found-description":"You may add guests and change details of the occupants of rooms.","price":"Price","price-discount":"Now {discount}% off","price-discount-short":"{discount}% off","price-discount-up-to":"Now up to {discount}% off","price-from":"Price from","Privacy Statement":"Privacy Statement","purchaser-details-account-info":"Account information","purchaser-details-contact-person":"Contact person","purchaser-details-header-purchaser":"Purchaser","purchaser-details-input-customer-reference":"Invoice reference","purchaser-details-label-address":"Address","purchaser-details-label-city":"City","purchaser-details-label-company":"Company","purchaser-details-label-company-code":"Business ID (VAT number)","purchaser-details-label-company-name":"Company name","purchaser-details-label-consumer":"Private","purchaser-details-label-contact-email":"Email","purchaser-details-label-contact-name":"Contact person","purchaser-details-label-contact-phone":"Phone","purchaser-details-label-country":"Country","purchaser-details-label-email":"Email","purchaser-details-label-first-name":"First name","purchaser-details-label-last-name":"Last name","purchaser-details-label-nationality":"Nationality","purchaser-details-label-newsletter":"I would like to receive offers and newsletters","purchaser-details-label-phone":"Phone","purchaser-details-label-ssn":"Social security nr. or passport nr.","purchaser-details-label-zip":"Postal code","questions-and-answers":"Questions & Answers","Read less":"Read less","Read more":"Read more","receipt-guest-info-input-email":"E-mail","receipt-guest-info-input-name":"Name","receipt-guest-info-input-phone":"Phone","receipt-header-guest-information":"Guest information","receipt-header-invoice-payment-confirmed":"Invoice payment received","receipt-header-my-reservation":"My reservation","receipt-header-payment-received":"Reservation confirmed","receipt-invoice-payment-confirmed":"Thank you for booking your accommodation with us. You will receive an invoice from us soon.","receipt-paragraph-guest-information-bottom":"You can view this information anytime in {extranet}.","receipt-paragraph-guest-information-description":"Fill in guest information so they will receive the room numbers and codes directly in their phones.","receipt-paragraph-guest-information-thank-you":"Thank you, your guest information has been received.","receipt-payment-received":"Thank you, your reservation has been confirmed","receipt-print-receipt":"Print receipt for contract {contractId}","refresh":"Refresh","remove-file":"remove-file","rental-inquiry":"Request","rental-inquiry-error-message":"Sorry, we are temporarily unable to process. Please refresh the page to try again.","rental-inquiry-error-title":"Oops, you need to try again!","rental-inquiry-get-in-touch":"If you need a place to stay for a month or more, get in touch and we\u2019ll get back to you with an offer!","rental-inquiry-submitted":"Submission successfully sent!","rental-inquiry-submitted-message":"Thank you so much for your interest in our rental leads service. We will get back to you as soon as possible!","rental-inquiry-submitting-error":"Oops, you need to try again!","rental-inquiry-submitting-error-message":"Sorry, we are temporarily unable to process. Please refresh the page to try again.","rental-inquiry-success-message":"Thank you for reaching out! We will get back to you as soon as possible!","rental-inquiry-success-title":"Contact information successfully sent!","rental-inquiry-tooltip":"Are you interested in this option? This option or a similar one can be made available for stays of one month or more. Please get in touch and we'll get back to you within 48 hours.","rental-leads-contact-subtitle":"Get in touch and we\u2019ll get back to you with an offer!","rental-leads-contact-title":"Contact information","rental-leads-email":"E-mail","rental-leads-company":"Company","rental-leads-firstname":"First name","rental-leads-gdpr":"Protection of your privacy is important to us. Please read our <a>Privacy Statement<\/a> for information on how we handle your data and what your rights are. No spamming involved, and you can unsubscribe at any time.","rental-leads-gdpr-link":"https:\/\/www.forenom.com\/privacy\/","rental-leads-marketing-opt-in":"Forenom may contact me in relation to the renting of apartments by sending me a quartal newsletter.","rental-leads-inquiry-business":"Business stay","rental-leads-inquiry-personal":"Personal stay","rental-leads-inquiry-purpose":"What is the purpose of this stay?","rental-leads-lastname":"Last name","rental-leads-phone":"Phone number","rental-leads-property-additional-info":"Additional information","rental-leads-property-address":"Address of the property","rental-leads-property-amenities":"Properties","rental-leads-property-area":"Living area (m2)","rental-leads-property-availabale-date":"First available dates","rental-leads-property-city":"City","rental-leads-property-country":"Country","rental-leads-property-housing-type":"Housing type","rental-leads-property-housing-type-apartment-building":"Apartment building","rental-leads-property-housing-type-detached-house":"Detached house","rental-leads-property-housing-type-large-property":"Large property (>200 m2 accommodation property)","rental-leads-property-housing-type-other":"Other","rental-leads-property-housing-type-row-house":"Row house","rental-leads-property-housing-type-semi-detached-house":"Semi-detached house","rental-leads-property-permission-to-show":"I want an offer from Forenom and I accept that Forenom can pre-market my apartment to Forenom customers.","rental-leads-property-photo-1":"Photo 1","rental-leads-property-photo-2":"Photo 2","rental-leads-property-rent":"Requested monthly rent (\u20ac)","rental-leads-property-rooms":"Number of rooms","rental-leads-property-subtitle":"By entering the information below, you can speed the process along, but you are not committing to anything yet.","rental-leads-property-title":"Property information","rental-leads-title":"Offer Your property or Apartment to Forenom!","guest-review-title":"Thank you for giving your feedback!","guest-review-subtitle":"In order to continuously improve our service, feedback from our customers is invaluable for our staff.","guest-review-question-tripPurpose-title":"Purpose of visit","guest-review-question-tripPurpose-answer-business":"Business","guest-review-question-tripPurpose-answer-leisure":"Leisure","guest-review-question-tripPurpose-answer-other":"Other","guest-review-question-traveling-title":"I was traveling","guest-review-question-traveling-answer-alone":"Alone","guest-review-question-traveling-answer-family":"With family","guest-review-question-traveling-answer-colleagues":"With colleagues","guest-review-question-traveling-answer-friends":"With friends","guest-review-question-foundUs-title":"How did you hear about Forenom?","guest-review-question-foundUs-answer-bookingcom-hotelscom-trivago-etc":"Booking.com, Hotels.com, Trivago etc.","guest-review-question-foundUs-answer-airbnb":"Airbnb","guest-review-question-foundUs-answer-vuokraovi-oikotie-website":"Vuokraovi, Oikotie or other website","guest-review-question-foundUs-answer-google-or-search-engine":"Google or other search engine","guest-review-question-foundUs-answer-social-media":"Social media","guest-review-question-foundUs-answer-event-fair":"Event or Fair","guest-review-question-foundUs-answer-personal-visit-or-phone":"Personal visit or phone call","guest-review-question-foundUs-answer-forenom-advertising":"Forenom advertising","guest-review-question-foundUs-answer-word-of-mouth":"Word of mouth","guest-review-question-foundUs-answer-loyal-customer":"Loyal customer","guest-review-question-foundUs-answer-other":"Other","guest-review-question-howDidWeDoScore-title":"How well did we do overall?","guest-review-question-cleanlinessScore-title":"Did the room meet your cleanliness expectations?","guest-review-question-customerServiceScore-title":"Were you satisfied with our customer service?","guest-review-question-locationScore-title":"Did the location meet your expectations?","guest-review-question-priceToValueScore-title":"Was the price to value ratio right?","guest-review-question-internetScore-title":"Did the internet work smoothly?","guest-review-question-review-title":"What would you like to tell other guests?","guest-review-question-review-placeholder":"Feel free to share your thoughts","guest-review-question-recommend-title":"Would you recommend us to your friends?","guest-review-question-recommend-answer-yes":"Yes","guest-review-question-recommend-answer-no":"No","guest-review-question-contact-title":"Please enter your contact details below, if you would like us to contact you about any problems related to your stay.","guest-review-question-contact-placeholder":"Email","guest-review-question-contact-agree":"I want to be contacted","guest-review-question-consent-to-publish":"I'm okay with my feedback being published online anonymously","guest-review-score-help":"(1 = Very bad, 10 = Excellent)","guest-review-submit":"Submit","guest-review-submitting":"Submitting","guest-review-success-title":"Feedback successfully sent!","guest-review-success-text":"We greatly appreciate you for taking the time to help us improve our service. And if we earned positive feedback from you, we\u2019ll make sure to pass along the compliments to our staff!  As customer feedback is really valuable to us, we would like to thank you with a -10% voucher for our online store (Aparthotels, hostels and Service apartments, max 7 nights).  Please save the code and enter it in the box provided during the payment. Your discount code: FEEDBACK21","guest-review-success-button":"Back to home","guest-review-error-title":"Oops, something went wrong!","guest-review-error-text":"Sorry, we were unable to process your feedback. Please try submitting again. If the issue persists you can call us at +358 20 198 3420 or email us at sales@forenom.com We apologize for the inconvenience.","guest-review-error-button":"Okay","required-address":"Please check your address is entered correctly","required-city":"Please check your city is entered correctly","required-company-code":"Please check your company code is entered correctly","required-company-contact-name":"Please check you have entered a contact person correctly","required-company-country":"Please check you have selected a country correctly","required-company-name":"Please check your company name is entered correctly","required-country":"Please select your country of residence","required-email":"Please check your email address is entered correctly","required-firstname":"Please check your first name is entered correctly","required-lastname":"Please check your last name is entered correctly","required-message":"Please check your message is entered correctly","required-nationality":"Please select your nationality","required-password":"Please check your password is entered correctly","required-personidentitydata":"Please check your social security or passport no. is entered correctly","required-phone":"Please check your phone no. is entered correctly","required-recaptcha":"The reCAPTCHA was invalid.","required-topic":"Please select a topic","required-value":"Required","required-zip":"Please check your postal code is entered correctly","reservation-continue-error":"Unfortunately we were unable to process your reservation. You can try again or call us at +358 20 198 3420.","reservation-extension-address":"Address","reservation-extension-availability":"Availability","reservation-extension-clear":"Clear the dates","reservation-extension-extended-date":"Extended date","reservation-extension-location-name":"Location name","reservation-extension-not-available":"We could not find suitable offer for your stay. We may still be able help you with your stay manually, so please contact our Customer Service center.","reservation-extension-not-found":"Oops, well this is embarrassing\u2026 The page you are looking for cannot be found. Please try again later. We apologise for the inconvenience! If the problem continues, please contact us by calling {phone} or emailing {email}","reservation-extension-original-date":"Original dates","reservation-extension-price-disclaimer":"Please note that your previously purchased services will be automatically applied to this reservation extension. You will see the final price at the check-out page.","reservation-extension-price-per-night":"Price per night","reservation-extension-reservation-number":"Reservation number","reservation-extension-room-number":"Room number","reservation-extension-room-type":"Room type","reservation-extension-select-date":"Please select a new end date from the calendar.","reservation-extension-stay-information":"Stay information","reservation-extension-summary":"Summary","reservation-extension-title":"Extend reservation","reservation-updating":"Your reservation is being updated...","reset":"Reset","room-n":"Room {n}","room-n-guests":"Room {n}, guests","room-suggested-for-you":"Suggested for you","room-type__list-item__limited-availability":"Only {roomsLeft} {roomsLeft, plural, one {room} other {rooms}} left!","room-type__list-item__max-reserved":"Max. {roomsReservedMax} rooms per order","room-type__list-item__none-available":"Unavailable","room-type__list-item__none-available-tooltip":"This option is unavailable for your chosen dates. Please select new dates.","room-type__room_description":"Room description","room-type__you-selected-our-last-room":"You have selected the last room","rooms":"Rooms","rooms-not-found":"Couldn't find a room? Give us a call at {phone} and we'll find you a place to stay!","route-fragment-aparthotel":"aparthotels","route-fragment-apartments":"furnished-apartments","route-fragment-cashier":"cashier","route-fragment-hostel":"hostels","route-fragment-receipt":"receipt","route-fragment-search":"location-search","sales-email__by-language":"sales@forenom.com","saving":"saving","search":"search","search-again":"Search again","search-engine-feedback":"Search engine feedback?","search-results-not-found-body-long-stay":"Please try extending your stay, changing your travel dates or change the number of guests to see more results.","search-results-not-found-body-short-stay":"Please try extending your stay, changing your travel dates or change the number of guests to see more results.","search-results-not-found-contact-body-long-stay":"Please contact our sales crew, call us, send us an email or contact us through the form. Thank you!","search-results-not-found-contact-body-short-stay":"Please contact our sales crew, call us, send us an email or contact us through the form. Thank you!","search-results-not-found-contact-title-long-stay":"Are you staying for a week or more or with a large group?","search-results-not-found-contact-title-short-stay":"Are you staying for a week or more or with a large group?","search-results-not-found-title-long-stay":"Unfortunately, we have nothing that matches.","search-results-not-found-title-short-stay":"Unfortunately, we have nothing that matches.","searching":"Searching...","listing-page-search-title":"Search and book","listing-page-search-description":"Here you can view all Forenom accommodation options that we have in the area. To make a booking immediately, just select the dates of your stay and choose an available apartment.","select-date":"Select date","select-room":"Select room","select-services":"Select services","send":"send","service-level-budget-description":"Good value for money in simple accommodation. The facilities are in basic condition and furnished modestly.","service-level-premium-description":"The comforts of home living combined with premium service. The facilities are new and designed uniquely with attention to detail.","service-level-smart-description":"Convenient, functional and well-equipped accommodation. The facilities are in good condition and furnished thoughtfully.","service-upgrade__choose-one":"Please choose at least one service to continue","service-upgrade__complete":"Thank you for your purchase!","service-upgrade__summary":"Summary","service-upgrade__your-reservation":"Your reservation","services":"Services","services__recommended-service":"Recommended","services__subtitle":"Tailor your reservation to make your stay fit all your needs","services__subtitle-no-services":"Unfortunately there are no extra services available at this time.","services__summary-price-total":"Total","show-all-images":"Show all images","show-list":"Show list","show-map":"Show map","show-on-map":"Show on map","show-rooms":"Show rooms","size":"Size","something-went-wrong":"Sorry, something went wrong...","sorry-something-went-wrong":"Sorry, something went wrong...","sorry-there-are-no-rooms-available-for-the-selected-dates":"Sorry, there are no rooms available for the selected dates.","sort-by":"Sort by","sort-by-distance":"Distance","sort-by-level":"Sort by level","sort-by-price-asc":"Lowest Price","sort-by-price-desc":"Highest Price","sort-by-size":"Sort by size","stay-longer-stay-cheaper":"Stay longer, stay cheaper!","sweden":"Sweden","Thank you!":"Thank you!","To be paid:":"To be paid:","total":"Total","update":"Update","url-cleaning-feedback":"cleaning-feedback","url-contact-us":"\/contact\/","url-identity-verification":"identity-verification","url-location-accommodations":"accommodation","url-location-aparthotels":"aparthotels","url-location-apartment-classification":"apartment-classification","url-location-apartment-groups":"apartments","url-location-apartments":"furnished-apartments","url-location-cashier":"cashier","url-location-hostels":"hostels","url-location-login":"login","url-location-receipt":"receipt","url-location-reservation-extension":"extend-reservation","url-location-search":"\/location-search","url-password-reset":"password-change","view":"view","view-details":"View details","view-less":"View less","view-n-more":"View {n} more","visitors":"visitors","where-do-you-want-to-go":"Where do you want to go?","Your request has been received and our support personnel will process it as soon as possible.":"Your request has been received and our support personnel will process it as soon as possible."},"oAuthRedirectUrl":"https:\/\/api.forenom.com\/2\/Account\/1\/externallogin","siteUrl":"https:\/\/www.forenom.com","extranetUrl":"https:\/\/my.forenom.com","RECAPTCHA_SITE_KEY":"6LeEVHUUAAAAABKAcdXt5W8ZwntVUeBH9o1VHcVC","spaceshipPublicApiUrl":"https:\/\/webshop-api.forenom.com\/graphql","salesforceOid":"00D1r000000tNIV","salesforceWebToLeadUrl":"https:\/\/webto.salesforce.com\/servlet\/servlet.WebToLead?encoding=UTF-8"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.forenom.com/wp-content/themes/fcom/dist/fcom.a442ac5486361759f122.min.js' id='fcom-script-js'></script>
+<script type='text/javascript' src='https://www.forenom.com/wp-includes/js/wp-embed.min.js?ver=5.8.1' id='wp-embed-js'></script>
+<script type="text/javascript">document.body.className = document.body.className.replace("siteorigin-panels-before-js","");</script><script>
+	jQuery(function() {
+		jQuery('.jq-background-orange').parent().css('background', '#ff5a13');
+		jQuery('.jq-background-blue').parent().css('background', '#3a7eee');
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html lang="en"  class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html lang="en"  class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html lang="en"  class="no-js lt-ie9"><![endif]-->
+<!--[if IE 9]><html lang="en"  class="no-js ie9" ><![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"  class="no-js"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Kahvila-ravintola Saimaan Helmi - Lappeenranta</title>
+        <meta name="keywords" content=""/>
+        <meta name="description" content="Saimaan Helmi palvelee Ajurinkadulla arkisin klo 6.00 - 16.00, lauantaisin klo 8.00 - 16.00"/>
+        
+        <meta property="og:title" content="Kahvila-ravintola Saimaan Helmi - Lappeenranta"/>
+        <meta property="og:description" content="Saimaan Helmi palvelee Ajurinkadulla arkisin klo 6.00 - 16.00, lauantaisin klo 8.00 - 16.00"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="https://www.saimaanhelmi.com/"/>
+        <meta property="og:site_name" content="www.saimaanhelmi.com"/>
+        <link rel="canonical" href="https://www.saimaanhelmi.com/"/>
+        
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<script>window.jQuery || document.write('<script src="/skinCss/website/js/jquery/jquery-1.7.min.js"><\/script>')</script>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+<script>
+
+/*! responsive-nav.js v1.0.14
+* https://github.com/viljamis/responsive-nav.js
+* http://responsive-nav.com
+*
+* Copyright (c) 2013 @viljamis
+* Available under the MIT license
+*/
+
+/* jshint strict:false, forin:false, noarg:true, noempty:true, eqeqeq:true,
+boss:true, bitwise:true, browser:true, devel:true, indent:2 */
+/* exported responsiveNav */
+
+var responsiveNav = (function (window, document) {
+
+var computed = !!window.getComputedStyle;
+
+// getComputedStyle polyfill
+if (!window.getComputedStyle) {
+window.getComputedStyle = function(el) {
+this.el = el;
+this.getPropertyValue = function(prop) {
+var re = /(\-([a-z]){1})/g;
+if (prop === "float") {
+prop = "styleFloat";
+}
+if (re.test(prop)) {
+prop = prop.replace(re, function () {
+return arguments[2].toUpperCase();
+});
+}
+return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+};
+return this;
+};
+}
+
+var nav,
+opts,
+navToggle,
+docEl = document.documentElement,
+head = document.getElementsByTagName("head")[0],
+styleElement = document.createElement("style"),
+navOpen = false,
+
+// fn arg can be an object or a function, thanks to handleEvent
+// read more at: http://www.thecssninja.com/javascript/handleevent
+addEvent = function (el, evt, fn, bubble) {
+if ("addEventListener" in el) {
+// BBOS6 doesn't support handleEvent, catch and polyfill
+try {
+el.addEventListener(evt, fn, bubble);
+} catch (e) {
+if (typeof fn === "object" && fn.handleEvent) {
+el.addEventListener(evt, function (e) {
+  // Bind fn as this and set first arg as event object
+  fn.handleEvent.call(fn, e);
+}, bubble);
+} else {
+throw e;
+}
+}
+} else if ("attachEvent" in el) {
+// check if the callback is an object and contains handleEvent
+if (typeof fn === "object" && fn.handleEvent) {
+el.attachEvent("on" + evt, function () {
+// Bind fn as this
+fn.handleEvent.call(fn);
+});
+} else {
+el.attachEvent("on" + evt, fn);
+}
+}
+},
+
+removeEvent = function (el, evt, fn, bubble) {
+if ("removeEventListener" in el) {
+try {
+el.removeEventListener(evt, fn, bubble);
+} catch (e) {
+if (typeof fn === "object" && fn.handleEvent) {
+el.removeEventListener(evt, function (e) {
+  fn.handleEvent.call(fn, e);
+}, bubble);
+} else {
+throw e;
+}
+}
+} else if ("detachEvent" in el) {
+if (typeof fn === "object" && fn.handleEvent) {
+el.detachEvent("on" + evt, function () {
+fn.handleEvent.call(fn);
+});
+} else {
+el.detachEvent("on" + evt, fn);
+}
+}
+},
+
+getFirstChild = function (e) {
+var firstChild = e.firstChild;
+// skip TextNodes
+while (firstChild !== null && firstChild.nodeType !== 1) {
+firstChild = firstChild.nextSibling;
+}
+return firstChild;
+},
+
+setAttributes = function (el, attrs) {
+for (var key in attrs) {
+el.setAttribute(key, attrs[key]);
+}
+},
+
+addClass = function (el, cls) {
+el.className += " " + cls;
+el.className = el.className.replace(/(^\s*)|(\s*$)/g,"");
+},
+
+removeClass = function (el, cls) {
+var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+el.className = el.className.replace(reg, " ").replace(/(^\s*)|(\s*$)/g,"");
+},
+
+ResponsiveNav = function (el, options) {
+var i;
+
+// Default options
+this.options = {
+animate: true,        // Boolean: Use CSS3 transitions, true or false
+transition: 400,      // Integer: Speed of the transition, in milliseconds
+label: "Päävalikko",        // String: Label for the navigation toggle
+insert: "after",      // String: Insert the toggle before or after the navigation
+customToggle: "",     // Selector: Specify the ID of a custom toggle
+openPos: "relative",  // String: Position of the opened nav, relative or static
+jsClass: "js",        // String: 'JS enabled' class which is added to <html> el
+init: function(){},   // Function: Init callback
+open: function(){},   // Function: Open callback
+close: function(){}   // Function: Close callback
+};
+
+// User defined options
+for (i in options) {
+this.options[i] = options[i];
+}
+
+// Adds "js" class for <html>
+addClass(docEl, this.options.jsClass);
+
+// Wrapper
+this.wrapperEl = el.replace("#", "");
+if (document.getElementById(this.wrapperEl)) {
+this.wrapper = document.getElementById(this.wrapperEl);
+} else {
+// If el doesn't exists, stop here.
+throw new Error("The nav element you are trying to select doesn't exist");
+}
+
+// Inner wrapper
+this.wrapper.inner = getFirstChild(this.wrapper);
+
+// For minification
+opts = this.options;
+nav = this.wrapper;
+
+// Init
+this._init(this);
+};
+
+ResponsiveNav.prototype = {
+// Public methods
+destroy: function () {
+this._removeStyles();
+removeClass(nav, "closed");
+removeClass(nav, "opened");
+nav.removeAttribute("style");
+nav.removeAttribute("aria-hidden");
+nav = null;
+_instance = null;
+
+removeEvent(window, "load", this, false);
+removeEvent(window, "resize", this, false);
+removeEvent(navToggle, "mousedown", this, false);
+removeEvent(navToggle, "touchstart", this, false);
+removeEvent(navToggle, "touchend", this, false);
+removeEvent(navToggle, "keyup", this, false);
+removeEvent(navToggle, "click", this, false);
+
+if (!opts.customToggle) {
+navToggle.parentNode.removeChild(navToggle);
+} else {
+navToggle.removeAttribute("aria-hidden");
+}
+},
+
+toggle: function () {
+if (!navOpen) {
+removeClass(nav, "closed");
+addClass(nav, "opened");
+nav.style.position = opts.openPos;
+setAttributes(nav, {"aria-hidden": "false"});
+
+navOpen = true;
+opts.open();
+} else {
+removeClass(nav, "opened");
+addClass(nav, "closed");
+setAttributes(nav, {"aria-hidden": "true"});
+
+if (opts.animate) {
+setTimeout(function () {
+nav.style.position = "absolute";
+}, opts.transition + 10);
+} else {
+nav.style.position = "absolute";
+}
+
+navOpen = false;
+opts.close();
+}
+},
+
+handleEvent: function (e) {
+var evt = e || window.event;
+
+switch (evt.type) {
+case "mousedown":
+this._onmousedown(evt);
+break;
+case "touchstart":
+this._ontouchstart(evt);
+break;
+case "touchend":
+this._ontouchend(evt);
+break;
+case "keyup":
+this._onkeyup(evt);
+break;
+case "click":
+this._onclick(evt);
+break;
+case "load":
+this._transitions(evt);
+this._resize(evt);
+break;
+case "resize":
+this._resize(evt);
+break;
+}
+},
+
+// Private methods
+_init: function () {
+addClass(nav, "closed");
+this._createToggle();
+
+addEvent(window, "load", this, false);
+addEvent(window, "resize", this, false);
+addEvent(navToggle, "mousedown", this, false);
+addEvent(navToggle, "touchstart", this, false);
+addEvent(navToggle, "touchend", this, false);
+addEvent(navToggle, "keyup", this, false);
+addEvent(navToggle, "click", this, false);
+},
+
+_createStyles: function () {
+if (!styleElement.parentNode) {
+head.appendChild(styleElement);
+}
+},
+
+_removeStyles: function () {
+if (styleElement.parentNode) {
+styleElement.parentNode.removeChild(styleElement);
+}
+},
+
+_createToggle: function () {
+if (!opts.customToggle) {
+var toggle = document.createElement("a");
+toggle.innerHTML = opts.label;
+setAttributes(toggle, {
+"href": "#",
+"id": "nav-toggle"
+});
+
+if (opts.insert === "after") {
+nav.parentNode.insertBefore(toggle, nav.nextSibling);
+} else {
+nav.parentNode.insertBefore(toggle, nav);
+}
+
+navToggle = document.getElementById("nav-toggle");
+} else {
+var toggleEl = opts.customToggle.replace("#", "");
+
+if (document.getElementById(toggleEl)) {
+navToggle = document.getElementById(toggleEl);
+} else {
+throw new Error("The custom nav toggle you are trying to select doesn't exist");
+}
+}
+},
+
+_preventDefault: function(e) {
+if (e.preventDefault) {
+e.preventDefault();
+e.stopPropagation();
+} else {
+e.returnValue = false;
+}
+},
+
+_onmousedown: function (e) {
+var evt = e || window.event;
+// If the user isn't right clicking:
+if (!(evt.which === 3 || evt.button === 2)) {
+this._preventDefault(e);
+this.toggle(e);
+}
+},
+
+_ontouchstart: function (e) {
+// Touchstart event fires before
+// the mousedown and can wipe it
+navToggle.onmousedown = null;
+this._preventDefault(e);
+this.toggle(e);
+},
+
+_ontouchend: function () {
+// Prevents ghost click from happening on some Android browsers
+var that = this;
+nav.addEventListener("click", that._preventDefault, true);
+setTimeout(function () {
+nav.removeEventListener("click", that._preventDefault, true);
+}, opts.transition);
+},
+
+_onkeyup: function (e) {
+var evt = e || window.event;
+if (evt.keyCode === 13) {
+this.toggle(e);
+}
+},
+
+_onclick: function (e) {
+// For older browsers (looking at IE)
+this._preventDefault(e);
+},
+
+_transitions: function () {
+if (opts.animate) {
+var objStyle = nav.style,
+transition = "max-height " + opts.transition + "ms";
+
+objStyle.WebkitTransition = transition;
+objStyle.MozTransition = transition;
+objStyle.OTransition = transition;
+objStyle.transition = transition;
+}
+},
+
+_calcHeight: function () {
+var savedHeight = nav.inner.offsetHeight,
+innerStyles = "#" + this.wrapperEl + ".opened{max-height:" + savedHeight + "px}";
+
+// Hide from old IE
+if (computed) {
+styleElement.innerHTML = innerStyles;
+innerStyles = "";
+}
+},
+
+_resize: function () {
+if (window.getComputedStyle(navToggle, null).getPropertyValue("display") !== "none") {
+setAttributes(navToggle, {"aria-hidden": "false"});
+
+// If the navigation is hidden
+if (nav.className.match(/(^|\s)closed(\s|$)/)) {
+setAttributes(nav, {"aria-hidden": "true"});
+nav.style.position = "absolute";
+}
+
+this._createStyles();
+this._calcHeight();
+} else {
+setAttributes(navToggle, {"aria-hidden": "true"});
+setAttributes(nav, {"aria-hidden": "false"});
+nav.style.position = opts.openPos;
+this._removeStyles();
+}
+
+// Init callback
+opts.init();
+}
+
+};
+
+var _instance;
+function rn (el, options) {
+if (!_instance) {
+_instance = new ResponsiveNav(el, options);
+}
+return _instance;
+}
+
+return rn;
+})(window, document);
+
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-42397302-48']);
+  _gaq.push(['_setDomainName', 'saimaanhelmi.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+        <link  href="/skinCss/website/css/structure.css?1634015224" rel="stylesheet"><link  href="/skinCss/website/skin/layout.css?1634015224" rel="stylesheet"><link  href="/skinCss/website.css?1634015224" rel="stylesheet"><link  href="/skinCss/website/js/overlay/overlay.css?1634015224" rel="stylesheet"><link  href="/skinCss/website/js/overlay/form.css?1634015224" rel="stylesheet">
+        
+        <script src="/skinCss/website/js/modernizr.js?1634015224"></script><script src="/skinCss/website/js/ajax.js?1634015224"></script><script src="/skinCss/website/js/overlay/overlay.js?1634015224"></script>
+        
+        
+
+    </head>
+    <body id="body" class="pt6 page_etusivu language_en" >
+        
+        <div id="wrapper" class="container">            <header class="header has-header-background clear" role="banner">
+                
+
+                <div id="identityWrapper" class="header-container clear">
+
+                    <div id="identityContact" class="header-content clear" >
+                         
+                        
+                        <div id="identity" class="header-title hgroup hidden-small" >
+                            <div id="companyName" class="h1"></div>
+                            <div id="companyTagline" class="h2"></div>
+
+                        </div>
+                        <div id="contact" class="header-subline hgroup hidden-small">
+                            <div id="actionLine" class="h1"></div>
+                            <div id="phoneNumber" class="h2"></div>
+                        </div>
+                        
+
+                        
+
+                        
+                        
+                    </div>
+                </div>
+
+                
+                <nav id="topNav" class="nav nav-primary" role="navigation">
+                    <ul class="clear">
+                        <li class=" active menuitem_etusivu "><a href="/" class="active active" >Etusivu</a></li>
+<li class=" menuitem_a-la-carte "><a href="/a-la-carte" class="" >A la Carte</a></li>
+<li class=" menuitem_lounas "><a href="/lounas" class="" >Lounas</a></li>
+<li class=" menuitem_yhteystiedot  lastChild"><a href="/yhteystiedot" class="" >Yhteystiedot</a></li>
+
+                    </ul>
+                </nav>
+                
+
+                
+
+                <div id="breadcrumbWrapper" class="breadcrumb-container">
+
+                    <div id="breadcrumbContainer" class="breadcrumb clear">
+
+                        <div id="breadcrumb" class="nav">
+                            
+                            <ol class="clear">
+                                <li>Etusivu</li>
+                            </ol>
+                            
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+
+                
+            </header>
+
+            <div id="contentWrapperWrapper" class="main-container">
+
+                <div id="contentWrapper" class="section main" role="main">
+
+    <div  class="contentArea contentAreaC"><div class="module htmlModule" >
+<ul id="rslides">
+<li><img src="/upl/website/img/banneri4_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri2_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri5_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri3_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri6_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri1_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri7_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri8_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri9_srcset-large.jpg" alt=""></li>
+<li><img src="/upl/website/img/banneri10_srcset-large.jpg" alt=""></li>
+</ul>
+
+</div><h1 class="module h1 aligncenter text-center" >Hyv&auml;n mielen ruokaa Helmest&auml;</h1>
+<article class="module text" ><p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>**********</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>Saimaan Helmi</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 58px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>Avoinna aamuisin</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 41px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>1.11. alkaen</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 48px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 55px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 48px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 55px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 59px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>ma-pe &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;5:30-16</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 59px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>la-su &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;suljettu</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 48px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 55px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 22px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 25px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 48px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Tarjoamme aamukahvit 1.-5.11.&nbsp;</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 35px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>klo 5:30-9:30</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 48px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12); min-height: 55px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Tervetuloa!</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>**********</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="font-kerning: none"><i>Uutta 1.11. alkaen</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12); min-height: 43px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Hyv&auml;n mielen</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 71px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>PUUROBAARI</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>klo 5:30-9:30</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 38px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12); min-height: 43px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 187px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>7,60</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12); min-height: 22px;">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>sis&auml;lt&auml;&auml;:</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>3:a erilaista l&auml;mmint&auml; puuroa</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 16px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>-voita, hilloa, marjoja, mehukeittoa, raejuustoa</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Tuorepuuroa</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Smoothieta</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Riisipiirakoita, vaaleaa ja tummaa leip&auml;&auml;</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 16px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>-kinkkua, makkaraa, juustoa, tomaattia, kurkkua, maustekurkkua</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Helmen inkiv&auml;&auml;ri-chilishotti</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>Omena- ja appelsiinit&auml;ysmehua</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(238, 34, 12);"><span style="font-kerning: none"><i>kahvia</i></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><em><span style="color:#FF0000;">**********</span></em></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);">&nbsp;</p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><em>Saimaan Helmen</em></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><span style="font-size:72px;"><em>Pikkujoulumenut</em></span></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><span style="font-size:28px;"><em>ryhmille ja yrityksille</em></span></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><span style="font-size:16px;"><em>(minimitilaus 10hl&ouml;)</em></span></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><span style="font-size:16px;"><em>Lis&auml;tietoa pikkujoulumenuista </em></span></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);"><span style="color:#008000;"><span style="font-size:16px;"><em>p. 05 416 1955, info@saimaanhelmi.com&nbsp;</em></span></span></p>
+
+<p style="margin: 0px; text-align: center; font-stretch: normal; font-size: 43px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><i style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Georgia; font-size: 28px; text-align: center;">************************</i></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>Pikkujoulumenu broilerista</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Savulohisalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Helmen jouluista vihersalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Sienisalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Broilerfileet&auml; gl&ouml;gikastikkeessa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Villiriisi&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Perinteiset uunijuurekset</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Puolukkaista maalaisleip&auml;&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Karjalanpiirakoita</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Margariini ja munavoi</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kotikaljaa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Luumutaskutorttu</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>20,70</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>************************</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>Helmen Joulu</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Rosollia ja rosollinkastike</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Talon sienisalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Helmen jouluista vihersalaattia ja balsamicokastiketta</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Smetanasilli&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>L&auml;mminsavulohta ja piparjuuricreme</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Saimaan Helmen joulukinkkua ja kinkunkastiketta</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Lanttulaatikkoa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Porkkanalaatikkoa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Keitetty&auml; perunaa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Puolukkaista maalaisleip&auml;&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Karjalanpiirakoita</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Munavoita ja margariinia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kotikaljaa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Luumutaskutorttu</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>26,50</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><i style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Georgia; font-size: 28px;">************************</i></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>Pikkujoulu aasialaisittain</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;"><span style="font-kerning: none"><i>&nbsp;</i></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Aasialainen coleslaw</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kana-nuudelisalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Vihersalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Karamellipossua</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Jasminriisi&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Wokkivihanneksia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Chili-hunajasavukirjolohta + Limemajoneesia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kasvissamosat+sweetchili-kastike</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Patonkia ja tuorejuustoa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Mango-kookosjuustokakkua</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>33,80</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>************************</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 20px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:28px;"><span style="font-kerning: none"><i>Joulun pitop&ouml;yt&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 11px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 12px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Waldorfin salaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Vihersalaattia ja sinappikastiketta</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Broiler-pastasalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Talon sienisalaattia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Savumuikkuja</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Tilli-graavilohta</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>L&auml;mminsavulohta + piparjuuricreme</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Katkarapumoussea ja kananmunanpuolikkaita</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Ylikyps&auml;&auml; h&auml;r&auml;nrintaa tummassa punasipulikastikkeessa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kermaperunoita</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Uunirosollia</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Puolukkaista maalaisleip&auml;&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Karjalanpiirakoita</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Saaristolaisleip&auml;&auml;</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Munavoi ja margariini</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Kotikaljaa</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>Lakka-kinuskikakkua</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); min-height: 16px; text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><span style="font-size:20px;"><span style="font-kerning: none"><i>47,90</i></span></span></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;">&nbsp;</p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0); text-align: center;"><i style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Georgia; font-size: 28px;">************************</i></p>
+
+<p style="margin: 0px; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Georgia; color: rgb(0, 0, 0);">&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><span style="font-family: tahoma, geneva, sans-serif; font-size: 22px;">Lounasp&ouml;yd&auml;st&auml;mme l&ouml;yd&auml;t joka p&auml;iv&auml; kolmea maistuvaa ja konstailematonta ruokalajia, joista voit maistaa vaikka jokaista. My&ouml;s a la carte-annokset valmistuvat nopeasti.</span></p>
+
+<p><span style="font-family:tahoma,geneva,sans-serif;"><span style="font-size:22px;">Lounas- ja a la carte-annoksiin kuuluu runsas salaattip&ouml;yt&auml;, p&auml;iv&auml;n keitto ja ruokajuomina kotikalja, vesi, piim&auml;t, maidot ja kivenn&auml;isvesi. Tarjolla my&ouml;s </span></span><span style="font-family: tahoma, geneva, sans-serif; font-size: 22px;">rieskaa, karjalanpiirakoita, ruisleip&auml;&auml; sek&auml; j&auml;lkiruoka ja kahvi.</span></p>
+
+<p><span style="font-family:tahoma,geneva,sans-serif;"><span style="font-size:22px;">Ruoka-annoksia voit tilata my&ouml;s mukaanviet&auml;v&auml;ksi.</span></span></p>
+
+<p><span style="font-family:tahoma,geneva,sans-serif;"><span style="font-size:22px;">Kanta-asiakaskorttilla joka 11. lounas ilmaiseksi.</span></span></p>
+
+<p>&nbsp;</p>
+
+<p><span style="font-family:tahoma,geneva,sans-serif;"><span style="font-size:22px;">Tervetuloa nauttimaan talomme antimista!</span></span></p>
+
+<p><span style="font-family:tahoma,geneva,sans-serif;"><em><span style="font-size:22px;">Saimaan Helmen v&auml;ki</span></em></span></p>
+</article>
+<div class="module alignleft text-left box" >
+    
+        <h2 class="h2">Saimaan Helmi </h2>
+    
+    <p><span style="font-size:14px;"><span style="font-size:16px;"><em><strong>Aukioloajat:&nbsp;</strong></em></span><br />
+Arkisin:&nbsp; &nbsp; 5:30-16&nbsp; &nbsp; &nbsp; &nbsp;la-su</span><span style="font-size: 14px;">: suljettu</span></p>
+
+<p><span style="font-size: 14px;">Ajurinkatu 6</span></p>
+
+<p><span style="font-size:14px;">53500 LAPPEENRANTA<br />
+<a href="http://goo.gl/maps/vk9iR" target="_blank">&raquo; Siirry karttaan</a></span></p>
+
+<p><span style="font-size:14px;">Puh.&nbsp;<a href="tel:054161955">05-4161955</a></span></p>
+
+<p><span style="font-size:14px;"><span style="color:#0000CD;"><u>info@saimaanhelmi.com</u></span></span></p>
+
+<p>&nbsp;</p>
+
+<p><a href="https://www.oivahymy.fi/hae-yrityksia/#text=Saimaan Helmi" target="_blank">Saimaan Helmen Oiva-raportit (Elintarvikevalvonnan tulokset)</a></p>
+
+    
+</div>
+</div>
+    <div  class="contentArea contentAreaE"><div class="module linklist downloadlist clear" id="page-contentArea_2_-module_1_">
+	<h3  class="h2"></h3 >
+	<ul>
+		
+		  <li><a href="/?c=refreshItems&amp;m=contentArea[2]/module[1]&amp;file=0&amp;ajax=1" title="Katso esitteemme" onclick="window.open(this.href); return false;" data-track-event="click" data-track-action="download">Katso esitteemme</a></li>
+		
+	</ul>
+</div>
+<article class="module text" ><p>Saimaan Helmi valittiin Etel&auml;-Karjalan parhaaksi lounaspaikaksi v.2016.</p>
+</article>
+<img src="/upl/website/etusivu/kuva_srcset-large.jpg" data-srcset="upl/website/etusivu/kuva_srcset-large.jpg" class="module image">
+</div>
+    <div  class="contentArea contentAreaF"><div class="module htmlModule" >
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-page" data-href="https://www.facebook.com/Kahvila-ravintola-Saimaan-Helmi-440450776140241/?rf=202854639754502" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/Kahvila-ravintola-Saimaan-Helmi-440450776140241/?rf=202854639754502" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Kahvila-ravintola-Saimaan-Helmi-440450776140241/?rf=202854639754502">Kahvila-ravintola Saimaan Helmi</a></blockquote></div>
+
+</div></div>
+    <div  class="contentArea contentAreaC"></div>
+</div>
+
+
+            </div>
+
+            <footer id="footer" class="footer footer-container">
+
+                <div class="bgWrapper footer-content">
+
+                    
+
+                    
+                    <div class="address">Saimaan Helmi | Ajurinkatu 6, 53500 LAPPEENRANTA | Puh. 05-4161955 | info@saimaanhelmi.com</div>
+                    
+
+                </div>
+
+                <div class="bgWrapper footer-branding clear">
+
+                    <div id="poweredByContainer">
+
+                        
+                        <a href="" target="_blank" rel="nofollow" id="poweredBy" title=""></a>
+                        
+
+                        <div id="poweredByRight" class="share-icons">
+
+                            
+
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+
+            <script>
+var navigation = responsiveNav("#topNav");
+</script>
+
+<script>
+$('#identityContact img').attr('src', function(i, src) {
+    return src.replace( '0.png', '.png' );
+});
+</script>
+
+<script>
+
+$(function() {
+
+$("#rslides").responsiveSlides({
+   speed: 1500,
+   nav: false,
+   timeout: 3000
+});
+
+});
+
+/*! http://responsiveslides.com v1.53 by @viljamis */
+(function(c,I,B){c.fn.responsiveSlides=function(l){var a=c.extend({auto:!0,speed:500,timeout:4E3,pager:!1,nav:!1,random:!1,pause:!1,pauseControls:!0,prevText:"Edellinen",nextText:"Seuraava",maxwidth:"",navContainer:"",manualControls:"",namespace:"rslides",before:function(){},after:function(){}},l);return this.each(function(){B++;var f=c(this),s,r,t,m,p,q,n=0,e=f.children(),C=e.size(),h=parseFloat(a.speed),D=parseFloat(a.timeout),u=parseFloat(a.maxwidth),g=a.namespace,d=g+B,E=g+"_nav "+d+"_nav",v=g+"_here",
+j=d+"_on",w=d+"_s",k=c("<ul class='"+g+"_tabs "+d+"_tabs' />"),x={"float":"left",position:"relative",opacity:1,zIndex:2},y={"float":"none",position:"absolute",opacity:0,zIndex:1},F=function(){var b=(document.body||document.documentElement).style,a="transition";if("string"===typeof b[a])return!0;s=["Moz","Webkit","Khtml","O","ms"];var a=a.charAt(0).toUpperCase()+a.substr(1),c;for(c=0;c<s.length;c++)if("string"===typeof b[s[c]+a])return!0;return!1}(),z=function(b){a.before();F?(e.removeClass(j).css(y).eq(b).addClass(j).css(x),
+n=b,setTimeout(function(){a.after()},h)):e.stop().fadeOut(h,function(){c(this).removeClass(j).css(y).css("opacity",1)}).eq(b).fadeIn(h,function(){c(this).addClass(j).css(x);a.after();n=b})};a.random&&(e.sort(function(){return Math.round(Math.random())-0.5}),f.empty().append(e));e.each(function(a){this.id=w+a});f.addClass(g+" "+d);l&&l.maxwidth&&f.css("max-width",u);e.hide().css(y).eq(0).addClass(j).css(x).show();F&&e.show().css({"-webkit-transition":"opacity "+h+"ms ease-in-out","-moz-transition":"opacity "+
+h+"ms ease-in-out","-o-transition":"opacity "+h+"ms ease-in-out",transition:"opacity "+h+"ms ease-in-out"});if(1<e.size()){if(D<h+100)return;if(a.pager&&!a.manualControls){var A=[];e.each(function(a){a+=1;A+="<li><a href='#' class='"+w+a+"'>"+a+"</a></li>"});k.append(A);l.navContainer?c(a.navContainer).append(k):f.after(k)}a.manualControls&&(k=c(a.manualControls),k.addClass(g+"_tabs "+d+"_tabs"));(a.pager||a.manualControls)&&k.find("li").each(function(a){c(this).addClass(w+(a+1))});if(a.pager||a.manualControls)q=
+k.find("a"),r=function(a){q.closest("li").removeClass(v).eq(a).addClass(v)};a.auto&&(t=function(){p=setInterval(function(){e.stop(!0,!0);var b=n+1<C?n+1:0;(a.pager||a.manualControls)&&r(b);z(b)},D)},t());m=function(){a.auto&&(clearInterval(p),t())};a.pause&&f.hover(function(){clearInterval(p)},function(){m()});if(a.pager||a.manualControls)q.bind("click",function(b){b.preventDefault();a.pauseControls||m();b=q.index(this);n===b||c("."+j).queue("fx").length||(r(b),z(b))}).eq(0).closest("li").addClass(v),
+a.pauseControls&&q.hover(function(){clearInterval(p)},function(){m()});if(a.nav){g="<a href='#' class='"+E+" prev'>"+a.prevText+"</a><a href='#' class='"+E+" next'>"+a.nextText+"</a>";l.navContainer?c(a.navContainer).append(g):f.after(g);var d=c("."+d+"_nav"),G=d.filter(".prev");d.bind("click",function(b){b.preventDefault();b=c("."+j);if(!b.queue("fx").length){var d=e.index(b);b=d-1;d=d+1<C?n+1:0;z(c(this)[0]===G[0]?b:d);if(a.pager||a.manualControls)r(c(this)[0]===G[0]?b:d);a.pauseControls||m()}});
+a.pauseControls&&d.hover(function(){clearInterval(p)},function(){m()})}}if("undefined"===typeof document.body.style.maxWidth&&l.maxwidth){var H=function(){f.css("width","100%");f.width()>u&&f.css("width",u)};H();c(I).bind("resize",function(){H()})}})}})(jQuery,this,0);
+
+</script>
+
+            
+            <script src="/skinCss/website/js/monotracker/monotracker.js?123"></script>
+            <script></script>
+            
+            
+            
+
+            
+            <script type="text/javascript">
+
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','_mga');
+
+              if(document.cookie.indexOf('mono_donottrack=true') !== -1) {
+                window['ga-disable-UA-60601199-41'] = true;
+              }
+
+              _mga('create', 'UA-60601199-41', 'auto');
+              _mga('set', 'anonymizeIp', true);
+              _mga('set', 'dimension1', '480490');
+              _mga('set', 'dimension2', 'website');
+              _mga('send', 'pageview');
+
+              _monoTracker.addTracker(function (action) {
+                    _mga('send', 'event', 'monoAction', action);
+              });
+
+              var _mtrkey;
+              var _mtrOrderData = _monoTracker.getData('ecommerceOrder');
+
+              if(_mtrOrderData) {
+
+                _mga('require', 'ecommerce');
+
+                _mga('ecommerce:addTransaction', {
+                  'id': _mtrOrderData.orderId,                     // Transaction ID. Required.
+                  'revenue': _mtrOrderData.total,               // Grand Total.
+                  'shipping': _mtrOrderData.shipping,                  // Shipping.
+                  'tax': _mtrOrderData.tax                     // Tax.
+                });
+
+                // adding items
+                for(_mtrkey in _mtrOrderData.items) {
+
+                    var _mtrItem = _mtrOrderData.items[_mtrkey];
+
+                    _mga('ecommerce:addItem', {
+                      'id': _mtrOrderData.orderId,                     // Transaction ID. Required.
+                      'name': _mtrItem.productName,    // Product name. Required.
+                      'sku': _mtrItem.sku,                 // SKU/code.
+                      'category': _mtrItem.category,         // Category or variation.
+                      'price': _mtrItem.price,                 // Unit price.
+                      'quantity': _mtrItem.quantity                 // Quantity.
+                    });
+
+                }
+
+                _mga('ecommerce:send');
+              }
+
+            </script>
+            
+
+
+</div>
+        
+            <script>
+            var _monoCookie = _monoCookie || {};
+            (function(d){
+            
+                _monoCookie.topbar = {
+                    description: 'K&auml;yt&auml;mme sivustollamme ev&auml;steit&auml; ja muita vastaavia tekniikoita. Klikkaamalla OK hyv&auml;ksyt ev&auml;steet.',
+                    link: 'OK',
+                    optInOrOut: 'optIn'
+                };
+            
+                var e = d.createElement('script'), s = d.getElementsByTagName('script')[0]; e.type='text/javascript'; e.defer=true; e.async=true; e.src='/skinCss/website/js/cookie/cookie.js';
+                s.parentNode.insertBefore(e,s);
+            })(document);
+            </script>
+            
+        <!--[if lt IE 8]><script src="/skinCss/website/js/boxsizing.js"></script><![endif]-->
+    </body>
+</html>
